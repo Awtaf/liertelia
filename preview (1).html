@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telia Liertoppen. Salgsportal.</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      const GOLD = "#FFD700", GREEN = "#00E676", PINK = "#FF3366", LP = "#C44DFF", OR = "#FF6B35", DARK = "#1A0030", P = "#990AE3";
+
+      const DATA = {
+        jan2026: {
+          label: "Januar 2026", emoji: "❄️", color: GREEN,
+          gross: 31, grossBudget: 46, upgrades: 99, upgradesBudget: 104,
+          trygg: 35, forsikring: 49, tjenester: 6139, tilbehor: 45825,
+          sellers: [
+            { name: "Dibran Shala", role: "ASM", rank: 1, gross: 13, upgrades: 34, trygg: 11, forsikring: 14, tilbehor: 15348, tjenester: 3909, av: "🛡️" },
+            { name: "Amer Salah", role: "SA", rank: 2, gross: 9, upgrades: 28, trygg: 8, forsikring: 20, tilbehor: 8713, tjenester: 79, av: "⭐" },
+            { name: "Izzedin Alzayegh", role: "SA", rank: 3, gross: 4, upgrades: 12, trygg: 1, forsikring: 3, tilbehor: 8910, tjenester: 717, av: "📱" },
+            { name: "Ahmed Ali", role: "SA", rank: 3, gross: 4, upgrades: 5, trygg: 3, forsikring: 5, tilbehor: 5352, tjenester: 1434, av: "🎧" },
+            { name: "Abdulnaser Sallam", role: "SM", rank: 5, gross: 1, upgrades: 20, trygg: 12, forsikring: 7, tilbehor: 7502, tjenester: 0, av: "👔" },
+          ],
+          profiles: {
+            "Dibran Shala": { quote: "🛡️ Du tok ledelsen i 2026 rett fra start! Januar viser at du kan dominere hele året. Hat trick på vei? 👑💜", strength1: "👑 Beste januar totalt", s1x: "Leder på gross, upgrades og Telia Trygg. Satte tonen for 2026 fra dag 1.", strength2: "🛡️ Telia Trygg sterk", s2x: "11 Telia Trygg i januar – nesten 1 per arbeidsdag.", improve: "Forsikring og tjenester har rom for vekst. Mål: 20+ forsikringer månedlig." },
+            "Amer Salah": { quote: "⭐ 20 forsikringer og 28 upgrades på deltid – du setter standarden! Tjenester er eneste blindsone. Fiks det i februar! 💜", strength1: "🔒 Forsikring-kongen januar", s1x: "20 forsikringer – best i butikken. Ufravikelig fokus på tilleggsprodukt.", strength2: "⭐ Deltid – heltidsresultat", s2x: "9 gross og 28 upgrades som deltidsansatt er imponerende.", improve: "Tjenester nesten null (79 kr). Husk å tilby Kom i Gang ved hvert salg!" },
+            "Izzedin Alzayegh": { quote: "📱 Godt tilbehørssalg! Nå er utfordringen å løfte forsikring og Telia Trygg. Et salg uten tilleggsprodukter er et halvt salg! 💜", strength1: "🎧 Tilbehør-fokus", s1x: "8 910 kr tilbehør er sterkt – god evne til mersalg.", strength2: "📈 Vekstpotensial", s2x: "12 upgrades er greit, men Telia Trygg og forsikring er klare forbedringsområder.", improve: "Mål 2026: Telia Trygg og forsikring – minst 5 av hvert per måned." },
+            "Ahmed Ali": { quote: "🎧 Vi vet hva du kan fra 2025. Januar var en rolig start – februar er sjansen til å vise formen din igjen! 💜", strength1: "🎧 Tilbehørkompetanse", s1x: "Rekordholderen fra 2025 er her. Vet hvordan man selger tilbehør.", strength2: "📈 Potensial ubrukt", s2x: "5 upgrades i januar er lavt for din kapasitet.", improve: "Upgrades er din styrke – 5 i januar er ikke det vi vet du kan. Mål: 20+ upgrades i februar." },
+            "Abdulnaser Sallam": { quote: "👔 1 gross i januar er ikke deg. 12 Telia Trygg viser at fokuset er der. Februar er din comeback-måned! 💜", strength1: "🛡️ Telia Trygg topp", s1x: "12 Telia Trygg er månedlig rekord – eksepsjonelt fokus på kundebeskyttelse.", strength2: "🔄 Upgrades solid", s2x: "20 upgrades viser at selgerinstinktet er der, selv i SM-rollen.", improve: "Gross på 1 er langt under kapasitet. Mål: 8+ gross i februar." },
+          }
+        },
+        feb2026: {
+          label: "Februar 2026", emoji: "💜", color: LP,
+          gross: 39, grossBudget: 60, upgrades: 102, upgradesBudget: 95,
+          trygg: 52, forsikring: 41, tjenester: 2790, tilbehor: 27050,
+          sellers: [
+            { name: "Dibran Shala", role: "ASM", rank: 1, gross: 16, upgrades: 45, trygg: 15, forsikring: 13, tilbehor: 4891, tjenester: 718, av: "🛡️" },
+            { name: "Amer Salah", role: "SA", rank: 2, gross: 7, upgrades: 25, trygg: 14, forsikring: 15, tilbehor: 12788, tjenester: 0, av: "⭐" },
+            { name: "Abdulnaser Sallam", role: "SM", rank: 3, gross: 7, upgrades: 12, trygg: 4, forsikring: 3, tilbehor: 1870, tjenester: 159, av: "👔" },
+            { name: "Izzedin Alzayegh", role: "SA", rank: 4, gross: 4, upgrades: 9, trygg: 13, forsikring: 5, tilbehor: 4022, tjenester: 955, av: "📱" },
+            { name: "Ahmed Ali", role: "SA", rank: 5, gross: 3, upgrades: 11, trygg: 6, forsikring: 5, tilbehor: 3479, tjenester: 958, av: "🎧" },
+          ],
+          profiles: {
+            "Dibran Shala": { quote: "🛡️ To måneder på rad som #1 – det er klasse! 45 upgrades er imponerende. Hat trick i mars? 👑💜", strength1: "🏆 2 måneder på rad #1", s1x: "#1 i januar og februar. Dominerer 2026 fra start.", strength2: "🔄 45 upgrades – eksepsjonelt", s2x: "45 upgrades i én måned er på rekordnivå. Konverterer nesten alle kunder.", improve: "Forsikring kan løftes. Med 45 upgrades burde forsikringen ligge på 30+." },
+            "Amer Salah": { quote: "⭐ 12 788 kr tilbehør og 15 forsikringer på deltid – klassen! Tjenester er 0 kr. Fiks det i mars! 💜", strength1: "🎧 Tilbehør-kongen februar", s1x: "12 788 kr tilbehør – best i butikken. Alltid fokus på mersalg.", strength2: "🔒 Forsikring-topp", s2x: "15 forsikringer er sterkest i butikken februar.", improve: "Tjenester på 0 kr er ikke bra. Husk å tilby Kom i Gang ved hvert eneste salg!" },
+            "Abdulnaser Sallam": { quote: "👔 7 gross er bedre enn januar, men dette er ikke Abdulnaser-nivå. Mars er din måned! 💜", strength1: "📈 Gross opp fra januar", s1x: "Fra 1 gross i januar til 7 i februar – riktig retning.", strength2: "👔 SM-balanse", s2x: "Balansen mellom lederrolle og eget salg er krevende.", improve: "Forsikring (3) og upgrades (12) er kritisk lave. Mål mars: 15+ gross, 40+ upgrades." },
+            "Izzedin Alzayegh": { quote: "📱 13 Telia Trygg på 4 gross – nesten ikke mulig! Nå må gross og upgrades opp på samme nivå! 💜", strength1: "🛡️ Telia Trygg-ratio", s1x: "13 Telia Trygg på 4 gross – absurd god ratio. Tilbyr trygghet til nesten alle!", strength2: "⚙️ Tjenester leverer", s2x: "955 kr tjenester – en av få som faktisk leverer her.", improve: "Gross og upgrades er kritisk lave. Mål: 10 gross og 20 upgrades i mars." },
+            "Ahmed Ali": { quote: "🎧 Vi vet hva du leverte i 2025. 3 gross i februar er ikke deg. La oss finne tilbake til toppformen! 💜", strength1: "⚙️ Tjenester", s1x: "958 kr tjenester – en av de som faktisk leverer her.", strength2: "🛡️ Telia Trygg vekst", s2x: "6 Telia Trygg på 3 gross viser riktig fokus selv på stille måned.", improve: "3 gross og 11 upgrades er langt under 2025-kapasiteten. Gross må opp til 15+ i mars!" },
+          }
+        },
+        y2025: {
+          label: "Årsrapport 2025", emoji: "🏆", color: GOLD,
+          gross: 809, upgrades: 1572, trygg: 247, forsikring: 859, tjenester: 68178, tilbehor: 480336,
+          sellers: [
+            { name: "Abdulnaser Sallam", role: "SM", rank: 1, gross: 234, upgrades: 368, trygg: 83, forsikring: 206, tilbehor: 102901, tjenester: 26456, av: "🥇" },
+            { name: "Mert Ambarduzgun", role: "ASM→Gulskogen", rank: 2, gross: 205, upgrades: 351, trygg: 35, forsikring: 136, tilbehor: 91484, tjenester: 18424, av: "🥈" },
+            { name: "Ahmed Ali", role: "SA", rank: 3, gross: 121, upgrades: 300, trygg: 25, forsikring: 188, tilbehor: 116937, tjenester: 9726, av: "🥉" },
+            { name: "Amer Salah", role: "SA", rank: 4, gross: 109, upgrades: 235, trygg: 23, forsikring: 156, tilbehor: 84091, tjenester: 3104, av: "⭐" },
+            { name: "Dibran Shala", role: "ASM", rank: 5, gross: 90, upgrades: 148, trygg: 52, forsikring: 85, tilbehor: 39517, tjenester: 6410, av: "🛡️" },
+            { name: "Sander O. Skjervheim", role: "SA", rank: 6, gross: 23, upgrades: 73, trygg: 10, forsikring: 36, tilbehor: 22256, tjenester: 0, av: "👤" },
+            { name: "King Salamon Lay Taw", role: "SA", rank: 7, gross: 16, upgrades: 61, trygg: 10, forsikring: 41, tilbehor: 17516, tjenester: 0, av: "👤" },
+          ],
+          profiles: {
+            "Abdulnaser Sallam": { quote: "👑 Du er hjertet og motoren i Liertoppen. 2025 viser at du ikke bare er en god selger – du er en leder som drar laget. Takk for et ekstraordinært år! 💜", strength1: "🏆 Leder på alle fronter", s1x: "Nummer én på gross, upgrades og forsikring. Setter standarden for hele butikken.", strength2: "📈 Konsistens gjennom året", s2x: "Leverte sterkt hver måned – ingen store svakhetmåneder i 2025.", improve: "Fokus 2026: Løfte teamet – Liertoppen skal dominere regionalt." },
+            "Mert Ambarduzgun": { quote: "🥈 Du satte spor på Liertoppen ingen glemmer. Gulskogen er heldige – lykke til videre! 💜", strength1: "⚡ Stand-selger i særklasse", s1x: "Hentet kunder andre ikke ser. Beste MBB-tall på butikken.", strength2: "🔄 Upgrade-maskin", s2x: "351 upgrades – nesten på nivå med #1. En av butikkens sterkeste.", improve: "Tok steget til Gulskogen som ASM – Liertoppen savner deg!" },
+            "Ahmed Ali": { quote: "🥉 Butikkrekord på tilbehør er ikke tilfeldig – det er en innstilling. Telia Trygg er neste kapittel! 💜", strength1: "🎧 Butikkrekord tilbehør", s1x: "116 937 kr – ingen er i nærheten. Tilbyr alltid tilbehør ved hvert salg.", strength2: "🔒 Forsikring-ekspert", s2x: "188 forsikringer – nesten på #1-nivå. Ekstremt god konvertering.", improve: "Telia Trygg er eneste blindsone – 25 stk kan lett tredobles!" },
+            "Amer Salah": { quote: "⭐ Som deltidsselger leverer du tall mange heltidsansatte ikke matcher. Forsikring-mestertittelen er 100% fortjent! 💜", strength1: "⭐ Deltid – heltidsresultat", s1x: "109 gross og 156 forsikringer som deltid – kvalitet over kvantitet.", strength2: "🔒 Forsikring-mester 2025", s2x: "Best på forsikring i 2025 – 156 stk viser konstant fokus.", improve: "OMS Tjenester er eneste svakhet. Husk Kom i Gang ved hvert salg!" },
+            "Dibran Shala": { quote: "🛡️ 52 Telia Trygg er ikke tilfeldig – det er en innstilling. Du tok ASM-rollen og viste at du er klar. 2026 er ditt år! 💜", strength1: "🛡️ Telia Trygg-rekord", s1x: "52 stk – butikkens absolutte rekord. Tilbyr trygghet til kunden ved hvert salg.", strength2: "🔴 Ny ASM – taklet rollen", s2x: "Tok over etter Mert og leverte fra dag én. Inspirerer teamet.", improve: "Gross og upgrades er neste mål. Potensialet ditt som ASM er enormt." },
+            "Sander O. Skjervheim": { quote: "👤 Solid bidrag til butikken i 2025. Takk for innsatsen! 💜", strength1: "📈 Konsistent bidrag", s1x: "23 gross og 73 upgrades gir laget viktig volum.", strength2: "🔒 Forsikring", s2x: "36 forsikringer viser riktig fokus.", improve: "Mål 2026: Løft tilbehør og tjenester." },
+            "King Salamon Lay Taw": { quote: "👤 Takk for ditt bidrag til Liertoppen i 2025! 💜", strength1: "🔒 Forsikring", s1x: "41 forsikringer – god konvertering.", strength2: "🔄 Upgrades", s2x: "61 upgrades er solid grunnarbeid.", improve: "Mål 2026: Øk gross mot 30+ månedlig." },
+          },
+          diplomas: [
+            { icon: "📊", title: "Årets Gross Mester", name: "Abdulnaser Sallam", role: "Store Manager", value: "234 gross", color: GOLD },
+            { icon: "🔄", title: "Årets Upgrade Mester", name: "Abdulnaser Sallam", role: "Store Manager", value: "368 upgrades", color: GREEN },
+            { icon: "🛡️", title: "Telia Trygg Mester", name: "Dibran Shala", role: "ASM", value: "52 stk", color: LP },
+            { icon: "🔒", title: "Forsikring Mester", name: "Amer Salah", role: "Salgsassistent", value: "156 forsikringer", color: OR },
+            { icon: "🎧", title: "Tilbehør Mester", name: "Ahmed Ali", role: "Salgsassistent", value: "116 937 kr", color: "#00BFFF" },
+            { icon: "⚡", title: "Stand Mester", name: "Mert Ambarduzgun", role: "ASM", value: "205 gross", color: PINK },
+            { icon: "⭐", title: "Årets Deltidsselger", name: "Amer Salah", role: "Salgsassistent", value: "109 gross", color: "#AAFFAA" },
+          ]
+        }
+      };
+
+      const css = `
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #1A0030; color: #F0E6FF; font-family: 'DM Sans', sans-serif; }
+        .nav { position: sticky; top: 0; z-index: 99; background: rgba(26,0,48,.95); border-bottom: 1px solid rgba(153,10,227,.25); display: flex; align-items: center; justify-content: space-between; padding: 0 18px; height: 48px; }
+        .brand { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; background: linear-gradient(135deg,#fff,#C44DFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
+        .nav-btn { background: rgba(153,10,227,.18); border: 1px solid rgba(153,10,227,.35); color: #C44DFF; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
+        .page { max-width: 960px; margin: 0 auto; padding: 22px 16px 40px; }
+        .hero { text-align: center; padding: 32px 0 28px; }
+        .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(54px, 13vw, 112px); letter-spacing: 4px; line-height: .88; background: linear-gradient(135deg,#fff 0%,#C44DFF 50%,#FF3366 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 11px; color: #9B7BB8; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; }
+        .yr { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 3px; color: #9B7BB8; margin: 8px 0 10px; border-bottom: 1px solid rgba(153,10,227,.2); padding-bottom: 6px; }
+        .mgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+        .mgrid1 { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; }
+        .mc { background: rgba(45,0,80,.45); border: 1px solid rgba(153,10,227,.25); border-top: 3px solid; border-radius: 13px; padding: 15px 13px; cursor: pointer; transition: transform .18s, box-shadow .18s; }
+        .mc:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(153,10,227,.2); }
+        .mc.locked { opacity: .35; cursor: default; pointer-events: none; }
+        .mc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+        .badge { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 8px; letter-spacing: 1px; }
+        .bl { background: rgba(0,230,118,.15); color: #00E676; }
+        .bk { background: rgba(155,123,184,.1); color: #9B7BB8; }
+        .ba { background: rgba(255,215,0,.15); color: #FFD700; }
+        .mc-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #fff; line-height: 1; margin-bottom: 3px; }
+        .mc-sub { font-size: 10px; color: #9B7BB8; }
+        .mc-nums { display: flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
+        .mc-n { text-align: center; }
+        .mc-nv { font-family: 'Bebas Neue', sans-serif; font-size: 18px; display: block; line-height: 1; }
+        .mc-nl { font-size: 8px; color: #9B7BB8; letter-spacing: 1px; text-transform: uppercase; }
+        .rpt-head { text-align: center; margin-bottom: 26px; }
+        .rpt-tag { display: inline-block; background: #990AE3; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; }
+        .rpt-head h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px,9vw,84px); letter-spacing: 4px; line-height: .9; background: linear-gradient(135deg,#fff,#C44DFF,#FF3366); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .rpt-head p { font-size: 11px; color: #9B7BB8; letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; }
+        .back { display: inline-flex; align-items: center; gap: 6px; background: rgba(153,10,227,.14); border: 1px solid rgba(153,10,227,.3); color: #C44DFF; padding: 7px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+        .kgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 22px; }
+        .kcard { background: linear-gradient(135deg,rgba(153,10,227,.13),rgba(45,0,80,.35)); border: 1px solid rgba(153,10,227,.28); border-top: 3px solid; border-radius: 12px; padding: 13px 10px; text-align: center; }
+        .k-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+        .k-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; line-height: 1; display: block; }
+        .k-unit { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #9B7BB8; }
+        .k-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #9B7BB8; display: block; margin-top: 4px; }
+        .k-badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-top: 4px; }
+        .bg { background: rgba(0,230,118,.15); color: #00E676; }
+        .br { background: rgba(255,51,102,.15); color: #FF3366; }
+        .bo { background: rgba(255,215,0,.15); color: #FFD700; }
+        .bp { background: rgba(153,10,227,.2); color: #C44DFF; }
+        .sec { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 3px; color: #C44DFF; margin: 20px 0 10px; padding-bottom: 5px; border-bottom: 1px solid rgba(153,10,227,.2); }
+        .bar-box { background: rgba(153,10,227,.06); border: 1px solid rgba(153,10,227,.18); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
+        .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+        .bar-lbl { font-size: 10px; color: #9B7BB8; width: 100px; flex-shrink: 0; text-align: right; }
+        .bar-track { flex: 1; height: 20px; background: rgba(153,10,227,.1); border-radius: 5px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; padding-right: 7px; font-family: 'Bebas Neue', sans-serif; font-size: 12px; color: #fff; transition: width .4s; }
+        .bar-pct { font-size: 10px; color: #9B7BB8; width: 36px; text-align: right; flex-shrink: 0; }
+        .sum-box { background: linear-gradient(135deg,rgba(153,10,227,.1),rgba(255,51,102,.05)); border: 1px solid rgba(153,10,227,.28); border-radius: 14px; padding: 16px; margin-bottom: 22px; }
+        .sum-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; color: #C44DFF; margin-bottom: 9px; }
+        .pills { display: flex; gap: 7px; flex-wrap: wrap; }
+        .pill { padding: 5px 11px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .pill-g { background: rgba(0,230,118,.12); border: 1px solid rgba(0,230,118,.3); color: #00E676; }
+        .pill-r { background: rgba(255,51,102,.12); border: 1px solid rgba(255,51,102,.3); color: #FF3366; }
+        .pill-o { background: rgba(255,215,0,.1); border: 1px solid rgba(255,215,0,.3); color: #FFD700; }
+        .lbw { overflow-x: auto; border-radius: 12px; border: 1px solid rgba(153,10,227,.22); margin-bottom: 26px; }
+        table { width: 100%; border-collapse: collapse; min-width: 460px; }
+        th { background: rgba(153,10,227,.18); color: #9B7BB8; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(153,10,227,.28); }
+        td { padding: 8px 10px; border-bottom: 1px solid rgba(153,10,227,.09); font-size: 12px; vertical-align: middle; }
+        tr.gold td { background: rgba(255,215,0,.05); }
+        tr.gold td:first-child { border-left: 3px solid #FFD700; }
+        tr.silver td:first-child { border-left: 3px solid #C0C0C0; }
+        tr.bronze td:first-child { border-left: 3px solid #CD7F32; }
+        tr:last-child td { border-bottom: none; }
+        .rk { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 10px; font-weight: 700; }
+        .big { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: #fff; }
+        .nl { cursor: pointer; color: #fff; font-weight: 700; border-bottom: 1px dashed rgba(153,10,227,.4); }
+        .nl:hover { color: #C44DFF; }
+        .scgrid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 30px; }
+        .scard { background: rgba(45,0,80,.5); border: 1px solid rgba(153,10,227,.22); border-radius: 14px; padding: 15px; cursor: pointer; transition: transform .18s, border-color .18s; }
+        .scard:hover { transform: translateY(-3px); border-color: rgba(153,10,227,.5); }
+        .scard.gold-c { border-color: rgba(255,215,0,.38); }
+        .sc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg,#990AE3,#C44DFF); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+        .sc-name { font-size: 13px; font-weight: 700; color: #fff; }
+        .sc-role { font-size: 9px; color: #9B7BB8; letter-spacing: 1.5px; text-transform: uppercase; }
+        .sc-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-bottom: 7px; }
+        .st-box { background: rgba(0,0,0,.22); border-radius: 7px; padding: 7px 5px; text-align: center; }
+        .st-v { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; line-height: 1; display: block; }
+        .st-l { font-size: 7px; letter-spacing: 1.5px; color: #9B7BB8; text-transform: uppercase; display: block; margin-top: 2px; }
+        .sc-cta { text-align: right; font-size: 10px; color: #9B7BB8; }
+        .dgrid { display: grid; grid-template-columns: repeat(2,1fr); gap: 13px; margin-bottom: 30px; }
+        .dip { border-radius: 14px; padding: 20px 14px 16px; text-align: center; background: linear-gradient(145deg,rgba(45,0,80,.9),rgba(26,0,48,.97)); border: 2px solid; position: relative; }
+        .dip-icon { font-size: 26px; display: block; margin-bottom: 6px; }
+        .dip-year { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #9B7BB8; margin-bottom: 3px; }
+        .dip-title { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; margin-bottom: 8px; line-height: 1.2; }
+        .dip-line { width: 30px; height: 1px; margin: 0 auto 8px; opacity: .4; }
+        .dip-name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .dip-role { font-size: 9px; color: #9B7BB8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
+        .dip-val { display: inline-block; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); padding: 4px 13px; border-radius: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; }
+        .prof-head { background: rgba(45,0,80,.7); border: 1px solid rgba(153,10,227,.28); border-radius: 16px; padding: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 16px; }
+        .p-av { width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg,#990AE3,#C44DFF); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; border: 3px solid rgba(153,10,227,.4); }
+        .p-name { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: #fff; line-height: 1; }
+        .p-role { font-size: 10px; color: #9B7BB8; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+        .p-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 7px; }
+        .ptag { background: rgba(153,10,227,.18); border: 1px solid rgba(153,10,227,.28); color: #C44DFF; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 7px; }
+        .p-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; margin-bottom: 14px; }
+        .pstat { background: linear-gradient(135deg,rgba(153,10,227,.13),rgba(45,0,80,.35)); border: 1px solid rgba(153,10,227,.22); border-radius: 10px; padding: 12px 10px; text-align: center; }
+        .ps-v { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; line-height: 1; display: block; }
+        .ps-l { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #9B7BB8; display: block; margin-top: 3px; }
+        .str-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 12px; }
+        .str-box { background: rgba(0,230,118,.06); border: 1px solid rgba(0,230,118,.18); border-radius: 10px; padding: 12px; }
+        .str-title { font-size: 10px; font-weight: 700; color: #00E676; margin-bottom: 3px; }
+        .str-text { font-size: 11px; color: rgba(240,230,255,.6); line-height: 1.5; }
+        .imp-box { background: rgba(255,107,53,.06); border: 1px solid rgba(255,107,53,.18); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+        .imp-box .str-title { color: #FF6B35; }
+        .quote-box { background: rgba(153,10,227,.08); border: 1px solid rgba(153,10,227,.22); border-left: 3px solid #990AE3; border-radius: 10px; padding: 14px; font-size: 12px; color: rgba(240,230,255,.8); line-height: 1.7; }
+        .footer { text-align: center; margin-top: 36px; font-size: 9px; color: rgba(155,123,184,.25); letter-spacing: 2px; text-transform: uppercase; }
+        @media(max-width:600px){
+          .mgrid{grid-template-columns:repeat(2,1fr)}
+          .kgrid{grid-template-columns:repeat(2,1fr)}
+          .scgrid{grid-template-columns:1fr}
+          .dgrid{grid-template-columns:1fr}
+          .str-grid{grid-template-columns:1fr}
+          .prof-head{flex-direction:column;text-align:center}
+          .p-tags{justify-content:center}
+          .p-stats{grid-template-columns:repeat(2,1fr)}
+          .bar-lbl{width:72px;font-size:9px}
+        }
+      `;
+
+      function pct(a, b) { return Math.min(100, Math.round((a / b) * 100)); }
+      function fmt(n) { return n >= 1000 ? Math.round(n).toLocaleString("no-NO") : n; }
+
+      function KCard({ icon, val, unit, label, badge, bclass, color }) {
+        return (
+          <div className="kcard" style={{ borderTopColor: color || "#990AE3" }}>
+            <span className="k-icon">{icon}</span>
+            <span className="k-val">{fmt(val)}{unit && <span className="k-unit"> {unit}</span>}</span>
+            <span className="k-lbl">{label}</span>
+            {badge && <span className={`k-badge ${bclass}`}>{badge}</span>}
+          </div>
+        );
+      }
+
+      function Bar({ label, val, max, color }) {
+        const w = Math.min(100, Math.round((val / max) * 100));
+        return (
+          <div className="bar-row">
+            <div className="bar-lbl">{label}</div>
+            <div className="bar-track">
+              <div className="bar-fill" style={{ width: `${w}%`, background: color }}>{fmt(val)}</div>
+            </div>
+            <div className="bar-pct">{w}%</div>
+          </div>
+        );
+      }
+
+      function SellerCard({ s, month, onProfile, isGold }) {
+        return (
+          <div className={`scard ${isGold ? "gold-c" : ""}`} onClick={() => onProfile(month, s.name)}>
+            <div className="sc-top">
+              <div className="av">{s.av}</div>
+              <div>
+                <div className="sc-name">{s.name}</div>
+                <div className="sc-role">{s.role} · #{s.rank}</div>
+              </div>
+            </div>
+            <div className="sc-stats">
+              <div className="st-box"><span className="st-v" style={{ color: isGold ? GOLD : "#fff" }}>{s.gross}</span><span className="st-l">Gross</span></div>
+              <div className="st-box"><span className="st-v" style={{ color: GREEN }}>{s.upgrades}</span><span className="st-l">Upgrades</span></div>
+              <div className="st-box"><span className="st-v" style={{ color: LP }}>{s.trygg}</span><span className="st-l">T.Trygg</span></div>
+            </div>
+            <div className="sc-cta">Se full profil →</div>
+          </div>
+        );
+      }
+
+      function MonthPage({ id, onBack, onProfile }) {
+        const d = DATA[id];
+        if (!d) return null;
+        const gp = pct(d.gross, d.grossBudget);
+        const up = pct(d.upgrades, d.upgradesBudget);
+        const rankClass = (r) => r === 1 ? "gold" : r === 2 ? "silver" : r === 3 ? "bronze" : "";
+
+        return (
+          <div className="page">
+            <button className="back" onClick={onBack}>← Tilbake</button>
+            <div className="rpt-head">
+              <div className="rpt-tag">{d.emoji} {d.label}</div>
+              <h1>Telia Liertoppen</h1>
+              <p>5 selgere · Klikk på navn for selgerprofil</p>
+            </div>
+
+            <div className="kgrid">
+              <KCard icon="📊" val={d.gross} label="Total Gross" badge={`Budsjett: ${d.grossBudget} · ${gp}%`} bclass={gp >= 90 ? "bg" : "br"} color={PINK} />
+              <KCard icon="🔄" val={d.upgrades} label="Upgrades" badge={`${up}% av mål`} bclass={up >= 100 ? "bg" : up >= 90 ? "bo" : "br"} color={GREEN} />
+              <KCard icon="🛡️" val={d.trygg} label="Telia Trygg" badge={id === "feb2026" ? "Butikkrekord! 🔥" : "God!"} bclass="bg" color={P} />
+              <KCard icon="🔒" val={d.forsikring} label="Forsikring" badge="Solid" bclass="bo" color={OR} />
+              <KCard icon="⚙️" val={d.tjenester} unit="kr" label="OMS Tjenester" badge="Fokusområde" bclass="br" color={PINK} />
+              <KCard icon="🎧" val={d.tilbehor} unit="kr" label="Tilbehør" badge="Sterk!" bclass="bg" color={LP} />
+            </div>
+
+            <div className="sec">📈 Budsjett vs Faktisk</div>
+            <div className="bar-box">
+              <Bar label="Total Gross" val={d.gross} max={d.grossBudget} color={PINK} />
+              <Bar label="Upgrades" val={d.upgrades} max={d.upgradesBudget} color={GREEN} />
+            </div>
+
+            <div className="sum-box">
+              <h3>📊 {d.label} – Oppsummering</h3>
+              <div className="pills">
+                <div className={`pill ${gp >= 90 ? "pill-g" : "pill-r"}`}>{gp >= 90 ? "✅" : "❌"} Gross {d.gross} av {d.grossBudget} – {gp}%</div>
+                <div className={`pill ${up >= 100 ? "pill-g" : up >= 90 ? "pill-o" : "pill-r"}`}>{up >= 100 ? "✅" : "⚠️"} Upgrades {d.upgrades} – {up}%</div>
+                {id === "feb2026" && <div className="pill pill-g">🛡️ 52 Telia Trygg – BUTIKKREKORD!</div>}
+                <div className="pill pill-r">❌ Tjenester lavt – prioritet</div>
+              </div>
+            </div>
+
+            <div className="sec">📋 Selgeroversikt</div>
+            <div className="lbw">
+              <table>
+                <thead>
+                  <tr><th>#</th><th>Selger</th><th>Gross</th><th>Upgr</th><th>T.Trygg</th><th>Forsikr</th><th>Tilbehør</th></tr>
+                </thead>
+                <tbody>
+                  {d.sellers.map((s, i) => (
+                    <tr key={i} className={rankClass(s.rank)}>
+                      <td>
+                        <span
+                          className="rk"
+                          style={{
+                            background: s.rank === 1 ? "rgba(255,215,0,.2)" : s.rank === 2 ? "rgba(192,192,192,.2)" : s.rank === 3 ? "rgba(205,127,50,.2)" : "rgba(153,10,227,.15)",
+                            color: s.rank === 1 ? GOLD : s.rank === 2 ? "#C0C0C0" : s.rank === 3 ? "#CD7F32" : "#9B7BB8"
+                          }}
+                        >
+                          {s.rank === 1 ? "👑" : s.rank}
+                        </span>
+                      </td>
+                      <td><span className="nl" onClick={() => onProfile(id, s.name)}>{s.name}</span></td>
+                      <td><span className="big">{s.gross}</span></td>
+                      <td><span className="big">{s.upgrades}</span></td>
+                      <td><span className="big" style={{ color: LP }}>{s.trygg}</span></td>
+                      <td><span className="big">{s.forsikring}</span></td>
+                      <td>{fmt(s.tilbehor)} kr</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="sec">🌟 Selgerkort</div>
+            <div className="scgrid">
+              {d.sellers.map((s, i) => <SellerCard key={i} s={s} month={id} onProfile={onProfile} isGold={s.rank === 1} />)}
+            </div>
+
+            <div className="footer">Telia Liertoppen · {d.label}</div>
+          </div>
+        );
+      }
+
+      function AnnualPage({ onBack, onProfile }) {
+        const d = DATA.y2025;
+        return (
+          <div className="page">
+            <button className="back" onClick={onBack}>← Tilbake</button>
+            <div className="rpt-head">
+              <div className="rpt-tag">🏆 Årsrapport 2025</div>
+              <h1>Telia Liertoppen</h1>
+              <p>Helårsoppsummering · Klikk på selger for profil · Diplomer</p>
+            </div>
+
+            <div className="kgrid">
+              <KCard icon="📊" val={d.gross} label="Total Gross" badge="Voice+FWA+MBB+B2B" bclass="bp" color={GOLD} />
+              <KCard icon="🔄" val={d.upgrades} label="Upgrades" badge="~131/mnd" bclass="bg" color={GREEN} />
+              <KCard icon="🛡️" val={d.trygg} label="Telia Trygg" badge="~21/mnd" bclass="bp" color={P} />
+              <KCard icon="🔒" val={d.forsikring} label="Forsikring" badge="Solid volum" bclass="bg" color={OR} />
+              <KCard icon="⚙️" val={d.tjenester} unit="kr" label="OMS Tjenester" badge="Forbedringspunkt" bclass="br" color={PINK} />
+              <KCard icon="🎧" val={d.tilbehor} unit="kr" label="Tilbehør" badge="Rekord!" bclass="bg" color={LP} />
+            </div>
+
+            <div className="sum-box">
+              <h3>📊 Årsoppsummering 2025</h3>
+              <div className="pills">
+                <div className="pill pill-g">✅ 809 gross – inkl. FWA, MBB og B2B</div>
+                <div className="pill pill-g">🔄 1 572 upgrades – butikkens styrke</div>
+                <div className="pill pill-g">🎧 480 336 kr tilbehør – rekord!</div>
+                <div className="pill pill-o">🛡️ 247 Telia Trygg – vekst i 2026</div>
+                <div className="pill pill-r">❌ Tjenester – prioritet 2026</div>
+              </div>
+            </div>
+
+            <div className="sec">📋 Totaloversikt – Alle selgere 2025</div>
+            <div className="lbw">
+              <table>
+                <thead>
+                  <tr><th>#</th><th>Selger</th><th>Gross</th><th>Upgr</th><th>T.Trygg</th><th>Forsikr</th><th>Tilbehør</th></tr>
+                </thead>
+                <tbody>
+                  {d.sellers.map((s, i) => (
+                    <tr key={i} className={s.rank === 1 ? "gold" : s.rank === 2 ? "silver" : s.rank === 3 ? "bronze" : ""}>
+                      <td>
+                        <span
+                          className="rk"
+                          style={{
+                            background: s.rank === 1 ? "rgba(255,215,0,.2)" : s.rank === 2 ? "rgba(192,192,192,.2)" : s.rank === 3 ? "rgba(205,127,50,.2)" : "rgba(153,10,227,.15)",
+                            color: s.rank === 1 ? GOLD : s.rank === 2 ? "#C0C0C0" : s.rank === 3 ? "#CD7F32" : "#9B7BB8"
+                          }}
+                        >
+                          {s.rank}
+                        </span>
+                      </td>
+                      <td>
+                        {s.av !== "👤"
+                          ? <span className="nl" onClick={() => onProfile("y2025", s.name)}>{s.name}</span>
+                          : s.name
+                        }
+                      </td>
+                      <td><span className="big">{s.gross}</span></td>
+                      <td><span className="big">{s.upgrades}</span></td>
+                      <td><span className="big" style={{ color: LP }}>{s.trygg}</span></td>
+                      <td><span className="big">{s.forsikring}</span></td>
+                      <td>{fmt(s.tilbehor)} kr</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="sec">🌟 Topp selgere</div>
+            <div className="scgrid">
+              {d.sellers.filter(s => s.av !== "👤").map((s, i) => (
+                <SellerCard key={i} s={s} month="y2025" onProfile={onProfile} isGold={s.rank === 1} />
+              ))}
+            </div>
+
+            <div className="sec">🏅 Årets Diplomer 2025</div>
+            <div className="dgrid">
+              {d.diplomas.map((dip, i) => (
+                <div key={i} className="dip" style={{ borderColor: dip.color }}>
+                  <span className="dip-icon">{dip.icon}</span>
+                  <div className="dip-year">Liertoppen · 2025</div>
+                  <div className="dip-title" style={{ color: dip.color }}>{dip.title}</div>
+                  <div className="dip-line" style={{ background: dip.color }}></div>
+                  <div className="dip-name">{dip.name}</div>
+                  <div className="dip-role">{dip.role}</div>
+                  <div className="dip-val" style={{ color: dip.color }}>{dip.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="footer">Telia Liertoppen · Årsrapport 2025</div>
+          </div>
+        );
+      }
+
+      function ProfilePage({ month, sellerName, onBack }) {
+        const d = DATA[month];
+        if (!d) return null;
+
+        const seller = d.sellers.find(s => s.name === sellerName);
+        const prof = d.profiles[sellerName];
+        if (!seller || !prof) return null;
+
+        const maxG = Math.max(...d.sellers.map(s => s.gross)) || 1;
+        const maxU = Math.max(...d.sellers.map(s => s.upgrades)) || 1;
+        const maxT = Math.max(...d.sellers.map(s => s.trygg)) || 1;
+        const maxF = Math.max(...d.sellers.map(s => s.forsikring)) || 1;
+
+        return (
+          <div className="page">
+            <button className="back" onClick={onBack}>← Tilbake til {d.label}</button>
+
+            <div className="prof-head">
+              <div className="p-av">{seller.av}</div>
+              <div>
+                <div className="p-name">{seller.name}</div>
+                <div className="p-role">{seller.role} · {d.label}</div>
+                <div className="p-tags">
+                  {seller.rank <= 3 && <span className="ptag">{seller.rank === 1 ? "👑" : seller.rank === 2 ? "🥈" : "🥉"} #{seller.rank}</span>}
+                  <span className="ptag">📊 {seller.gross} Gross</span>
+                  <span className="ptag">🔄 {seller.upgrades} Upgrades</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-stats">
+              {[
+                ["📊", seller.gross, "Gross", GOLD],
+                ["🔄", seller.upgrades, "Upgrades", GREEN],
+                ["🛡️", seller.trygg, "T.Trygg", LP],
+                ["🔒", seller.forsikring, "Forsikring", OR],
+                ["🎧", fmt(seller.tilbehor), "Tilbehør kr", "#C44DFF"],
+                ["⚙️", fmt(seller.tjenester), "Tjenester kr", "#aaa"]
+              ].map(([icon, val, lbl, col], i) => (
+                <div key={i} className="pstat">
+                  <span className="ps-v" style={{ color: col }}>{val}</span>
+                  <span className="ps-l">{lbl}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="sec">📈 Ytelse vs. månedens beste</div>
+            <div className="bar-box">
+              <Bar label="Gross" val={seller.gross} max={maxG} color={GOLD} />
+              <Bar label="Upgrades" val={seller.upgrades} max={maxU} color={GREEN} />
+              <Bar label="T.Trygg" val={seller.trygg} max={maxT} color={LP} />
+              <Bar label="Forsikring" val={seller.forsikring} max={maxF} color={OR} />
+            </div>
+
+            <div className="sec">💪 Styrker</div>
+            <div className="str-grid">
+              <div className="str-box"><div className="str-title">{prof.strength1}</div><div className="str-text">{prof.s1x}</div></div>
+              <div className="str-box"><div className="str-title">{prof.strength2}</div><div className="str-text">{prof.s2x}</div></div>
+            </div>
+
+            <div className="imp-box">
+              <div className="str-title">🎯 Fokus fremover</div>
+              <div className="str-text">{prof.improve}</div>
+            </div>
+
+            <div className="quote-box">{prof.quote}</div>
+            <div className="footer">Telia Liertoppen · Selgerprofil</div>
+          </div>
+        );
+      }
+
+      function App() {
+        const [page, setPage] = useState("home");
+        const [profMonth, setProfMonth] = useState(null);
+        const [profSeller, setProfSeller] = useState(null);
+
+        function showProfile(month, seller) {
+          setProfMonth(month);
+          setProfSeller(seller);
+          setPage("profile");
+          window.scrollTo(0, 0);
+        }
+
+        function goPage(p) {
+          setPage(p);
+          window.scrollTo(0, 0);
+        }
+
+        function MonthCard({ id, d, locked }) {
+          const gp = pct(d.gross, d.grossBudget);
+          return (
+            <div className={`mc ${locked ? "locked" : ""}`} style={{ borderTopColor: d.color }} onClick={() => !locked && goPage(id)}>
+              <div className="mc-head">
+                <span style={{ fontSize: 20 }}>{d.emoji}</span>
+                <span className={`badge ${locked ? "bk" : "bl"}`}>{locked ? "Ikke lastet" : "Tilgjengelig"}</span>
+              </div>
+              <div className="mc-title">{d.label}</div>
+              <div className="mc-sub">5 selgere · Månedlig rapport</div>
+              {!locked && (
+                <div className="mc-nums">
+                  <div className="mc-n"><span className="mc-nv" style={{ color: PINK }}>{d.gross}</span><span className="mc-nl">Gross</span></div>
+                  <div className="mc-n"><span className="mc-nv" style={{ color: GREEN }}>{d.upgrades}</span><span className="mc-nl">Upgrades</span></div>
+                  <div className="mc-n"><span className="mc-nv" style={{ color: LP }}>{d.trygg}</span><span className="mc-nl">T.Trygg</span></div>
+                  <div className="mc-n"><span className="mc-nv" style={{ color: PINK }}>{gp}%</span><span className="mc-nl">Budsjett</span></div>
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        return (
+          <>
+            <style>{css}</style>
+
+            <div className="nav">
+              <div className="brand" onClick={() => goPage("home")}>TELIA LIERTOPPEN</div>
+              <button className="nav-btn" onClick={() => goPage("home")}>🏠 Hjem</button>
+            </div>
+
+            {page === "home" && (
+              <div className="page">
+                <div className="hero">
+                  <h1>Telia<br />Liertoppen</h1>
+                  <p>Salgsportal · Velg måned for å se rapport</p>
+                </div>
+
+                <div className="yr">🏆 2025</div>
+                <div className="mgrid1">
+                  <div className="mc annual" style={{ borderTopColor: GOLD }} onClick={() => goPage("y2025")}>
+                    <div className="mc-head"><span style={{ fontSize: 20 }}>🏆</span><span className="badge ba">Årsrapport</span></div>
+                    <div className="mc-title">Årsrapport 2025</div>
+                    <div className="mc-sub">Januar – Desember · Full YTD · Alle selgere · Diplomer</div>
+                    <div className="mc-nums">
+                      <div className="mc-n"><span className="mc-nv">809</span><span className="mc-nl">Gross</span></div>
+                      <div className="mc-n"><span className="mc-nv">1 572</span><span className="mc-nl">Upgrades</span></div>
+                      <div className="mc-n"><span className="mc-nv">247</span><span className="mc-nl">T.Trygg</span></div>
+                      <div className="mc-n"><span className="mc-nv">859</span><span className="mc-nl">Forsikring</span></div>
+                      <div className="mc-n"><span className="mc-nv">480k</span><span className="mc-nl">Tilbehør</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="yr">📅 2026</div>
+                <div className="mgrid">
+                  <MonthCard id="jan2026" d={DATA.jan2026} locked={false} />
+                  <MonthCard id="feb2026" d={DATA.feb2026} locked={false} />
+                  {["Mars","April","Mai","Juni","Juli","August","September","Oktober","November","Desember"].map((m, i) => (
+                    <div key={i} className="mc locked" style={{ borderTopColor: "#9B7BB8" }}>
+                      <div className="mc-head"><span>🔒</span><span className="badge bk">Ikke lastet</span></div>
+                      <div className="mc-title">{m} 2026</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="footer">Telia Liertoppen · Salgsportal 2026</div>
+              </div>
+            )}
+
+            {(page === "jan2026" || page === "feb2026") && (
+              <MonthPage id={page} onBack={() => goPage("home")} onProfile={showProfile} />
+            )}
+
+            {page === "y2025" && (
+              <AnnualPage onBack={() => goPage("home")} onProfile={showProfile} />
+            )}
+
+            {page === "profile" && (
+              <ProfilePage month={profMonth} sellerName={profSeller} onBack={() => goPage(profMonth)} />
+            )}
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
