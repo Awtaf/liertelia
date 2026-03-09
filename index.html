@@ -125,57 +125,61 @@ tr:hover { background:rgba(255,255,255,0.03); }
 
 /* 2025 summary on home */
 .summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; padding:12px 16px; }
+
+/* Year selection on home */
+.year-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; padding:16px 16px; max-width:600px; margin:0 auto; }
+.year-card { background:rgba(255,255,255,0.05); border-radius:20px; padding:40px 24px; text-align:center;
+  cursor:pointer; border:2px solid rgba(255,255,255,0.1); transition:all .3s; }
+.year-card:hover { transform:translateY(-6px); border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.1); }
+.year-card .ynum { font-size:2.5rem; font-weight:900; margin-bottom:8px; }
+.year-card .ysub { font-size:0.85rem; color:rgba(255,255,255,0.5); }
+.year-card.y2025 { border-color:rgba(0,191,255,0.3); }
+.year-card.y2025:hover { border-color:rgba(0,191,255,0.6); background:rgba(0,191,255,0.08); }
+.year-card.y2025 .ynum { background:linear-gradient(135deg,#00BFFF,#00FF88); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.year-card.y2026 { border-color:rgba(153,10,227,0.3); }
+.year-card.y2026:hover { border-color:rgba(153,10,227,0.6); background:rgba(153,10,227,0.08); }
+.year-card.y2026 .ynum { background:linear-gradient(135deg,#990AE3,#FF6B35); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 </style>
 </head>
 <body>
 <div class="nav">
-<div class="logo" onclick="go('home')">TELIA DRAMMEN</div>
-<button class="hbtn" onclick="go('home')">🏠 Hjem</button>
+<div class="logo" onclick="go('home');hideYear()">TELIA DRAMMEN</div>
+<button class="hbtn" onclick="go('home');hideYear()">🏠 Hjem</button>
 </div>
 <div id="home" class="page active">
 <div class="hero">
 <h1>Telia Drammen</h1>
 <p>Region 1 — Salgsoversikt</p>
 </div>
-<div class="sec">📅 Mars 2026 — Status inneværende måned</div>
-<div class="store-grid"><div class="sc" onclick="go('gulskogen')" style="border-top:3px solid #00BFFF">
-<div class="sn" style="color:#00BFFF">🏬 Gulskogen</div>
-<div class="si"><span>Gross hittil</span><span class="sv">12 / 128</span></div>
-<div class="pct" style="color:#00BFFF">9%</div>
-<div class="si"><span>Upgrades</span><span class="sv">53</span></div>
-<div class="si"><span>T. Trygg</span><span class="sv">12</span></div>
-<div class="daily">📈 Daglig mål: 7.2 per dag</div>
-</div><div class="sc" onclick="go('liertoppen')" style="border-top:3px solid #990AE3">
-<div class="sn" style="color:#990AE3">🏪 Liertoppen</div>
-<div class="si"><span>Gross hittil</span><span class="sv">12 / 57</span></div>
-<div class="pct" style="color:#990AE3">21%</div>
-<div class="si"><span>Upgrades</span><span class="sv">26</span></div>
-<div class="si"><span>T. Trygg</span><span class="sv">7</span></div>
-<div class="daily">📈 Daglig mål: 2.8 per dag</div>
-</div><div class="sc" onclick="go('buskerud')" style="border-top:3px solid #FF6B35">
-<div class="sn" style="color:#FF6B35">🏢 Buskerud</div>
-<div class="si"><span>Gross hittil</span><span class="sv">8 / 61</span></div>
-<div class="pct" style="color:#FF6B35">13%</div>
-<div class="si"><span>Upgrades</span><span class="sv">23</span></div>
-<div class="si"><span>T. Trygg</span><span class="sv">9</span></div>
-<div class="daily">📈 Daglig mål: 3.3 per dag</div>
-</div></div>
-<div class="sec">📊 2025 — Alle butikker samlet</div>
-<div class="kpi-grid"><div class="kc"><div class="kl">Total Gross</div><div class="kv" style="color:#00BFFF">3561</div></div><div class="kc"><div class="kl">Upgrades</div><div class="kv" style="color:#FFD700">6335</div></div><div class="kc"><div class="kl">Forsikring</div><div class="kv" style="color:#FF6B6B">3327</div></div><div class="kc"><div class="kl">Telia Trygg</div><div class="kv" style="color:#C44DFF">1300</div></div><div class="kc"><div class="kl">Omsetning</div><div class="kv" style="color:#00FF88">2.2M kr</div></div><div class="kc"><div class="kl">Tilbehør</div><div class="kv" style="color:#00BFFF">2.0M kr</div></div><div class="kc"><div class="kl">Tjenester</div><div class="kv" style="color:#00FF88">244k kr</div></div></div>
-<div class="sec">🏪 Velg butikk</div>
-<div class="store-grid"><div class="sc" onclick="go('gulskogen')" style="border-top:3px solid #00BFFF">
+<div id="year-select">
+<div class="sec" style="text-align:center">📅 Velg år</div>
+<div class="year-grid">
+<div class="year-card y2025" onclick="showYear(2025)">
+<div class="ynum">2025</div>
+<div class="ysub">Årssammendrag</div>
+</div>
+<div class="year-card y2026" onclick="showYear(2026)">
+<div class="ynum">2026</div>
+<div class="ysub">Inneværende år</div>
+</div>
+</div>
+</div>
+<div id="year-2025" style="display:none">
+<div class="back" onclick="hideYear()">← Tilbake</div>
+<div class="sec">📊 2025 — Velg butikk</div>
+<div class="store-grid"><div class="sc" onclick="goStore('gulskogen',2025)" style="border-top:3px solid #00BFFF">
 <div class="sn" style="color:#00BFFF">🏬 Gulskogen</div>
 <div class="si"><span>Gross</span><span class="sv">1995</span></div>
 <div class="si"><span>Upgrades</span><span class="sv">3195</span></div>
 <div class="si"><span>T. Trygg</span><span class="sv">770</span></div>
 <div class="si"><span>Omsetning</span><span class="sv">927k kr</span></div>
-</div><div class="sc" onclick="go('liertoppen')" style="border-top:3px solid #990AE3">
+</div><div class="sc" onclick="goStore('liertoppen',2025)" style="border-top:3px solid #990AE3">
 <div class="sn" style="color:#990AE3">🏪 Liertoppen</div>
 <div class="si"><span>Gross</span><span class="sv">809</span></div>
 <div class="si"><span>Upgrades</span><span class="sv">1572</span></div>
 <div class="si"><span>T. Trygg</span><span class="sv">247</span></div>
 <div class="si"><span>Omsetning</span><span class="sv">549k kr</span></div>
-</div><div class="sc" onclick="go('buskerud')" style="border-top:3px solid #FF6B35">
+</div><div class="sc" onclick="goStore('buskerud',2025)" style="border-top:3px solid #FF6B35">
 <div class="sn" style="color:#FF6B35">🏢 Buskerud</div>
 <div class="si"><span>Gross</span><span class="sv">757</span></div>
 <div class="si"><span>Upgrades</span><span class="sv">1568</span></div>
@@ -183,8 +187,35 @@ tr:hover { background:rgba(255,255,255,0.03); }
 <div class="si"><span>Omsetning</span><span class="sv">736k kr</span></div>
 </div></div>
 </div>
+<div id="year-2026" style="display:none">
+<div class="back" onclick="hideYear()">← Tilbake</div>
+<div class="sec">📅 2026 — Velg butikk</div>
+<div class="store-grid"><div class="sc" onclick="goStore('gulskogen',2026)" style="border-top:3px solid #00BFFF">
+<div class="sn" style="color:#00BFFF">🏬 Gulskogen</div>
+<div class="si"><span>Gross hittil</span><span class="sv">12 / 128</span></div>
+<div class="pct" style="color:#00BFFF">9%</div>
+<div class="si"><span>Upgrades</span><span class="sv">53</span></div>
+<div class="si"><span>T. Trygg</span><span class="sv">12</span></div>
+<div class="daily">📈 Daglig mål: 7.2 per dag</div>
+</div><div class="sc" onclick="goStore('liertoppen',2026)" style="border-top:3px solid #990AE3">
+<div class="sn" style="color:#990AE3">🏪 Liertoppen</div>
+<div class="si"><span>Gross hittil</span><span class="sv">12 / 57</span></div>
+<div class="pct" style="color:#990AE3">21%</div>
+<div class="si"><span>Upgrades</span><span class="sv">26</span></div>
+<div class="si"><span>T. Trygg</span><span class="sv">7</span></div>
+<div class="daily">📈 Daglig mål: 2.8 per dag</div>
+</div><div class="sc" onclick="goStore('buskerud',2026)" style="border-top:3px solid #FF6B35">
+<div class="sn" style="color:#FF6B35">🏢 Buskerud</div>
+<div class="si"><span>Gross hittil</span><span class="sv">8 / 61</span></div>
+<div class="pct" style="color:#FF6B35">13%</div>
+<div class="si"><span>Upgrades</span><span class="sv">23</span></div>
+<div class="si"><span>T. Trygg</span><span class="sv">9</span></div>
+<div class="daily">📈 Daglig mål: 3.3 per dag</div>
+</div></div>
+</div>
+</div>
 <div id="gulskogen" class="page">
-<div class="back" onclick="go('home')">← Tilbake til hjem</div>
+<div class="back" onclick="goHome()">← Tilbake</div>
 <div class="store-header"><h2 style="color:#00BFFF">🏬 Gulskogen</h2></div>
 <div class="tabs">
 <div class="tab active" onclick="stab(this,'gulskogen_2025_c')">📊 2025</div>
@@ -1161,7 +1192,7 @@ tr:hover { background:rgba(255,255,255,0.03); }
 </div>
 </div>
 <div id="liertoppen" class="page">
-<div class="back" onclick="go('home')">← Tilbake til hjem</div>
+<div class="back" onclick="goHome()">← Tilbake</div>
 <div class="store-header"><h2 style="color:#990AE3">🏪 Liertoppen</h2></div>
 <div class="tabs">
 <div class="tab active" onclick="stab(this,'liertoppen_2025_c')">📊 2025</div>
@@ -1816,7 +1847,7 @@ tr:hover { background:rgba(255,255,255,0.03); }
 </div>
 </div>
 <div id="buskerud" class="page">
-<div class="back" onclick="go('home')">← Tilbake til hjem</div>
+<div class="back" onclick="goHome()">← Tilbake</div>
 <div class="store-header"><h2 style="color:#FF6B35">🏢 Buskerud</h2></div>
 <div class="tabs">
 <div class="tab active" onclick="stab(this,'buskerud_2025_c')">📊 2025</div>
@@ -2449,10 +2480,46 @@ tr:hover { background:rgba(255,255,255,0.03); }
 <div class="prof-grid kpi-grid"></div>
 </div>
 <script>
+var selectedYear = null;
+
 function go(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
+}
+
+function showYear(year) {
+  selectedYear = year;
+  document.getElementById('year-select').style.display = 'none';
+  document.getElementById('year-2025').style.display = year === 2025 ? 'block' : 'none';
+  document.getElementById('year-2026').style.display = year === 2026 ? 'block' : 'none';
+}
+
+function hideYear() {
+  selectedYear = null;
+  document.getElementById('year-select').style.display = 'block';
+  document.getElementById('year-2025').style.display = 'none';
+  document.getElementById('year-2026').style.display = 'none';
+}
+
+function goStore(id, year) {
+  selectedYear = year;
+  go(id);
+  var page = document.getElementById(id);
+  var tabs = page.querySelectorAll('.tab');
+  var tcontents = page.querySelectorAll('.tcontent');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  tcontents.forEach(function(t) { t.classList.remove('active'); });
+  var tabIdx = year === 2025 ? 0 : 1;
+  tabs[tabIdx].classList.add('active');
+  document.getElementById(id + '_' + year + '_c').classList.add('active');
+}
+
+function goHome() {
+  go('home');
+  if (selectedYear) {
+    showYear(selectedYear);
+  }
 }
 
 function stab(btn, contentId) {
@@ -2511,7 +2578,7 @@ function profBack() {
   if (storePart) {
     go(storePart);
   } else {
-    go('home');
+    goHome();
   }
 }
 </script>
