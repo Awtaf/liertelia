@@ -621,6 +621,18 @@ id="buskerud" class="page">
 <tr class=""><td><span class="rk">5</span></td><td><span class="nlink" onclick="showProf(this,'buskerud_mars_c')" data-navn="Ismael Javeed" data-stilling="SA" data-gross="0" data-upgr="2" data-trygg="0" data-forsikring="1" data-tjenester="0" data-tilbehor="2228" data-fwa="0" data-mbb="0" data-b2b="0" data-voice="0">Ismael Javeed</span></td><td><span class="stag">SA</span></td><td><span class="big">0</span></td><td><span class="big">2</span></td><td><span class="big">1</span></td><td><span class="big" style="color:#C44DFF">0</span></td><td><span class="big">2 228 kr</span></td><td><span class="big">0</span></td></tr>
 </tbody></table></div>
 </div>
+
+<div id="profile" class="page">
+<button class="back" id="pb" onclick="go('home')">&#8592; Tilbake</button>
+<div class="phead">
+<div class="pav">👤</div>
+<div><div class="pname" id="pn">Selger</div><div class="prole" id="pr">Stilling</div></div>
+</div>
+<div class="pstats" id="ps"></div>
+<div class="sec">📊 OVERSIKT</div>
+<div class="barbox" id="pb2"></div>
+</div>
+
 <script>
 var fp="home";
 function go(id){
@@ -655,7 +667,7 @@ function hideMnd(cid){
   detail.style.display="none";
   if(grid)grid.style.display="";
 }
-function fk(v){v=parseInt(v);if(v>=1000000)return(v/1000000).toFixed(1)+"M";if(v>=1000)return Math.floor(v/1000)+"k";return v;}
+function fk(v){v=parseInt(v);if(isNaN(v))return"0";var s=v.toString();var r="";var c=0;for(var i=s.length-1;i>=0;i--){if(c>0&&c%3===0)r=" "+r;r=s[i]+r;c++;}return r;}
 function showProf(el,pid){
   fp=pid; var d=el.dataset;
   document.getElementById("pn").textContent=d.navn;
@@ -672,12 +684,7 @@ function showProf(el,pid){
   var mx=Math.max(parseInt(d.gross),parseInt(d.upgr),parseInt(d.forsikring),1);
   function b(l,v2,c){var w=Math.min(100,Math.round(parseInt(v2)/mx*100));return "<div class='brow'><div class='blbl'>"+l+"</div><div class='btrk'><div class='bfll' style='width:"+w+"%;background:"+c+"'>"+v2+"</div></div><div class='bpct'>"+w+"%</div></div>";}
   document.getElementById("pb2").innerHTML=b("Gross",d.gross,"#FFD700")+b("Upgrades",d.upgr,"#00E676")+b("Forsikring",d.forsikring,"#FF6B35")+b("T.Trygg",d.trygg,"#C44DFF")+b("FWA",d.fwa,"#00BFFF");
-  document.getElementById("pb").onclick=function(){
-    // go back to the page, then show correct tab
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    var pg=document.getElementById(fp.split("_")[0]);
-    if(pg){pg.classList.add("active");window.scrollTo(0,0);}
-  };
+  document.getElementById("pb").onclick=function(){go(fp.split("_")[0]);};
   go("profile");
 }
 </script></body></html>
