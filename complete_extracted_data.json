@@ -1,0 +1,1167 @@
+{
+  "gulskogen": {
+    "ytd_2025": {
+      "sellers": [
+        {
+          "navn": "Yasin Ali Ismail",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 46,
+          "upgr": 51,
+          "forsikring": 43,
+          "trygg": 41,
+          "tjenester": 2073.6,
+          "tilbehor": 24608.120000000024
+        },
+        {
+          "navn": "Saidt Oliver Alavi",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 35,
+          "upgr": 48,
+          "forsikring": 26,
+          "trygg": 8,
+          "tjenester": 399.2,
+          "tilbehor": 19637.879999999997
+        },
+        {
+          "navn": "Mert Ambarduzgun",
+          "stilling": "ASM",
+          "store": "gulskogen",
+          "gross": 14,
+          "upgr": 57,
+          "forsikring": 29,
+          "trygg": 20,
+          "tjenester": 478.56,
+          "tilbehor": 15725.92000000001
+        },
+        {
+          "navn": "Ahmed Al Ali",
+          "stilling": "ASM",
+          "store": "gulskogen",
+          "gross": 25,
+          "upgr": 44,
+          "forsikring": 30,
+          "trygg": 19,
+          "tjenester": 1675.2,
+          "tilbehor": 15564.079999999998
+        },
+        {
+          "navn": "Tommy Olafsen",
+          "stilling": "SM",
+          "store": "gulskogen",
+          "gross": 38,
+          "upgr": 42,
+          "forsikring": 18,
+          "trygg": 24,
+          "tjenester": 3760.399999999999,
+          "tilbehor": 7927.84
+        },
+        {
+          "navn": "Ali Esmati",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 34,
+          "upgr": 22,
+          "forsikring": 15,
+          "trygg": 20,
+          "tjenester": 1116.8,
+          "tilbehor": 14258.8
+        },
+        {
+          "navn": "Josef Ishan Latif Mossaiar",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 20,
+          "upgr": 33,
+          "forsikring": 27,
+          "trygg": 31,
+          "tjenester": 478.4,
+          "tilbehor": 18134.40000000001
+        },
+        {
+          "navn": "Aya Mohammad",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 15,
+          "upgr": 32,
+          "forsikring": 16,
+          "trygg": 12,
+          "tjenester": 876.8,
+          "tilbehor": 12309.119999999997
+        },
+        {
+          "navn": "Kasim Al Ali",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 15,
+          "upgr": 15,
+          "forsikring": 8,
+          "trygg": 0,
+          "tjenester": 397.6,
+          "tilbehor": 4359.999999999998
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 7,
+          "upgr": 8,
+          "forsikring": 5,
+          "trygg": 0,
+          "tjenester": 79.2,
+          "tilbehor": 1921.92
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 4,
+          "upgr": 5,
+          "forsikring": 1,
+          "trygg": 3,
+          "tjenester": 0.0,
+          "tilbehor": 5223.52
+        },
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 0,
+          "upgr": 6,
+          "forsikring": 2,
+          "trygg": 0,
+          "tjenester": 399.2,
+          "tilbehor": 1755.04
+        }
+      ]
+    },
+    "jan": {
+      "sellers": [
+        {
+          "navn": "Ali Esmati",
+          "stilling": "SA",
+          "gross": 26.0,
+          "upgr": 17.0,
+          "trygg": 12.0,
+          "forsikring": 13.0,
+          "tjenester": 1117.0,
+          "tilbehor": 11812.0,
+          "fwa": 3.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 23.0
+        },
+        {
+          "navn": "Yasin Ali Ismail",
+          "stilling": "SA",
+          "gross": 17.0,
+          "upgr": 14.0,
+          "trygg": 12.0,
+          "forsikring": 15.0,
+          "tjenester": 558.0,
+          "tilbehor": 9571.0,
+          "fwa": 3.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 14.0
+        },
+        {
+          "navn": "Tommy Olafsen",
+          "stilling": "SM",
+          "gross": 14.0,
+          "upgr": 11.0,
+          "trygg": 4.0,
+          "forsikring": 3.0,
+          "tjenester": 1117.0,
+          "tilbehor": 4486.0,
+          "fwa": 10.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 4.0
+        },
+        {
+          "navn": "Josef Ishan Latif Mossaiar",
+          "stilling": "SA",
+          "gross": 8.0,
+          "upgr": 16.0,
+          "trygg": 15.0,
+          "forsikring": 14.0,
+          "tjenester": 478.0,
+          "tilbehor": 8664.0,
+          "fwa": 1.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 7.0
+        },
+        {
+          "navn": "Ahmed Al Ali",
+          "stilling": "ASM",
+          "gross": 8.0,
+          "upgr": 13.0,
+          "trygg": 3.0,
+          "forsikring": 9.0,
+          "tjenester": 638.0,
+          "tilbehor": 5298.0,
+          "fwa": 3.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 5.0
+        },
+        {
+          "navn": "Saidt Oliver Alavi",
+          "stilling": "SA",
+          "gross": 8.0,
+          "upgr": 13.0,
+          "trygg": 0.0,
+          "forsikring": 12.0,
+          "tjenester": 0.0,
+          "tilbehor": 8523.0,
+          "fwa": 3.0,
+          "mbb": 0.0,
+          "b2b": 1.0,
+          "voice": 4.0
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "gross": 6.0,
+          "upgr": 2.0,
+          "trygg": 0.0,
+          "forsikring": 3.0,
+          "tjenester": 0.0,
+          "tilbehor": 647.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 6.0
+        },
+        {
+          "navn": "Mert Ambarduzgun",
+          "stilling": "ASM",
+          "gross": 3.0,
+          "upgr": 29.0,
+          "trygg": 7.0,
+          "forsikring": 16.0,
+          "tjenester": 479.0,
+          "tilbehor": 10700.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 3.0
+        },
+        {
+          "navn": "Aya Mohammad",
+          "stilling": "SA",
+          "gross": 3.0,
+          "upgr": 6.0,
+          "trygg": 2.0,
+          "forsikring": 3.0,
+          "tjenester": 478.0,
+          "tilbehor": 3544.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 3.0
+        },
+        {
+          "navn": "Kasim Al Ali",
+          "stilling": "SA",
+          "gross": 1.0,
+          "upgr": 6.0,
+          "trygg": 0.0,
+          "forsikring": 2.0,
+          "tjenester": 398.0,
+          "tilbehor": 1212.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 1.0
+        }
+      ],
+      "kpis": {}
+    },
+    "feb": {
+      "sellers": [
+        {
+          "navn": "Saidt Oliver Alavi",
+          "stilling": "SA",
+          "gross": 18.0,
+          "upgr": 21.0,
+          "trygg": 2.0,
+          "forsikring": 6.0,
+          "tjenester": 399.0,
+          "tilbehor": 8865.0,
+          "fwa": 3.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 15.0
+        },
+        {
+          "navn": "Yasin Ali Ismail",
+          "stilling": "SA",
+          "gross": 16.0,
+          "upgr": 17.0,
+          "trygg": 8.0,
+          "forsikring": 17.0,
+          "tjenester": 158.0,
+          "tilbehor": 7440.0,
+          "fwa": 0.0,
+          "mbb": 1.0,
+          "b2b": 0.0,
+          "voice": 15.0
+        },
+        {
+          "navn": "Tommy Olafsen",
+          "stilling": "SM",
+          "gross": 13.0,
+          "upgr": 10.0,
+          "trygg": 6.0,
+          "forsikring": 6.0,
+          "tjenester": 1287.0,
+          "tilbehor": 2445.0,
+          "fwa": 6.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 7.0
+        },
+        {
+          "navn": "Ahmed Al Ali",
+          "stilling": "ASM",
+          "gross": 11.0,
+          "upgr": 18.0,
+          "trygg": 6.0,
+          "forsikring": 13.0,
+          "tjenester": 638.0,
+          "tilbehor": 6878.0,
+          "fwa": 1.0,
+          "mbb": 1.0,
+          "b2b": 0.0,
+          "voice": 9.0
+        },
+        {
+          "navn": "Mert Ambarduzgun",
+          "stilling": "ASM",
+          "gross": 9.0,
+          "upgr": 15.0,
+          "trygg": 5.0,
+          "forsikring": 7.0,
+          "tjenester": 0.0,
+          "tilbehor": 3025.0,
+          "fwa": 2.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 7.0
+        },
+        {
+          "navn": "Aya Mohammad",
+          "stilling": "SA",
+          "gross": 9.0,
+          "upgr": 12.0,
+          "trygg": 3.0,
+          "forsikring": 5.0,
+          "tjenester": 399.0,
+          "tilbehor": 5301.0,
+          "fwa": 6.0,
+          "mbb": 0.0,
+          "b2b": 1.0,
+          "voice": 2.0
+        },
+        {
+          "navn": "Josef Ishan Latif Mossaiar",
+          "stilling": "SA",
+          "gross": 8.0,
+          "upgr": 12.0,
+          "trygg": 11.0,
+          "forsikring": 10.0,
+          "tjenester": 0.0,
+          "tilbehor": 5454.0,
+          "fwa": 0.0,
+          "mbb": 1.0,
+          "b2b": 1.0,
+          "voice": 6.0
+        },
+        {
+          "navn": "Kasim Al Ali",
+          "stilling": "SA",
+          "gross": 5.0,
+          "upgr": 7.0,
+          "trygg": 0.0,
+          "forsikring": 5.0,
+          "tjenester": 0.0,
+          "tilbehor": 2354.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 5.0
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "gross": 3.0,
+          "upgr": 1.0,
+          "trygg": 0.0,
+          "forsikring": 0.0,
+          "tjenester": 0.0,
+          "tilbehor": 703.0,
+          "fwa": 1.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 2.0
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "gross": 1.0,
+          "upgr": 2.0,
+          "trygg": 0.0,
+          "forsikring": 1.0,
+          "tjenester": 79.0,
+          "tilbehor": 877.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 1.0
+        },
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "gross": 0.0,
+          "upgr": 0.0,
+          "trygg": 0.0,
+          "forsikring": 0.0,
+          "tjenester": 0.0,
+          "tilbehor": 199.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 0.0
+        }
+      ],
+      "kpis": {}
+    },
+    "mar": {
+      "sellers": [
+        {
+          "navn": "Yasin Ali Ismail",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 13,
+          "upgr": 20,
+          "forsikring": 12,
+          "trygg": 21,
+          "tjenester": 1356.8,
+          "tilbehor": 7597.279999999999
+        },
+        {
+          "navn": "Tommy Olafsen",
+          "stilling": "SM",
+          "store": "gulskogen",
+          "gross": 13,
+          "upgr": 21,
+          "forsikring": 9,
+          "trygg": 15,
+          "tjenester": 1356.8,
+          "tilbehor": 996.8
+        },
+        {
+          "navn": "Saidt Oliver Alavi",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 9,
+          "upgr": 14,
+          "forsikring": 8,
+          "trygg": 6,
+          "tjenester": 0.0,
+          "tilbehor": 2250.7200000000003
+        },
+        {
+          "navn": "Ahmed Al Ali",
+          "stilling": "ASM",
+          "store": "gulskogen",
+          "gross": 6,
+          "upgr": 13,
+          "forsikring": 8,
+          "trygg": 10,
+          "tjenester": 399.2,
+          "tilbehor": 3388.0
+        },
+        {
+          "navn": "Aya Mohammad",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 3,
+          "upgr": 14,
+          "forsikring": 8,
+          "trygg": 7,
+          "tjenester": 0.0,
+          "tilbehor": 3464.8
+        },
+        {
+          "navn": "Mert Ambarduzgun",
+          "stilling": "ASM",
+          "store": "gulskogen",
+          "gross": 2,
+          "upgr": 13,
+          "forsikring": 6,
+          "trygg": 8,
+          "tjenester": 0.0,
+          "tilbehor": 2000.8000000000002
+        },
+        {
+          "navn": "Kasim Al Ali",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 9,
+          "upgr": 2,
+          "forsikring": 1,
+          "trygg": 0,
+          "tjenester": 0.0,
+          "tilbehor": 793.5999999999999
+        },
+        {
+          "navn": "Ali Esmati",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 7,
+          "upgr": 5,
+          "forsikring": 2,
+          "trygg": 8,
+          "tjenester": 0.0,
+          "tilbehor": 2446.3999999999996
+        },
+        {
+          "navn": "Josef Ishan Latif Mossaiar",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 3,
+          "upgr": 6,
+          "forsikring": 4,
+          "trygg": 5,
+          "tjenester": 0.0,
+          "tilbehor": 4017.12
+        },
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 0,
+          "upgr": 6,
+          "forsikring": 2,
+          "trygg": 0,
+          "tjenester": 399.2,
+          "tilbehor": 1555.84
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 1,
+          "upgr": 4,
+          "forsikring": 1,
+          "trygg": 3,
+          "tjenester": 0.0,
+          "tilbehor": 4520.8
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "store": "gulskogen",
+          "gross": 0,
+          "upgr": 4,
+          "forsikring": 1,
+          "trygg": 0,
+          "tjenester": 0.0,
+          "tilbehor": 398.4
+        }
+      ]
+    }
+  },
+  "liertoppen": {
+    "ytd_2025": {
+      "sellers": [
+        {
+          "navn": "Dibran Shala",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 36,
+          "upgr": 106,
+          "forsikring": 36,
+          "trygg": 47,
+          "tjenester": 5822.399999999998,
+          "tilbehor": 27849.68000000003
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 17,
+          "upgr": 71,
+          "forsikring": 40,
+          "trygg": 24,
+          "tjenester": 237.60000000000002,
+          "tilbehor": 24147.24000000002
+        },
+        {
+          "navn": "Abdulnaser Sallam",
+          "stilling": "SM",
+          "store": "liertoppen",
+          "gross": 20,
+          "upgr": 47,
+          "forsikring": 20,
+          "trygg": 21,
+          "tjenester": 2314.3999999999996,
+          "tilbehor": 20367.840000000015
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 8,
+          "upgr": 28,
+          "forsikring": 19,
+          "trygg": 13,
+          "tjenester": 2392.0,
+          "tilbehor": 12576.48
+        },
+        {
+          "navn": "Izzedin Alzayegh",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 8,
+          "upgr": 25,
+          "forsikring": 12,
+          "trygg": 17,
+          "tjenester": 1672.0,
+          "tilbehor": 14350.479999999998
+        },
+        {
+          "navn": "Ahmad Sallam",
+          "stilling": "SM",
+          "store": "liertoppen",
+          "gross": 0,
+          "upgr": 0,
+          "forsikring": 0,
+          "trygg": 0,
+          "tjenester": 0.0,
+          "tilbehor": 0.0
+        }
+      ]
+    },
+    "jan": {
+      "sellers": [
+        {
+          "navn": "Dibran Shala",
+          "stilling": "SA",
+          "gross": 13.0,
+          "upgr": 34.0,
+          "trygg": 11.0,
+          "forsikring": 14.0,
+          "tjenester": 3909.0,
+          "tilbehor": 15348.0,
+          "fwa": 1.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 12.0
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "gross": 9.0,
+          "upgr": 28.0,
+          "trygg": 8.0,
+          "forsikring": 20.0,
+          "tjenester": 79.0,
+          "tilbehor": 8713.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 9.0
+        },
+        {
+          "navn": "Izzedin Alzayegh",
+          "stilling": "SA",
+          "gross": 4.0,
+          "upgr": 12.0,
+          "trygg": 1.0,
+          "forsikring": 3.0,
+          "tjenester": 717.0,
+          "tilbehor": 8910.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 4.0
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "gross": 4.0,
+          "upgr": 5.0,
+          "trygg": 3.0,
+          "forsikring": 5.0,
+          "tjenester": 1434.0,
+          "tilbehor": 5352.0,
+          "fwa": 1.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 3.0
+        },
+        {
+          "navn": "Abdulnaser Sallam",
+          "stilling": "SM",
+          "gross": 1.0,
+          "upgr": 20.0,
+          "trygg": 12.0,
+          "forsikring": 7.0,
+          "tjenester": 0.0,
+          "tilbehor": 7502.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 1.0
+        }
+      ],
+      "kpis": {}
+    },
+    "feb": {
+      "sellers": [
+        {
+          "navn": "Dibran Shala",
+          "stilling": "SA",
+          "gross": 16.0,
+          "upgr": 45.0,
+          "trygg": 15.0,
+          "forsikring": 13.0,
+          "tjenester": 718.0,
+          "tilbehor": 4891.0,
+          "fwa": 0.0,
+          "mbb": 1.0,
+          "b2b": 0.0,
+          "voice": 15.0
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "gross": 7.0,
+          "upgr": 25.0,
+          "trygg": 14.0,
+          "forsikring": 15.0,
+          "tjenester": 0.0,
+          "tilbehor": 12788.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 7.0
+        },
+        {
+          "navn": "Abdulnaser Sallam",
+          "stilling": "SM",
+          "gross": 7.0,
+          "upgr": 12.0,
+          "trygg": 4.0,
+          "forsikring": 3.0,
+          "tjenester": 159.0,
+          "tilbehor": 1870.0,
+          "fwa": 1.0,
+          "mbb": 2.0,
+          "b2b": 1.0,
+          "voice": 3.0
+        },
+        {
+          "navn": "Izzedin Alzayegh",
+          "stilling": "SA",
+          "gross": 4.0,
+          "upgr": 9.0,
+          "trygg": 13.0,
+          "forsikring": 5.0,
+          "tjenester": 955.0,
+          "tilbehor": 4022.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 4.0
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "gross": 3.0,
+          "upgr": 11.0,
+          "trygg": 6.0,
+          "forsikring": 5.0,
+          "tjenester": 958.0,
+          "tilbehor": 3479.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 3.0
+        },
+        {
+          "navn": "Ahmad Sallam",
+          "stilling": "SM",
+          "gross": 0.0,
+          "upgr": 0.0,
+          "trygg": 0.0,
+          "forsikring": 0.0,
+          "tjenester": 0.0,
+          "tilbehor": 0.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 0.0
+        }
+      ],
+      "kpis": {}
+    },
+    "mar": {
+      "sellers": [
+        {
+          "navn": "Dibran Shala",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 7,
+          "upgr": 27,
+          "forsikring": 9,
+          "trygg": 21,
+          "tjenester": 1196.0,
+          "tilbehor": 7610.8799999999965
+        },
+        {
+          "navn": "Abdulnaser Sallam",
+          "stilling": "SM",
+          "store": "liertoppen",
+          "gross": 12,
+          "upgr": 15,
+          "forsikring": 10,
+          "trygg": 5,
+          "tjenester": 2155.2,
+          "tilbehor": 10996.000000000004
+        },
+        {
+          "navn": "Amer Salah",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 2,
+          "upgr": 18,
+          "forsikring": 5,
+          "trygg": 2,
+          "tjenester": 158.4,
+          "tilbehor": 2645.92
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 0,
+          "upgr": 12,
+          "forsikring": 9,
+          "trygg": 4,
+          "tjenester": 0.0,
+          "tilbehor": 3744.7999999999993
+        },
+        {
+          "navn": "Izzedin Alzayegh",
+          "stilling": "SA",
+          "store": "liertoppen",
+          "gross": 0,
+          "upgr": 4,
+          "forsikring": 4,
+          "trygg": 3,
+          "tjenester": 0.0,
+          "tilbehor": 1418.4
+        }
+      ]
+    }
+  },
+  "buskerud": {
+    "ytd_2025": {
+      "sellers": [
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 23,
+          "upgr": 65,
+          "forsikring": 29,
+          "trygg": 7,
+          "tjenester": 3591.1999999999994,
+          "tilbehor": 20173.20000000001
+        },
+        {
+          "navn": "Ahmad Sallam",
+          "stilling": "SM",
+          "store": "buskerud",
+          "gross": 27,
+          "upgr": 54,
+          "forsikring": 30,
+          "trygg": 9,
+          "tjenester": 2873.6,
+          "tilbehor": 27302.24000000003
+        },
+        {
+          "navn": "Christoffer Øvervoll",
+          "stilling": "ASM",
+          "store": "buskerud",
+          "gross": 11,
+          "upgr": 53,
+          "forsikring": 26,
+          "trygg": 13,
+          "tjenester": 4071.2,
+          "tilbehor": 20581.040000000005
+        },
+        {
+          "navn": "Ismael Javeed",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 3,
+          "upgr": 29,
+          "forsikring": 13,
+          "trygg": 5,
+          "tjenester": 557.6,
+          "tilbehor": 11599.999999999998
+        },
+        {
+          "navn": "Emily Adelaide Marshall",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 10,
+          "upgr": 21,
+          "forsikring": 11,
+          "trygg": 0,
+          "tjenester": 0.0,
+          "tilbehor": 14981.839999999998
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 2,
+          "upgr": 9,
+          "forsikring": 3,
+          "trygg": 2,
+          "tjenester": 399.2,
+          "tilbehor": 5339.999999999998
+        }
+      ]
+    },
+    "jan": {
+      "sellers": [
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "gross": 16.0,
+          "upgr": 31.0,
+          "trygg": 3.0,
+          "forsikring": 15.0,
+          "tjenester": 1756.0,
+          "tilbehor": 9305.0,
+          "fwa": 7.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 9.0
+        },
+        {
+          "navn": "Ahmad Sallam",
+          "stilling": "SM",
+          "gross": 8.0,
+          "upgr": 22.0,
+          "trygg": 1.0,
+          "forsikring": 10.0,
+          "tjenester": 798.0,
+          "tilbehor": 10604.0,
+          "fwa": 2.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 6.0
+        },
+        {
+          "navn": "Christoffer Øvervoll",
+          "stilling": "ASM",
+          "gross": 7.0,
+          "upgr": 36.0,
+          "trygg": 3.0,
+          "forsikring": 16.0,
+          "tjenester": 1516.0,
+          "tilbehor": 14999.0,
+          "fwa": 0.0,
+          "mbb": 1.0,
+          "b2b": 0.0,
+          "voice": 6.0
+        },
+        {
+          "navn": "Emily Adelaide Marshall",
+          "stilling": "SA",
+          "gross": 4.0,
+          "upgr": 9.0,
+          "trygg": 0.0,
+          "forsikring": 4.0,
+          "tjenester": 0.0,
+          "tilbehor": 5655.0,
+          "fwa": 3.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 1.0
+        },
+        {
+          "navn": "Ismael Javeed",
+          "stilling": "SA",
+          "gross": 2.0,
+          "upgr": 10.0,
+          "trygg": 0.0,
+          "forsikring": 4.0,
+          "tjenester": 158.0,
+          "tilbehor": 5554.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 2.0
+        }
+      ],
+      "kpis": {}
+    },
+    "feb": {
+      "sellers": [
+        {
+          "navn": "Ahmad Sallam",
+          "stilling": "SM",
+          "gross": 11.0,
+          "upgr": 19.0,
+          "trygg": 7.0,
+          "forsikring": 11.0,
+          "tjenester": 1517.0,
+          "tilbehor": 12417.0,
+          "fwa": 2.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 9.0
+        },
+        {
+          "navn": "Emily Adelaide Marshall",
+          "stilling": "SA",
+          "gross": 4.0,
+          "upgr": 11.0,
+          "trygg": 0.0,
+          "forsikring": 5.0,
+          "tjenester": 0.0,
+          "tilbehor": 5940.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 4.0
+        },
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "gross": 3.0,
+          "upgr": 20.0,
+          "trygg": 3.0,
+          "forsikring": 9.0,
+          "tjenester": 1436.0,
+          "tilbehor": 8620.0,
+          "fwa": 1.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 2.0
+        },
+        {
+          "navn": "Ismael Javeed",
+          "stilling": "SA",
+          "gross": 1.0,
+          "upgr": 12.0,
+          "trygg": 5.0,
+          "forsikring": 7.0,
+          "tjenester": 399.0,
+          "tilbehor": 2869.0,
+          "fwa": 0.0,
+          "mbb": 0.0,
+          "b2b": 0.0,
+          "voice": 1.0
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "gross": 1.0,
+          "upgr": 3.0,
+          "trygg": 0.0,
+          "forsikring": 2.0,
+          "tjenester": 399.0,
+          "tilbehor": 1874.0,
+          "fwa": 0.0,
+          "mbb": 1.0,
+          "b2b": 0.0,
+          "voice": 0.0
+        }
+      ],
+      "kpis": {}
+    },
+    "mar": {
+      "sellers": [
+        {
+          "navn": "Christoffer Øvervoll",
+          "stilling": "ASM",
+          "store": "buskerud",
+          "gross": 4,
+          "upgr": 17,
+          "forsikring": 10,
+          "trygg": 10,
+          "tjenester": 2555.2,
+          "tilbehor": 5581.599999999998
+        },
+        {
+          "navn": "Ahmad Sallam",
+          "stilling": "SM",
+          "store": "buskerud",
+          "gross": 8,
+          "upgr": 13,
+          "forsikring": 9,
+          "trygg": 1,
+          "tjenester": 558.4,
+          "tilbehor": 4281.5999999999985
+        },
+        {
+          "navn": "Mohammad Jalal Badawi",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 1,
+          "upgr": 14,
+          "forsikring": 5,
+          "trygg": 1,
+          "tjenester": 399.2,
+          "tilbehor": 2248.0
+        },
+        {
+          "navn": "Ahmed Ali",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 1,
+          "upgr": 6,
+          "forsikring": 1,
+          "trygg": 2,
+          "tjenester": 0.0,
+          "tilbehor": 3466.399999999999
+        },
+        {
+          "navn": "Ismael Javeed",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 0,
+          "upgr": 7,
+          "forsikring": 2,
+          "trygg": 0,
+          "tjenester": 0.0,
+          "tilbehor": 3176.6400000000003
+        },
+        {
+          "navn": "Emily Adelaide Marshall",
+          "stilling": "SA",
+          "store": "buskerud",
+          "gross": 2,
+          "upgr": 1,
+          "forsikring": 2,
+          "trygg": 0,
+          "tjenester": 0.0,
+          "tilbehor": 3386.8
+        }
+      ]
+    }
+  }
+}
