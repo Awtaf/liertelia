@@ -2,6 +2,7 @@
 """
 Generate konkurranse.html - Gulskogen Mai anime-style competition page
 Auto-updated whenever new ToppSelger reports arrive.
+Uses pure CSS character art - NO emojis, NO external images.
 """
 import json
 import os
@@ -14,23 +15,23 @@ MATCHUPS = [
             'name': 'Ahmed Al Ali',
             'hours': 100,
             'color': '#FF6600',
-            'anime': 'NARUTO UZUMAKI',
+            'anime': 'NARUTO',
             'jp': 'うずまきナルト',
-            'ability': '🌀 Shadow Clone Jutsu',
-            'emoji': '🌀',
+            'ability': 'Shadow Clone Jutsu',
+            'symbol': 'N',
             'gradient': 'linear-gradient(160deg, #7a2e00 0%, #FF6600 60%, #FFB300 100%)',
-            'bg': '#7a2e00',
+            'glow': '#FF6600',
         },
         'right': {
             'name': 'Yasin Ali Ismail',
             'hours': 90,
             'color': '#5599FF',
-            'anime': 'SASUKE UCHIHA',
+            'anime': 'SASUKE',
             'jp': 'うちはサスケ',
-            'ability': '⚡ Chidori',
-            'emoji': '⚡',
+            'ability': 'Chidori',
+            'symbol': 'S',
             'gradient': 'linear-gradient(160deg, #0a0a40 0%, #1a1aaa 60%, #5599FF 100%)',
-            'bg': '#0a0a40',
+            'glow': '#5599FF',
         },
     },
     {
@@ -39,23 +40,23 @@ MATCHUPS = [
             'name': 'Saidt Oliver Alavi',
             'hours': 60,
             'color': '#FFD700',
-            'anime': 'SON GOKU',
+            'anime': 'GOKU',
             'jp': '孫悟空',
-            'ability': '🔆 Kamehameha',
-            'emoji': '🔆',
+            'ability': 'Kamehameha',
+            'symbol': 'G',
             'gradient': 'linear-gradient(160deg, #4a3000 0%, #FF8C00 60%, #FFD700 100%)',
-            'bg': '#4a3000',
+            'glow': '#FFD700',
         },
         'right': {
             'name': 'Mert Ambarduzgun',
             'hours': 50,
-            'color': '#CC55FF',
+            'color': '#BB66FF',
             'anime': 'VEGETA',
             'jp': 'ベジータ',
-            'ability': '👑 Final Flash',
-            'emoji': '👑',
-            'gradient': 'linear-gradient(160deg, #2a0040 0%, #6600aa 60%, #CC55FF 100%)',
-            'bg': '#2a0040',
+            'ability': 'Final Flash',
+            'symbol': 'V',
+            'gradient': 'linear-gradient(160deg, #2a0050 0%, #6600aa 60%, #BB66FF 100%)',
+            'glow': '#BB66FF',
         },
     },
     {
@@ -63,13 +64,13 @@ MATCHUPS = [
         'left': {
             'name': 'Josef Ishan Latif Mossaiar',
             'hours': 65,
-            'color': '#00DD66',
-            'anime': 'IZUKU MIDORIYA',
-            'jp': '緑谷出久',
-            'ability': '💪 One For All',
-            'emoji': '💪',
-            'gradient': 'linear-gradient(160deg, #003300 0%, #006622 60%, #00DD66 100%)',
-            'bg': '#003300',
+            'color': '#44DD88',
+            'anime': 'DEKU',
+            'jp': 'デク',
+            'ability': 'One For All',
+            'symbol': 'D',
+            'gradient': 'linear-gradient(160deg, #003322 0%, #22aa55 60%, #44DD88 100%)',
+            'glow': '#44DD88',
         },
         'right': {
             'name': 'Aya Mohammad',
@@ -77,10 +78,10 @@ MATCHUPS = [
             'color': '#FF69B4',
             'anime': 'ZERO TWO',
             'jp': 'ゼロツー',
-            'ability': '🌸 Strelizia',
-            'emoji': '🌸',
-            'gradient': 'linear-gradient(160deg, #4a0020 0%, #cc0066 60%, #FF69B4 100%)',
-            'bg': '#4a0020',
+            'ability': 'Strelizia',
+            'symbol': '02',
+            'gradient': 'linear-gradient(160deg, #4a0028 0%, #cc2277 60%, #FF69B4 100%)',
+            'glow': '#FF69B4',
             'is_girl': True,
         },
     },
@@ -89,640 +90,533 @@ MATCHUPS = [
         'left': {
             'name': 'Ali Esmati',
             'hours': 90,
-            'color': '#FF4422',
-            'anime': 'ICHIGO KUROSAKI',
+            'color': '#FF4444',
+            'anime': 'ICHIGO',
             'jp': '黒崎一護',
-            'ability': '⚔️ Getsuga Tenshou',
-            'emoji': '⚔️',
-            'gradient': 'linear-gradient(160deg, #3a0000 0%, #991100 60%, #FF4422 100%)',
-            'bg': '#3a0000',
+            'ability': 'Bankai: Tensa Zangetsu',
+            'symbol': 'I',
+            'gradient': 'linear-gradient(160deg, #3a0000 0%, #cc2222 60%, #FF4444 100%)',
+            'glow': '#FF4444',
         },
         'right': {
             'name': 'Kasim & Tommy',
             'hours': 90,
-            'color': '#00E5FF',
-            'anime': 'MIGHT GUY & ROCK LEE',
-            'jp': 'マイト・ガイ & ロック・リー',
-            'ability': '🔥 Gates of Youth',
-            'emoji': '🔥',
-            'gradient': 'linear-gradient(160deg, #003333 0%, #006644 60%, #00E5FF 100%)',
-            'bg': '#003333',
-            'team': ['Kasim Al Ali', 'Tommy Olafsen'],
+            'color': '#00CC66',
+            'anime': 'GUY & LEE',
+            'jp': 'ガイ＆リー',
+            'ability': 'Gates of Youth',
+            'symbol': 'GL',
+            'gradient': 'linear-gradient(160deg, #003322 0%, #009944 60%, #00CC66 100%)',
+            'glow': '#00CC66',
         },
     },
 ]
 
+ALL_FIGHTERS = []
+for m in MATCHUPS:
+    ALL_FIGHTERS.append(m['left'])
+    ALL_FIGHTERS.append(m['right'])
 
-def load_data():
-    path = '/agent/home/complete_extracted_data.json'
-    if not os.path.exists(path):
+
+def load_may_data():
+    """Load Mai data from complete_extracted_data.json"""
+    data_path = os.path.join(os.path.dirname(__file__), 'complete_extracted_data.json')
+    if not os.path.exists(data_path):
         return {}
-    with open(path) as f:
-        return json.load(f)
-
-
-def get_seller_stats(data, store, month, name):
-    try:
-        sellers = data[store][month]['sellers']
-    except (KeyError, TypeError):
-        return 0, 0
+    with open(data_path, 'r') as f:
+        data = json.load(f)
+    gulskogen = data.get('gulskogen', {})
+    mai = gulskogen.get('mai', gulskogen.get('may', {}))
+    sellers = mai.get('sellers', [])
+    result = {}
     for s in sellers:
-        sname = s.get('navn', s.get('name', ''))
-        if sname.strip().lower() == name.strip().lower():
-            return float(s.get('gross', 0)), float(s.get('trygg', 0))
+        name = s.get('navn', s.get('name', ''))
+        result[name] = {
+            'gross': s.get('gross', 0),
+            'trygg': s.get('trygg', s.get('telia_trygg', 0)),
+        }
+    return result
+
+
+def get_fighter_stats(fighter, mai_data):
+    name = fighter['name']
+    if '&' in name:
+        parts = name.split('&')
+        total_g = 0
+        total_t = 0
+        for part in parts:
+            pname = part.strip()
+            for k, v in mai_data.items():
+                if pname.lower() in k.lower():
+                    total_g += v['gross']
+                    total_t += v['trygg']
+                    break
+        return total_g, total_t
+    else:
+        for k, v in mai_data.items():
+            if name.lower().split()[0] in k.lower() and name.lower().split()[-1] in k.lower():
+                return v['gross'], v['trygg']
+        first = name.split()[0].lower()
+        for k, v in mai_data.items():
+            if first in k.lower():
+                return v['gross'], v['trygg']
     return 0, 0
 
 
-def fighter_stats(data, fighter):
-    if 'team' in fighter:
-        gross, trygg = 0, 0
-        for member in fighter['team']:
-            g, t = get_seller_stats(data, 'gulskogen', 'mai', member)
-            gross += g
-            trygg += t
-        hours = fighter['hours']
-    else:
-        gross, trygg = get_seller_stats(data, 'gulskogen', 'mai', fighter['name'])
-        hours = fighter['hours']
-
-    gross_ph = round(gross / hours, 2) if hours > 0 else 0
-    trygg_ph = round(trygg / hours, 2) if hours > 0 else 0
-    power    = round(gross_ph * 10 + trygg_ph * 5, 1)
-    return {
-        'gross':    int(gross),
-        'trygg':    int(trygg),
-        'hours':    hours,
-        'gross_ph': gross_ph,
-        'trygg_ph': trygg_ph,
-        'power':    power,
-    }
+def calc_power(gross, trygg, hours):
+    if hours == 0:
+        return 0
+    return round((gross / hours) * 10 + (trygg / hours) * 5, 1)
 
 
-def bar_pct(a, b):
-    total = a + b
-    if total == 0:
-        return 50, 50
-    return round(a / total * 100), round(b / total * 100)
+def generate():
+    mai_data = load_may_data()
 
+    # Calculate all stats
+    fighter_stats = []
+    for f in ALL_FIGHTERS:
+        gross, trygg = get_fighter_stats(f, mai_data)
+        power = calc_power(gross, trygg, f['hours'])
+        gross_per_h = round(gross / f['hours'], 2) if f['hours'] > 0 else 0
+        trygg_per_h = round(trygg / f['hours'], 2) if f['hours'] > 0 else 0
+        fighter_stats.append({
+            **f,
+            'gross': gross,
+            'trygg': trygg,
+            'power': power,
+            'gross_per_h': gross_per_h,
+            'trygg_per_h': trygg_per_h,
+        })
 
-def winner_class(lp, rp):
-    if lp > rp:   return 'left-wins'
-    if rp > lp:   return 'right-wins'
-    return 'draw'
+    # Sort by power for ranking
+    ranked = sorted(fighter_stats, key=lambda x: x['power'], reverse=True)
 
-
-def generate_html(data):
-    matchup_data = []
-    for m in MATCHUPS:
-        ls = fighter_stats(data, m['left'])
-        rs = fighter_stats(data, m['right'])
-        matchup_data.append({'matchup': m, 'ls': ls, 'rs': rs})
-
-    css = """
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-        background: #04040f;
-        color: #fff;
-        font-family: 'Segoe UI', sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-        min-width: 900px;
-    }
-
-    /* ── STARFIELD ── */
-    .bg-stars {
-        position: fixed; top:0; left:0; width:100%; height:100%;
-        background: radial-gradient(ellipse at 20% 20%, #0a0a2e 0%, #04040f 60%);
-        z-index: -1;
-    }
-    .bg-stars::before {
-        content: '';
-        position: absolute; top:0; left:0; width:100%; height:100%;
-        background-image:
-            radial-gradient(1px 1px at 5%  10%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 15% 30%, #aaf 0%, transparent 100%),
-            radial-gradient(1px 1px at 25% 5%,  #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 35% 50%, #ffa 0%, transparent 100%),
-            radial-gradient(1px 1px at 45% 75%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 55% 20%, #aff 0%, transparent 100%),
-            radial-gradient(1px 1px at 65% 65%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 75% 40%, #faf 0%, transparent 100%),
-            radial-gradient(1px 1px at 85% 15%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 92% 85%, #aaf 0%, transparent 100%),
-            radial-gradient(1px 1px at 10% 60%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 70% 90%, #ffa 0%, transparent 100%);
-        opacity: 0.7;
-    }
-
-    header {
-        text-align: center;
-        padding: 50px 20px 24px;
-    }
-    .header-title {
-        font-size: 3.2rem;
-        font-weight: 900;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        background: linear-gradient(135deg, #FFD700, #FF4500, #FF69B4, #00BFFF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: titlePulse 3s ease-in-out infinite;
-        margin-bottom: 8px;
-    }
-    @keyframes titlePulse {
-        0%, 100% { filter: brightness(1); }
-        50%       { filter: brightness(1.5); }
-    }
-    .header-sub {
-        color: #aaa;
-        font-size: 1.1rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
-    .month-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, #990AE3, #00BFFF);
-        color: #fff;
-        font-weight: 800;
-        font-size: 1rem;
-        padding: 6px 24px;
-        border-radius: 30px;
-        margin-top: 14px;
-        letter-spacing: 3px;
-    }
-    .back-link {
-        display: inline-block;
-        margin-top: 16px;
-        color: #555;
-        font-size: 0.9rem;
-        text-decoration: none;
-        letter-spacing: 2px;
-        transition: color 0.2s;
-    }
-    .back-link:hover { color: #aaa; }
-
-    .arena {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 24px 20px 80px;
-    }
-
-    /* ── MATCHUP CARD ── */
-    .matchup-card {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 24px;
-        margin-bottom: 36px;
-        overflow: hidden;
-        position: relative;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .matchup-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-    }
-    .matchup-number {
-        text-align: center;
-        font-size: 0.85rem;
-        letter-spacing: 4px;
-        color: #555;
-        padding: 18px 0 0;
-        text-transform: uppercase;
-    }
-
-    .fighters-row {
-        display: flex;
-        align-items: stretch;
-        padding: 20px;
-        gap: 0;
-    }
-
-    /* ── FIGHTER PANEL ── */
-    .fighter {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 16px 24px;
-        border-radius: 18px;
-        position: relative;
-        transition: background 0.3s;
-    }
-    .fighter.winner {
-        background: rgba(255,255,255,0.07);
-    }
-
-    /* ── AVATAR (emoji-based, always works) ── */
-    .fighter-avatar {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.8rem;
-        margin-bottom: 14px;
-        position: relative;
-        border: 4px solid transparent;
-        animation: avatarGlow 2s ease-in-out infinite;
-        flex-shrink: 0;
-    }
-    @keyframes avatarGlow {
-        0%, 100% { box-shadow: 0 0 14px var(--c), 0 0 28px var(--c); }
-        50%       { box-shadow: 0 0 30px var(--c), 0 0 60px var(--c), 0 0 90px var(--c); }
-    }
-    .girl-glow { animation: girlGlow 2s ease-in-out infinite !important; }
-    @keyframes girlGlow {
-        0%, 100% { box-shadow: 0 0 16px #FF69B4, 0 0 32px #FF69B4, 0 0 6px #fff; }
-        50%       { box-shadow: 0 0 32px #FF69B4, 0 0 64px #FF69B4, 0 0 100px #FF69B4, 0 0 12px #fff; }
-    }
-
-    .winner-crown {
-        position: absolute;
-        top: -20px;
-        font-size: 1.6rem;
-        display: none;
-        filter: drop-shadow(0 0 8px gold);
-    }
-    .fighter.winner .winner-crown { display: block; }
-
-    .fighter-anime {
-        font-size: 0.85rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        opacity: 0.9;
-        margin-bottom: 4px;
-        font-weight: 800;
-        text-align: center;
-    }
-    .fighter-jp {
-        font-size: 1rem;
-        color: #888;
-        margin-bottom: 6px;
-        text-align: center;
-        letter-spacing: 1px;
-    }
-    .fighter-name {
-        font-size: 1.1rem;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 4px;
-        line-height: 1.3;
-    }
-    .fighter-ability {
-        font-size: 0.82rem;
-        letter-spacing: 1px;
-        color: #666;
-        margin-bottom: 6px;
-        text-align: center;
-        font-style: italic;
-    }
-    .fighter-hours {
-        font-size: 0.82rem;
-        color: #555;
-        margin-bottom: 18px;
-        letter-spacing: 1px;
-    }
-
-    .stat-row {
-        display: flex;
-        justify-content: center;
-        gap: 28px;
-        width: 100%;
-    }
-    .stat-box { text-align: center; }
-    .stat-val {
-        font-size: 2rem;
-        font-weight: 900;
-        line-height: 1;
-    }
-    .stat-lbl {
-        font-size: 0.72rem;
-        letter-spacing: 2px;
-        color: #777;
-        text-transform: uppercase;
-        margin-top: 4px;
-    }
-    .power-badge {
-        margin-top: 14px;
-        font-size: 0.85rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        padding: 5px 16px;
-        border-radius: 14px;
-        border: 1px solid currentColor;
-    }
-
-    /* ── VS COLUMN ── */
-    .vs-col {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 14px;
-        min-width: 70px;
-    }
-    .vs-circle {
-        width: 62px; height: 62px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #FF4500, #FFD700);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 900;
-        font-size: 1.3rem;
-        letter-spacing: 1px;
-        box-shadow: 0 0 24px rgba(255,100,0,0.6);
-        animation: vsPulse 1.5s ease-in-out infinite;
-    }
-    @keyframes vsPulse {
-        0%, 100% { transform: scale(1);    box-shadow: 0 0 24px rgba(255,100,0,0.6); }
-        50%       { transform: scale(1.15); box-shadow: 0 0 48px rgba(255,100,0,1); }
-    }
-
-    /* ── POWER BAR ── */
-    .power-bar-section { padding: 0 28px 24px; }
-    .power-bar-label {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: #666;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-    }
-    .power-bar-track {
-        display: flex;
-        height: 14px;
-        border-radius: 7px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.05);
-    }
-    .power-bar-left  { transition: width 1s ease; border-radius: 7px 0 0 7px; }
-    .power-bar-right { transition: width 1s ease; border-radius: 0 7px 7px 0; }
-
-    /* ── PER HOUR ── */
-    .per-hour-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 28px 8px;
-        gap: 10px;
-    }
-    .ph-block {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.88rem;
-        color: #aaa;
-    }
-    .ph-val { font-weight: 800; font-size: 1rem; }
-
-    /* ── DRAW ── */
-    .draw-banner {
-        text-align: center;
-        font-size: 1rem;
-        letter-spacing: 3px;
-        color: #FFD700;
-        padding: 8px 0 16px;
-        text-transform: uppercase;
-    }
-
-    /* ── SCOREBOARD ── */
-    .scoreboard {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 20px;
-        padding: 28px;
-        margin-bottom: 36px;
-    }
-    .scoreboard h3 {
-        text-align: center;
-        font-size: 1rem;
-        letter-spacing: 4px;
-        color: #aaa;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-    .score-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        font-size: 1rem;
-    }
-    .score-row:last-child { border-bottom: none; }
-    .score-name { flex: 1; font-size: 1rem; }
-    .score-val  { min-width: 80px; text-align: right; font-weight: 800; font-size: 1.1rem; }
-    .rank-1 { color: #FFD700; }
-    .rank-2 { color: #C0C0C0; }
-    .rank-3 { color: #CD7F32; }
-
-    footer {
-        text-align: center;
-        color: #333;
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        padding-bottom: 40px;
-    }
-    """
-
-    # ── BUILD MATCHUP HTML ────────────────────────────────────────────────────
-    matchup_html = ''
-    for i, md in enumerate(matchup_data):
-        m  = md['matchup']
-        ls = md['ls']
-        rs = md['rs']
-
-        wc  = winner_class(ls['power'], rs['power'])
-        lw  = 'winner' if wc == 'left-wins'  else ''
-        rw  = 'winner' if wc == 'right-wins' else ''
-
-        lpct, rpct = bar_pct(ls['power'], rs['power'])
-        lc  = m['left']['color']
-        rc  = m['right']['color']
-        lg  = m['left']['gradient']
-        rg  = m['right']['gradient']
-
-        draw_banner = '<div class="draw-banner">⚔️ DRAW ⚔️</div>' if wc == 'draw' else ''
-
-        l_girl = 'girl-glow' if m['left'].get('is_girl')  else ''
-        r_girl = 'girl-glow' if m['right'].get('is_girl') else ''
-
-        matchup_html += f"""
-        <div class="matchup-card {wc}">
-            <div class="matchup-number">⚔️ KAMP {i+1}</div>
-            <div class="fighters-row">
-
-                <!-- LEFT FIGHTER -->
-                <div class="fighter {lw}" style="--c:{lc}">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar {l_girl}" style="--c:{lc}; border-color:{lc}; background:{lg};">
-                        {m['left']['emoji']}
-                    </div>
-                    <div class="fighter-anime" style="color:{lc}">{m['left']['anime']}</div>
-                    <div class="fighter-jp">{m['left']['jp']}</div>
-                    <div class="fighter-name">{m['left']['name']}</div>
-                    <div class="fighter-ability">{m['left']['ability']}</div>
-                    <div class="fighter-hours">⏱ {m['left']['hours']} timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:{lc}">{ls['gross']}</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:{lc}">{ls['trygg']}</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:{lc}">⚡ {ls['power']} POWER</div>
-                </div>
-
-                <!-- VS -->
-                <div class="vs-col">
-                    <div class="vs-circle">VS</div>
-                </div>
-
-                <!-- RIGHT FIGHTER -->
-                <div class="fighter {rw}" style="--c:{rc}">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar {r_girl}" style="--c:{rc}; border-color:{rc}; background:{rg};">
-                        {m['right']['emoji']}
-                    </div>
-                    <div class="fighter-anime" style="color:{rc}">{m['right']['anime']}</div>
-                    <div class="fighter-jp">{m['right']['jp']}</div>
-                    <div class="fighter-name">{m['right']['name']}</div>
-                    <div class="fighter-ability">{m['right']['ability']}</div>
-                    <div class="fighter-hours">⏱ {m['right']['hours']} timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:{rc}">{rs['gross']}</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:{rc}">{rs['trygg']}</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:{rc}">⚡ {rs['power']} POWER</div>
-                </div>
-            </div>
-
-            <!-- Per-hour row -->
-            <div class="per-hour-row">
-                <div class="ph-block">
-                    <span style="color:{lc}">▶</span>
-                    <span class="ph-val" style="color:{lc}">{ls['gross_ph']}</span>
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:{lc}">{ls['trygg_ph']}</span>
-                    <span>trygg/t</span>
-                </div>
-                <div class="ph-block">
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:{rc}">{rs['gross_ph']}</span>
-                    <span>&nbsp;trygg/t</span>
-                    <span class="ph-val" style="color:{rc}">{rs['trygg_ph']}</span>
-                    <span style="color:{rc}">◀</span>
-                </div>
-            </div>
-
-            <!-- Power bar -->
-            <div class="power-bar-section">
-                <div class="power-bar-label">
-                    <span style="color:{lc}">{m['left']['name'].split()[0]}</span>
-                    <span style="color:#555">⚡ POWER LEVEL ⚡</span>
-                    <span style="color:{rc}">{m['right']['name'].split()[0]}</span>
-                </div>
-                <div class="power-bar-track">
-                    <div class="power-bar-left"  style="width:{lpct}%; background:{lc}"></div>
-                    <div class="power-bar-right" style="width:{rpct}%; background:{rc}"></div>
-                </div>
-            </div>
-            {draw_banner}
-        </div>
-        """
-
-    # ── POWER RANKING ─────────────────────────────────────────────────────────
-    all_fighters = []
-    for md in matchup_data:
-        m  = md['matchup']
-        ls = md['ls']
-        rs = md['rs']
-        all_fighters.append((m['left']['name'],  ls['power'], ls['gross'], ls['trygg'],
-                              m['left']['color'],  m['left']['emoji'],  m['left']['anime']))
-        all_fighters.append((m['right']['name'], rs['power'], rs['gross'], rs['trygg'],
-                              m['right']['color'], m['right']['emoji'], m['right']['anime']))
-
-    all_fighters.sort(key=lambda x: x[1], reverse=True)
-    rank_classes = ['rank-1', 'rank-2', 'rank-3']
-    rank_emojis  = ['🥇', '🥈', '🥉']
-
-    ranking_rows = ''
-    for idx, (name, power, gross, trygg, color, emoji, anime) in enumerate(all_fighters):
-        rc_cls = rank_classes[idx] if idx < 3 else ''
-        re_lbl = rank_emojis[idx]  if idx < 3 else f'#{idx+1}'
-        ranking_rows += f"""
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">{re_lbl}</span>
-            <span class="score-name {rc_cls}" style="margin-left:12px">
-                {emoji} <strong>{name}</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">{anime}</span>
-            </span>
-            <span class="score-val" style="color:{color}">{power}</span>
-        </div>"""
-
-    # ── FULL HTML ──────────────────────────────────────────────────────────────
-    html = f"""<!DOCTYPE html>
+    # Build HTML
+    html = f'''<!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1000">
-<title>⚔️ Gulskogen Konkurranse — Mai 2026</title>
-<style>{css}</style>
+<title>Gulskogen Konkurranse — Mai 2026</title>
+<style>
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+body {{
+    background: #080818;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    min-width: 1000px;
+    padding: 40px 60px;
+}}
+
+.title {{
+    text-align: center;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #FF6600, #FFD700, #FF6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}}
+.subtitle {{
+    text-align: center;
+    font-size: 24px;
+    color: #aaa;
+    margin-bottom: 10px;
+}}
+.badge {{
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6600, #FF3300);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0 auto 40px;
+}}
+.badge-wrap {{ text-align: center; }}
+.back-link {{
+    text-align: center;
+    margin-bottom: 40px;
+}}
+.back-link a {{
+    color: #888;
+    text-decoration: none;
+    font-size: 18px;
+}}
+.back-link a:hover {{ color: #fff; }}
+
+/* ── RANKING TABLE ─────────────────────────────────────────── */
+.ranking {{
+    max-width: 900px;
+    margin: 0 auto 60px;
+    background: #111125;
+    border-radius: 16px;
+    border: 1px solid #222;
+    overflow: hidden;
+}}
+.ranking-title {{
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 20px;
+    border-bottom: 1px solid #222;
+    letter-spacing: 2px;
+}}
+.rank-row {{
+    display: flex;
+    align-items: center;
+    padding: 14px 30px;
+    border-bottom: 1px solid #1a1a30;
+    font-size: 20px;
+}}
+.rank-row:last-child {{ border-bottom: none; }}
+.rank-num {{
+    width: 50px;
+    font-weight: 800;
+    font-size: 22px;
+}}
+.rank-num.gold {{ color: #FFD700; }}
+.rank-num.silver {{ color: #C0C0C0; }}
+.rank-num.bronze {{ color: #CD7F32; }}
+.rank-avatar {{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 20px;
+    margin-right: 18px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}}
+.rank-info {{
+    flex: 1;
+}}
+.rank-name {{
+    font-weight: 700;
+    font-size: 20px;
+}}
+.rank-anime {{
+    font-size: 14px;
+    opacity: 0.5;
+    letter-spacing: 1px;
+}}
+.rank-power {{
+    font-weight: 800;
+    font-size: 24px;
+    min-width: 80px;
+    text-align: right;
+}}
+
+/* ── MATCH CARDS ─────────────────────────────────────────── */
+.match {{
+    max-width: 950px;
+    margin: 0 auto 50px;
+    background: #0d0d22;
+    border-radius: 20px;
+    border: 1px solid #222;
+    padding: 40px;
+}}
+.match-label {{
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: #555;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}}
+.fighters {{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}}
+.fighter {{
+    width: 38%;
+    text-align: center;
+}}
+.avatar-circle {{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 52px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
+    position: relative;
+}}
+.avatar-circle.girl {{
+    animation: girlPulse 2s ease-in-out infinite;
+}}
+@keyframes girlPulse {{
+    0%, 100% {{ box-shadow: 0 0 30px rgba(255,105,180,0.4); }}
+    50% {{ box-shadow: 0 0 60px rgba(255,105,180,0.8), 0 0 100px rgba(255,105,180,0.3); }}
+}}
+.anime-name {{
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}}
+.jp-name {{
+    font-size: 14px;
+    opacity: 0.4;
+    margin-bottom: 6px;
+}}
+.real-name {{
+    font-size: 20px;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 4px;
+}}
+.ability {{
+    font-size: 15px;
+    opacity: 0.6;
+    font-style: italic;
+    margin-bottom: 4px;
+}}
+.hours-badge {{
+    font-size: 14px;
+    color: #66ff66;
+    margin-bottom: 18px;
+}}
+.stats {{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 14px;
+}}
+.stat-val {{
+    font-size: 42px;
+    font-weight: 900;
+}}
+.stat-label {{
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}}
+.power-badge {{
+    display: inline-block;
+    padding: 6px 22px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 800;
+    border: 2px solid;
+}}
+
+/* VS circle */
+.vs-section {{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+}}
+.vs {{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff3300, #ff0066);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 900;
+    box-shadow: 0 0 30px rgba(255,0,60,0.5);
+}}
+
+/* ── POWER BAR ─────────────────────────────────────────── */
+.power-bar-section {{
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+}}
+.bar-labels {{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 8px;
+}}
+.bar-name {{ font-weight: 700; font-size: 16px; text-transform: uppercase; }}
+.bar-stats {{ font-size: 13px; color: #aaa; }}
+.power-bar {{
+    height: 14px;
+    background: #1a1a30;
+    border-radius: 7px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 10px;
+}}
+.bar-left, .bar-right {{
+    height: 100%;
+    transition: width 0.5s;
+}}
+.match-result {{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-top: 8px;
+}}
+
+footer {{
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    margin-top: 60px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}}
+</style>
 </head>
 <body>
-<div class="bg-stars"></div>
 
-<header>
-    <div class="header-title">⚔️ Gulskogen Arena ⚔️</div>
-    <div class="header-sub">Hvem dominerer mai — per time?</div>
-    <div class="month-badge">MAI 2026</div>
-    <div style="margin-top:16px;">
-        <a href="index.html" class="back-link">← Tilbake til dashboard</a>
+<div class="title">GULSKOGEN ARENA</div>
+<div class="subtitle">HVEM DOMINERER MAI — PER TIME?</div>
+<div class="badge-wrap"><span class="badge">MAI 2026</span></div>
+<div class="back-link"><a href="index.html">&larr; Tilbake til dashboard</a></div>
+
+<!-- ── POWER RANKING ─────────────────────────────────────── -->
+<div class="ranking">
+<div class="ranking-title">POWER RANKING — MAI 2026</div>
+'''
+
+    # Ranking rows
+    for i, f in enumerate(ranked):
+        rank = i + 1
+        cls = ''
+        if rank == 1: cls = ' gold'
+        elif rank == 2: cls = ' silver'
+        elif rank == 3: cls = ' bronze'
+        medal = ''
+        if rank == 1: medal = ' &#x1F451;'
+        elif rank == 2: medal = ' &#x1F948;'
+        elif rank == 3: medal = ' &#x1F949;'
+
+        html += f'''<div class="rank-row">
+    <div class="rank-num{cls}">#{rank}{medal}</div>
+    <div class="rank-avatar" style="background:{f['gradient']}">{f['symbol']}</div>
+    <div class="rank-info">
+        <div class="rank-name">{f['name']}</div>
+        <div class="rank-anime">{f['anime']} &middot; {f['jp']}</div>
     </div>
-</header>
+    <div class="rank-power" style="color:{f['color']}">{f['power']}</div>
+</div>
+'''
 
-<div class="arena">
+    html += '''<div class="rank-row" style="justify-content:center;color:#555;font-size:14px;letter-spacing:1px;">
+    POWER = (Gross/time &times; 10) + (T.Trygg/time &times; 5)
+</div>
+</div>
+'''
 
-    <!-- POWER RANKING -->
-    <div class="scoreboard">
-        <h3>⚡ Power Ranking — Mai 2026</h3>
-        {ranking_rows}
-        <div style="text-align:center; font-size:0.78rem; color:#444; margin-top:14px; letter-spacing:1px">
-            ⚡ POWER = (Gross/time × 10) + (T.Trygg/time × 5)
+    # ── MATCH CARDS ──────────────────────────────────────────
+    for idx, m in enumerate(MATCHUPS):
+        left = None
+        right = None
+        for fs in fighter_stats:
+            if fs['name'] == m['left']['name']:
+                left = fs
+            if fs['name'] == m['right']['name']:
+                right = fs
+
+        total_power = left['power'] + right['power']
+        if total_power > 0:
+            left_pct = round(left['power'] / total_power * 100)
+            right_pct = 100 - left_pct
+        else:
+            left_pct = 50
+            right_pct = 50
+
+        if left['power'] > right['power']:
+            result_text = f"&#x1F451; {left['name'].split()[0].upper()} LEDER"
+            result_color = left['color']
+        elif right['power'] > left['power']:
+            result_text = f"{right['name'].split()[0].upper()} LEDER &#x1F451;"
+            result_color = right['color']
+        else:
+            result_text = "DRAW"
+            result_color = "#888"
+
+        girl_class = ' girl' if left.get('is_girl') else ''
+        girl_class_r = ' girl' if right.get('is_girl') else ''
+
+        html += f'''
+<!-- ── KAMP {idx+1} ─────────────────────────────────────── -->
+<div class="match">
+<div class="match-label">KAMP {idx+1}</div>
+<div class="fighters">
+    <div class="fighter">
+        <div class="avatar-circle{girl_class}" style="background:{left['gradient']};box-shadow:0 0 40px {left['glow']}55">{left['symbol']}</div>
+        <div class="anime-name" style="color:{left['color']}">{left['anime']}</div>
+        <div class="jp-name">{left['jp']}</div>
+        <div class="real-name">{left['name']}</div>
+        <div class="ability">{left['ability']}</div>
+        <div class="hours-badge">{left['hours']} timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:{left['color']}">{left['gross']}</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:{left['color']}">{left['trygg']}</div><div class="stat-label">T.TRYGG</div></div>
         </div>
+        <div class="power-badge" style="color:{left['color']};border-color:{left['color']}">{left['power']} POWER</div>
     </div>
-
-    <!-- MATCHUPS -->
-    {matchup_html}
-
+    <div class="vs-section">
+        <div class="vs">VS</div>
+    </div>
+    <div class="fighter">
+        <div class="avatar-circle{girl_class_r}" style="background:{right['gradient']};box-shadow:0 0 40px {right['glow']}55">{right['symbol']}</div>
+        <div class="anime-name" style="color:{right['color']}">{right['anime']}</div>
+        <div class="jp-name">{right['jp']}</div>
+        <div class="real-name">{right['name']}</div>
+        <div class="ability">{right['ability']}</div>
+        <div class="hours-badge">{right['hours']} timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:{right['color']}">{right['gross']}</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:{right['color']}">{right['trygg']}</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:{right['color']};border-color:{right['color']}">{right['power']} POWER</div>
+    </div>
 </div>
 
-<footer>
-    <p>TELIA DRAMMEN &nbsp;·&nbsp; GULSKOGEN &nbsp;·&nbsp; MAI 2026</p>
-    <p style="margin-top:6px; font-size:0.72rem;">Oppdateres automatisk ved ny rapport</p>
-</footer>
+<div class="power-bar-section">
+    <div class="bar-labels">
+        <div>
+            <span class="bar-name" style="color:{left['color']}">{left['name'].split()[0].upper()}</span>
+            <span class="bar-stats">{left['gross_per_h']} gross/t | {left['trygg_per_h']} trygg/t</span>
+        </div>
+        <div style="text-align:right">
+            <span class="bar-stats">{right['gross_per_h']} gross/t | {right['trygg_per_h']} trygg/t</span>
+            <span class="bar-name" style="color:{right['color']}">{right['name'].split()[0].upper()}</span>
+        </div>
+    </div>
+    <div class="power-bar">
+        <div class="bar-left" style="width:{left_pct}%;background:{left['gradient']}"></div>
+        <div class="bar-right" style="width:{right_pct}%;background:{right['gradient']}"></div>
+    </div>
+    <div class="match-result" style="color:{result_color}">{result_text}</div>
+</div>
+</div>
+'''
 
+    html += '''
+<footer>TELIA DRAMMEN &middot; GULSKOGEN &middot; MAI 2026<br>Oppdateres automatisk ved ny rapport</footer>
 </body>
-</html>"""
+</html>'''
 
-    return html
+    out_path = os.path.join(os.path.dirname(__file__), 'konkurranse.html')
+    with open(out_path, 'w') as f:
+        f.write(html)
+    print(f"konkurranse.html generert ({len(html):,} bytes)")
 
 
 if __name__ == '__main__':
-    data = load_data()
-    html = generate_html(data)
-    out  = '/agent/home/konkurranse.html'
-    with open(out, 'w', encoding='utf-8') as f:
-        f.write(html)
-    print(f"✅ konkurranse.html generert ({len(html):,} bytes)")
+    generate()

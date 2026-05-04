@@ -2,817 +2,592 @@
 <html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1000">
-<title>⚔️ Gulskogen Konkurranse — Mai 2026</title>
+<title>Gulskogen Konkurranse — Mai 2026</title>
 <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-        background: #04040f;
-        color: #fff;
-        font-family: 'Segoe UI', sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-        min-width: 900px;
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #080818;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    min-width: 1000px;
+    padding: 40px 60px;
+}
 
-    /* ── STARFIELD ── */
-    .bg-stars {
-        position: fixed; top:0; left:0; width:100%; height:100%;
-        background: radial-gradient(ellipse at 20% 20%, #0a0a2e 0%, #04040f 60%);
-        z-index: -1;
-    }
-    .bg-stars::before {
-        content: '';
-        position: absolute; top:0; left:0; width:100%; height:100%;
-        background-image:
-            radial-gradient(1px 1px at 5%  10%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 15% 30%, #aaf 0%, transparent 100%),
-            radial-gradient(1px 1px at 25% 5%,  #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 35% 50%, #ffa 0%, transparent 100%),
-            radial-gradient(1px 1px at 45% 75%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 55% 20%, #aff 0%, transparent 100%),
-            radial-gradient(1px 1px at 65% 65%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 75% 40%, #faf 0%, transparent 100%),
-            radial-gradient(1px 1px at 85% 15%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 92% 85%, #aaf 0%, transparent 100%),
-            radial-gradient(1px 1px at 10% 60%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 70% 90%, #ffa 0%, transparent 100%);
-        opacity: 0.7;
-    }
+.title {
+    text-align: center;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #FF6600, #FFD700, #FF6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+.subtitle {
+    text-align: center;
+    font-size: 24px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+.badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6600, #FF3300);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0 auto 40px;
+}
+.badge-wrap { text-align: center; }
+.back-link {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.back-link a {
+    color: #888;
+    text-decoration: none;
+    font-size: 18px;
+}
+.back-link a:hover { color: #fff; }
 
-    header {
-        text-align: center;
-        padding: 50px 20px 24px;
-    }
-    .header-title {
-        font-size: 3.2rem;
-        font-weight: 900;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        background: linear-gradient(135deg, #FFD700, #FF4500, #FF69B4, #00BFFF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: titlePulse 3s ease-in-out infinite;
-        margin-bottom: 8px;
-    }
-    @keyframes titlePulse {
-        0%, 100% { filter: brightness(1); }
-        50%       { filter: brightness(1.5); }
-    }
-    .header-sub {
-        color: #aaa;
-        font-size: 1.1rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
-    .month-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, #990AE3, #00BFFF);
-        color: #fff;
-        font-weight: 800;
-        font-size: 1rem;
-        padding: 6px 24px;
-        border-radius: 30px;
-        margin-top: 14px;
-        letter-spacing: 3px;
-    }
-    .back-link {
-        display: inline-block;
-        margin-top: 16px;
-        color: #555;
-        font-size: 0.9rem;
-        text-decoration: none;
-        letter-spacing: 2px;
-        transition: color 0.2s;
-    }
-    .back-link:hover { color: #aaa; }
+/* ── RANKING TABLE ─────────────────────────────────────────── */
+.ranking {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    background: #111125;
+    border-radius: 16px;
+    border: 1px solid #222;
+    overflow: hidden;
+}
+.ranking-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    padding: 20px;
+    border-bottom: 1px solid #222;
+    letter-spacing: 2px;
+}
+.rank-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 30px;
+    border-bottom: 1px solid #1a1a30;
+    font-size: 20px;
+}
+.rank-row:last-child { border-bottom: none; }
+.rank-num {
+    width: 50px;
+    font-weight: 800;
+    font-size: 22px;
+}
+.rank-num.gold { color: #FFD700; }
+.rank-num.silver { color: #C0C0C0; }
+.rank-num.bronze { color: #CD7F32; }
+.rank-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 20px;
+    margin-right: 18px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}
+.rank-info {
+    flex: 1;
+}
+.rank-name {
+    font-weight: 700;
+    font-size: 20px;
+}
+.rank-anime {
+    font-size: 14px;
+    opacity: 0.5;
+    letter-spacing: 1px;
+}
+.rank-power {
+    font-weight: 800;
+    font-size: 24px;
+    min-width: 80px;
+    text-align: right;
+}
 
-    .arena {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 24px 20px 80px;
-    }
+/* ── MATCH CARDS ─────────────────────────────────────────── */
+.match {
+    max-width: 950px;
+    margin: 0 auto 50px;
+    background: #0d0d22;
+    border-radius: 20px;
+    border: 1px solid #222;
+    padding: 40px;
+}
+.match-label {
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: #555;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.fighters {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.fighter {
+    width: 38%;
+    text-align: center;
+}
+.avatar-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 52px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
+    position: relative;
+}
+.avatar-circle.girl {
+    animation: girlPulse 2s ease-in-out infinite;
+}
+@keyframes girlPulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(255,105,180,0.4); }
+    50% { box-shadow: 0 0 60px rgba(255,105,180,0.8), 0 0 100px rgba(255,105,180,0.3); }
+}
+.anime-name {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.jp-name {
+    font-size: 14px;
+    opacity: 0.4;
+    margin-bottom: 6px;
+}
+.real-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 4px;
+}
+.ability {
+    font-size: 15px;
+    opacity: 0.6;
+    font-style: italic;
+    margin-bottom: 4px;
+}
+.hours-badge {
+    font-size: 14px;
+    color: #66ff66;
+    margin-bottom: 18px;
+}
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 14px;
+}
+.stat-val {
+    font-size: 42px;
+    font-weight: 900;
+}
+.stat-label {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.power-badge {
+    display: inline-block;
+    padding: 6px 22px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 800;
+    border: 2px solid;
+}
 
-    /* ── MATCHUP CARD ── */
-    .matchup-card {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 24px;
-        margin-bottom: 36px;
-        overflow: hidden;
-        position: relative;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .matchup-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-    }
-    .matchup-number {
-        text-align: center;
-        font-size: 0.85rem;
-        letter-spacing: 4px;
-        color: #555;
-        padding: 18px 0 0;
-        text-transform: uppercase;
-    }
+/* VS circle */
+.vs-section {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+}
+.vs {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff3300, #ff0066);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 900;
+    box-shadow: 0 0 30px rgba(255,0,60,0.5);
+}
 
-    .fighters-row {
-        display: flex;
-        align-items: stretch;
-        padding: 20px;
-        gap: 0;
-    }
+/* ── POWER BAR ─────────────────────────────────────────── */
+.power-bar-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+}
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.bar-name { font-weight: 700; font-size: 16px; text-transform: uppercase; }
+.bar-stats { font-size: 13px; color: #aaa; }
+.power-bar {
+    height: 14px;
+    background: #1a1a30;
+    border-radius: 7px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 10px;
+}
+.bar-left, .bar-right {
+    height: 100%;
+    transition: width 0.5s;
+}
+.match-result {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-top: 8px;
+}
 
-    /* ── FIGHTER PANEL ── */
-    .fighter {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 16px 24px;
-        border-radius: 18px;
-        position: relative;
-        transition: background 0.3s;
-    }
-    .fighter.winner {
-        background: rgba(255,255,255,0.07);
-    }
-
-    /* ── AVATAR (emoji-based, always works) ── */
-    .fighter-avatar {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.8rem;
-        margin-bottom: 14px;
-        position: relative;
-        border: 4px solid transparent;
-        animation: avatarGlow 2s ease-in-out infinite;
-        flex-shrink: 0;
-    }
-    @keyframes avatarGlow {
-        0%, 100% { box-shadow: 0 0 14px var(--c), 0 0 28px var(--c); }
-        50%       { box-shadow: 0 0 30px var(--c), 0 0 60px var(--c), 0 0 90px var(--c); }
-    }
-    .girl-glow { animation: girlGlow 2s ease-in-out infinite !important; }
-    @keyframes girlGlow {
-        0%, 100% { box-shadow: 0 0 16px #FF69B4, 0 0 32px #FF69B4, 0 0 6px #fff; }
-        50%       { box-shadow: 0 0 32px #FF69B4, 0 0 64px #FF69B4, 0 0 100px #FF69B4, 0 0 12px #fff; }
-    }
-
-    .winner-crown {
-        position: absolute;
-        top: -20px;
-        font-size: 1.6rem;
-        display: none;
-        filter: drop-shadow(0 0 8px gold);
-    }
-    .fighter.winner .winner-crown { display: block; }
-
-    .fighter-anime {
-        font-size: 0.85rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        opacity: 0.9;
-        margin-bottom: 4px;
-        font-weight: 800;
-        text-align: center;
-    }
-    .fighter-jp {
-        font-size: 1rem;
-        color: #888;
-        margin-bottom: 6px;
-        text-align: center;
-        letter-spacing: 1px;
-    }
-    .fighter-name {
-        font-size: 1.1rem;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 4px;
-        line-height: 1.3;
-    }
-    .fighter-ability {
-        font-size: 0.82rem;
-        letter-spacing: 1px;
-        color: #666;
-        margin-bottom: 6px;
-        text-align: center;
-        font-style: italic;
-    }
-    .fighter-hours {
-        font-size: 0.82rem;
-        color: #555;
-        margin-bottom: 18px;
-        letter-spacing: 1px;
-    }
-
-    .stat-row {
-        display: flex;
-        justify-content: center;
-        gap: 28px;
-        width: 100%;
-    }
-    .stat-box { text-align: center; }
-    .stat-val {
-        font-size: 2rem;
-        font-weight: 900;
-        line-height: 1;
-    }
-    .stat-lbl {
-        font-size: 0.72rem;
-        letter-spacing: 2px;
-        color: #777;
-        text-transform: uppercase;
-        margin-top: 4px;
-    }
-    .power-badge {
-        margin-top: 14px;
-        font-size: 0.85rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        padding: 5px 16px;
-        border-radius: 14px;
-        border: 1px solid currentColor;
-    }
-
-    /* ── VS COLUMN ── */
-    .vs-col {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 14px;
-        min-width: 70px;
-    }
-    .vs-circle {
-        width: 62px; height: 62px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #FF4500, #FFD700);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 900;
-        font-size: 1.3rem;
-        letter-spacing: 1px;
-        box-shadow: 0 0 24px rgba(255,100,0,0.6);
-        animation: vsPulse 1.5s ease-in-out infinite;
-    }
-    @keyframes vsPulse {
-        0%, 100% { transform: scale(1);    box-shadow: 0 0 24px rgba(255,100,0,0.6); }
-        50%       { transform: scale(1.15); box-shadow: 0 0 48px rgba(255,100,0,1); }
-    }
-
-    /* ── POWER BAR ── */
-    .power-bar-section { padding: 0 28px 24px; }
-    .power-bar-label {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: #666;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-    }
-    .power-bar-track {
-        display: flex;
-        height: 14px;
-        border-radius: 7px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.05);
-    }
-    .power-bar-left  { transition: width 1s ease; border-radius: 7px 0 0 7px; }
-    .power-bar-right { transition: width 1s ease; border-radius: 0 7px 7px 0; }
-
-    /* ── PER HOUR ── */
-    .per-hour-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 28px 8px;
-        gap: 10px;
-    }
-    .ph-block {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.88rem;
-        color: #aaa;
-    }
-    .ph-val { font-weight: 800; font-size: 1rem; }
-
-    /* ── DRAW ── */
-    .draw-banner {
-        text-align: center;
-        font-size: 1rem;
-        letter-spacing: 3px;
-        color: #FFD700;
-        padding: 8px 0 16px;
-        text-transform: uppercase;
-    }
-
-    /* ── SCOREBOARD ── */
-    .scoreboard {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 20px;
-        padding: 28px;
-        margin-bottom: 36px;
-    }
-    .scoreboard h3 {
-        text-align: center;
-        font-size: 1rem;
-        letter-spacing: 4px;
-        color: #aaa;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-    .score-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        font-size: 1rem;
-    }
-    .score-row:last-child { border-bottom: none; }
-    .score-name { flex: 1; font-size: 1rem; }
-    .score-val  { min-width: 80px; text-align: right; font-weight: 800; font-size: 1.1rem; }
-    .rank-1 { color: #FFD700; }
-    .rank-2 { color: #C0C0C0; }
-    .rank-3 { color: #CD7F32; }
-
-    footer {
-        text-align: center;
-        color: #333;
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        padding-bottom: 40px;
-    }
-    </style>
+footer {
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    margin-top: 60px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+</style>
 </head>
 <body>
-<div class="bg-stars"></div>
 
-<header>
-    <div class="header-title">⚔️ Gulskogen Arena ⚔️</div>
-    <div class="header-sub">Hvem dominerer mai — per time?</div>
-    <div class="month-badge">MAI 2026</div>
-    <div style="margin-top:16px;">
-        <a href="index.html" class="back-link">← Tilbake til dashboard</a>
+<div class="title">GULSKOGEN ARENA</div>
+<div class="subtitle">HVEM DOMINERER MAI — PER TIME?</div>
+<div class="badge-wrap"><span class="badge">MAI 2026</span></div>
+<div class="back-link"><a href="index.html">&larr; Tilbake til dashboard</a></div>
+
+<!-- ── POWER RANKING ─────────────────────────────────────── -->
+<div class="ranking">
+<div class="ranking-title">POWER RANKING — MAI 2026</div>
+<div class="rank-row">
+    <div class="rank-num gold">#1 &#x1F451;</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #7a2e00 0%, #FF6600 60%, #FFB300 100%)">N</div>
+    <div class="rank-info">
+        <div class="rank-name">Ahmed Al Ali</div>
+        <div class="rank-anime">NARUTO &middot; うずまきナルト</div>
     </div>
-</header>
-
-<div class="arena">
-
-    <!-- POWER RANKING -->
-    <div class="scoreboard">
-        <h3>⚡ Power Ranking — Mai 2026</h3>
-        
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">🥇</span>
-            <span class="score-name rank-1" style="margin-left:12px">
-                🌀 <strong>Ahmed Al Ali</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">NARUTO UZUMAKI</span>
-            </span>
-            <span class="score-val" style="color:#FF6600">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">🥈</span>
-            <span class="score-name rank-2" style="margin-left:12px">
-                ⚡ <strong>Yasin Ali Ismail</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">SASUKE UCHIHA</span>
-            </span>
-            <span class="score-val" style="color:#5599FF">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">🥉</span>
-            <span class="score-name rank-3" style="margin-left:12px">
-                🔆 <strong>Saidt Oliver Alavi</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">SON GOKU</span>
-            </span>
-            <span class="score-val" style="color:#FFD700">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">#4</span>
-            <span class="score-name " style="margin-left:12px">
-                👑 <strong>Mert Ambarduzgun</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">VEGETA</span>
-            </span>
-            <span class="score-val" style="color:#CC55FF">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">#5</span>
-            <span class="score-name " style="margin-left:12px">
-                💪 <strong>Josef Ishan Latif Mossaiar</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">IZUKU MIDORIYA</span>
-            </span>
-            <span class="score-val" style="color:#00DD66">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">#6</span>
-            <span class="score-name " style="margin-left:12px">
-                🌸 <strong>Aya Mohammad</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">ZERO TWO</span>
-            </span>
-            <span class="score-val" style="color:#FF69B4">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">#7</span>
-            <span class="score-name " style="margin-left:12px">
-                ⚔️ <strong>Ali Esmati</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">ICHIGO KUROSAKI</span>
-            </span>
-            <span class="score-val" style="color:#FF4422">0.0</span>
-        </div>
-        <div class="score-row">
-            <span style="min-width:36px; text-align:center; font-size:1.2rem">#8</span>
-            <span class="score-name " style="margin-left:12px">
-                🔥 <strong>Kasim & Tommy</strong>
-                <span style="color:#444; font-size:0.8rem; margin-left:8px">MIGHT GUY & ROCK LEE</span>
-            </span>
-            <span class="score-val" style="color:#00E5FF">0.0</span>
-        </div>
-        <div style="text-align:center; font-size:0.78rem; color:#444; margin-top:14px; letter-spacing:1px">
-            ⚡ POWER = (Gross/time × 10) + (T.Trygg/time × 5)
-        </div>
+    <div class="rank-power" style="color:#FF6600">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num silver">#2 &#x1F948;</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #0a0a40 0%, #1a1aaa 60%, #5599FF 100%)">S</div>
+    <div class="rank-info">
+        <div class="rank-name">Yasin Ali Ismail</div>
+        <div class="rank-anime">SASUKE &middot; うちはサスケ</div>
     </div>
-
-    <!-- MATCHUPS -->
-    
-        <div class="matchup-card draw">
-            <div class="matchup-number">⚔️ KAMP 1</div>
-            <div class="fighters-row">
-
-                <!-- LEFT FIGHTER -->
-                <div class="fighter " style="--c:#FF6600">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#FF6600; border-color:#FF6600; background:linear-gradient(160deg, #7a2e00 0%, #FF6600 60%, #FFB300 100%);">
-                        🌀
-                    </div>
-                    <div class="fighter-anime" style="color:#FF6600">NARUTO UZUMAKI</div>
-                    <div class="fighter-jp">うずまきナルト</div>
-                    <div class="fighter-name">Ahmed Al Ali</div>
-                    <div class="fighter-ability">🌀 Shadow Clone Jutsu</div>
-                    <div class="fighter-hours">⏱ 100 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FF6600">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FF6600">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#FF6600">⚡ 0.0 POWER</div>
-                </div>
-
-                <!-- VS -->
-                <div class="vs-col">
-                    <div class="vs-circle">VS</div>
-                </div>
-
-                <!-- RIGHT FIGHTER -->
-                <div class="fighter " style="--c:#5599FF">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#5599FF; border-color:#5599FF; background:linear-gradient(160deg, #0a0a40 0%, #1a1aaa 60%, #5599FF 100%);">
-                        ⚡
-                    </div>
-                    <div class="fighter-anime" style="color:#5599FF">SASUKE UCHIHA</div>
-                    <div class="fighter-jp">うちはサスケ</div>
-                    <div class="fighter-name">Yasin Ali Ismail</div>
-                    <div class="fighter-ability">⚡ Chidori</div>
-                    <div class="fighter-hours">⏱ 90 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#5599FF">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#5599FF">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#5599FF">⚡ 0.0 POWER</div>
-                </div>
-            </div>
-
-            <!-- Per-hour row -->
-            <div class="per-hour-row">
-                <div class="ph-block">
-                    <span style="color:#FF6600">▶</span>
-                    <span class="ph-val" style="color:#FF6600">0.0</span>
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#FF6600">0.0</span>
-                    <span>trygg/t</span>
-                </div>
-                <div class="ph-block">
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#5599FF">0.0</span>
-                    <span>&nbsp;trygg/t</span>
-                    <span class="ph-val" style="color:#5599FF">0.0</span>
-                    <span style="color:#5599FF">◀</span>
-                </div>
-            </div>
-
-            <!-- Power bar -->
-            <div class="power-bar-section">
-                <div class="power-bar-label">
-                    <span style="color:#FF6600">Ahmed</span>
-                    <span style="color:#555">⚡ POWER LEVEL ⚡</span>
-                    <span style="color:#5599FF">Yasin</span>
-                </div>
-                <div class="power-bar-track">
-                    <div class="power-bar-left"  style="width:50%; background:#FF6600"></div>
-                    <div class="power-bar-right" style="width:50%; background:#5599FF"></div>
-                </div>
-            </div>
-            <div class="draw-banner">⚔️ DRAW ⚔️</div>
-        </div>
-        
-        <div class="matchup-card draw">
-            <div class="matchup-number">⚔️ KAMP 2</div>
-            <div class="fighters-row">
-
-                <!-- LEFT FIGHTER -->
-                <div class="fighter " style="--c:#FFD700">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#FFD700; border-color:#FFD700; background:linear-gradient(160deg, #4a3000 0%, #FF8C00 60%, #FFD700 100%);">
-                        🔆
-                    </div>
-                    <div class="fighter-anime" style="color:#FFD700">SON GOKU</div>
-                    <div class="fighter-jp">孫悟空</div>
-                    <div class="fighter-name">Saidt Oliver Alavi</div>
-                    <div class="fighter-ability">🔆 Kamehameha</div>
-                    <div class="fighter-hours">⏱ 60 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FFD700">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FFD700">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#FFD700">⚡ 0.0 POWER</div>
-                </div>
-
-                <!-- VS -->
-                <div class="vs-col">
-                    <div class="vs-circle">VS</div>
-                </div>
-
-                <!-- RIGHT FIGHTER -->
-                <div class="fighter " style="--c:#CC55FF">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#CC55FF; border-color:#CC55FF; background:linear-gradient(160deg, #2a0040 0%, #6600aa 60%, #CC55FF 100%);">
-                        👑
-                    </div>
-                    <div class="fighter-anime" style="color:#CC55FF">VEGETA</div>
-                    <div class="fighter-jp">ベジータ</div>
-                    <div class="fighter-name">Mert Ambarduzgun</div>
-                    <div class="fighter-ability">👑 Final Flash</div>
-                    <div class="fighter-hours">⏱ 50 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#CC55FF">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#CC55FF">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#CC55FF">⚡ 0.0 POWER</div>
-                </div>
-            </div>
-
-            <!-- Per-hour row -->
-            <div class="per-hour-row">
-                <div class="ph-block">
-                    <span style="color:#FFD700">▶</span>
-                    <span class="ph-val" style="color:#FFD700">0.0</span>
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#FFD700">0.0</span>
-                    <span>trygg/t</span>
-                </div>
-                <div class="ph-block">
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#CC55FF">0.0</span>
-                    <span>&nbsp;trygg/t</span>
-                    <span class="ph-val" style="color:#CC55FF">0.0</span>
-                    <span style="color:#CC55FF">◀</span>
-                </div>
-            </div>
-
-            <!-- Power bar -->
-            <div class="power-bar-section">
-                <div class="power-bar-label">
-                    <span style="color:#FFD700">Saidt</span>
-                    <span style="color:#555">⚡ POWER LEVEL ⚡</span>
-                    <span style="color:#CC55FF">Mert</span>
-                </div>
-                <div class="power-bar-track">
-                    <div class="power-bar-left"  style="width:50%; background:#FFD700"></div>
-                    <div class="power-bar-right" style="width:50%; background:#CC55FF"></div>
-                </div>
-            </div>
-            <div class="draw-banner">⚔️ DRAW ⚔️</div>
-        </div>
-        
-        <div class="matchup-card draw">
-            <div class="matchup-number">⚔️ KAMP 3</div>
-            <div class="fighters-row">
-
-                <!-- LEFT FIGHTER -->
-                <div class="fighter " style="--c:#00DD66">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#00DD66; border-color:#00DD66; background:linear-gradient(160deg, #003300 0%, #006622 60%, #00DD66 100%);">
-                        💪
-                    </div>
-                    <div class="fighter-anime" style="color:#00DD66">IZUKU MIDORIYA</div>
-                    <div class="fighter-jp">緑谷出久</div>
-                    <div class="fighter-name">Josef Ishan Latif Mossaiar</div>
-                    <div class="fighter-ability">💪 One For All</div>
-                    <div class="fighter-hours">⏱ 65 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#00DD66">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#00DD66">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#00DD66">⚡ 0.0 POWER</div>
-                </div>
-
-                <!-- VS -->
-                <div class="vs-col">
-                    <div class="vs-circle">VS</div>
-                </div>
-
-                <!-- RIGHT FIGHTER -->
-                <div class="fighter " style="--c:#FF69B4">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar girl-glow" style="--c:#FF69B4; border-color:#FF69B4; background:linear-gradient(160deg, #4a0020 0%, #cc0066 60%, #FF69B4 100%);">
-                        🌸
-                    </div>
-                    <div class="fighter-anime" style="color:#FF69B4">ZERO TWO</div>
-                    <div class="fighter-jp">ゼロツー</div>
-                    <div class="fighter-name">Aya Mohammad</div>
-                    <div class="fighter-ability">🌸 Strelizia</div>
-                    <div class="fighter-hours">⏱ 68 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FF69B4">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FF69B4">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#FF69B4">⚡ 0.0 POWER</div>
-                </div>
-            </div>
-
-            <!-- Per-hour row -->
-            <div class="per-hour-row">
-                <div class="ph-block">
-                    <span style="color:#00DD66">▶</span>
-                    <span class="ph-val" style="color:#00DD66">0.0</span>
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#00DD66">0.0</span>
-                    <span>trygg/t</span>
-                </div>
-                <div class="ph-block">
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#FF69B4">0.0</span>
-                    <span>&nbsp;trygg/t</span>
-                    <span class="ph-val" style="color:#FF69B4">0.0</span>
-                    <span style="color:#FF69B4">◀</span>
-                </div>
-            </div>
-
-            <!-- Power bar -->
-            <div class="power-bar-section">
-                <div class="power-bar-label">
-                    <span style="color:#00DD66">Josef</span>
-                    <span style="color:#555">⚡ POWER LEVEL ⚡</span>
-                    <span style="color:#FF69B4">Aya</span>
-                </div>
-                <div class="power-bar-track">
-                    <div class="power-bar-left"  style="width:50%; background:#00DD66"></div>
-                    <div class="power-bar-right" style="width:50%; background:#FF69B4"></div>
-                </div>
-            </div>
-            <div class="draw-banner">⚔️ DRAW ⚔️</div>
-        </div>
-        
-        <div class="matchup-card draw">
-            <div class="matchup-number">⚔️ KAMP 4</div>
-            <div class="fighters-row">
-
-                <!-- LEFT FIGHTER -->
-                <div class="fighter " style="--c:#FF4422">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#FF4422; border-color:#FF4422; background:linear-gradient(160deg, #3a0000 0%, #991100 60%, #FF4422 100%);">
-                        ⚔️
-                    </div>
-                    <div class="fighter-anime" style="color:#FF4422">ICHIGO KUROSAKI</div>
-                    <div class="fighter-jp">黒崎一護</div>
-                    <div class="fighter-name">Ali Esmati</div>
-                    <div class="fighter-ability">⚔️ Getsuga Tenshou</div>
-                    <div class="fighter-hours">⏱ 90 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FF4422">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#FF4422">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#FF4422">⚡ 0.0 POWER</div>
-                </div>
-
-                <!-- VS -->
-                <div class="vs-col">
-                    <div class="vs-circle">VS</div>
-                </div>
-
-                <!-- RIGHT FIGHTER -->
-                <div class="fighter " style="--c:#00E5FF">
-                    <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar " style="--c:#00E5FF; border-color:#00E5FF; background:linear-gradient(160deg, #003333 0%, #006644 60%, #00E5FF 100%);">
-                        🔥
-                    </div>
-                    <div class="fighter-anime" style="color:#00E5FF">MIGHT GUY & ROCK LEE</div>
-                    <div class="fighter-jp">マイト・ガイ & ロック・リー</div>
-                    <div class="fighter-name">Kasim & Tommy</div>
-                    <div class="fighter-ability">🔥 Gates of Youth</div>
-                    <div class="fighter-hours">⏱ 90 timer</div>
-                    <div class="stat-row">
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#00E5FF">0</div>
-                            <div class="stat-lbl">Gross</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-val" style="color:#00E5FF">0</div>
-                            <div class="stat-lbl">T.Trygg</div>
-                        </div>
-                    </div>
-                    <div class="power-badge" style="color:#00E5FF">⚡ 0.0 POWER</div>
-                </div>
-            </div>
-
-            <!-- Per-hour row -->
-            <div class="per-hour-row">
-                <div class="ph-block">
-                    <span style="color:#FF4422">▶</span>
-                    <span class="ph-val" style="color:#FF4422">0.0</span>
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#FF4422">0.0</span>
-                    <span>trygg/t</span>
-                </div>
-                <div class="ph-block">
-                    <span>gross/t &nbsp;|&nbsp;</span>
-                    <span class="ph-val" style="color:#00E5FF">0.0</span>
-                    <span>&nbsp;trygg/t</span>
-                    <span class="ph-val" style="color:#00E5FF">0.0</span>
-                    <span style="color:#00E5FF">◀</span>
-                </div>
-            </div>
-
-            <!-- Power bar -->
-            <div class="power-bar-section">
-                <div class="power-bar-label">
-                    <span style="color:#FF4422">Ali</span>
-                    <span style="color:#555">⚡ POWER LEVEL ⚡</span>
-                    <span style="color:#00E5FF">Kasim</span>
-                </div>
-                <div class="power-bar-track">
-                    <div class="power-bar-left"  style="width:50%; background:#FF4422"></div>
-                    <div class="power-bar-right" style="width:50%; background:#00E5FF"></div>
-                </div>
-            </div>
-            <div class="draw-banner">⚔️ DRAW ⚔️</div>
-        </div>
-        
-
+    <div class="rank-power" style="color:#5599FF">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num bronze">#3 &#x1F949;</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #4a3000 0%, #FF8C00 60%, #FFD700 100%)">G</div>
+    <div class="rank-info">
+        <div class="rank-name">Saidt Oliver Alavi</div>
+        <div class="rank-anime">GOKU &middot; 孫悟空</div>
+    </div>
+    <div class="rank-power" style="color:#FFD700">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num">#4</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #2a0050 0%, #6600aa 60%, #BB66FF 100%)">V</div>
+    <div class="rank-info">
+        <div class="rank-name">Mert Ambarduzgun</div>
+        <div class="rank-anime">VEGETA &middot; ベジータ</div>
+    </div>
+    <div class="rank-power" style="color:#BB66FF">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num">#5</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #003322 0%, #22aa55 60%, #44DD88 100%)">D</div>
+    <div class="rank-info">
+        <div class="rank-name">Josef Ishan Latif Mossaiar</div>
+        <div class="rank-anime">DEKU &middot; デク</div>
+    </div>
+    <div class="rank-power" style="color:#44DD88">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num">#6</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #4a0028 0%, #cc2277 60%, #FF69B4 100%)">02</div>
+    <div class="rank-info">
+        <div class="rank-name">Aya Mohammad</div>
+        <div class="rank-anime">ZERO TWO &middot; ゼロツー</div>
+    </div>
+    <div class="rank-power" style="color:#FF69B4">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num">#7</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #3a0000 0%, #cc2222 60%, #FF4444 100%)">I</div>
+    <div class="rank-info">
+        <div class="rank-name">Ali Esmati</div>
+        <div class="rank-anime">ICHIGO &middot; 黒崎一護</div>
+    </div>
+    <div class="rank-power" style="color:#FF4444">0.0</div>
+</div>
+<div class="rank-row">
+    <div class="rank-num">#8</div>
+    <div class="rank-avatar" style="background:linear-gradient(160deg, #003322 0%, #009944 60%, #00CC66 100%)">GL</div>
+    <div class="rank-info">
+        <div class="rank-name">Kasim & Tommy</div>
+        <div class="rank-anime">GUY & LEE &middot; ガイ＆リー</div>
+    </div>
+    <div class="rank-power" style="color:#00CC66">0.0</div>
+</div>
+<div class="rank-row" style="justify-content:center;color:#555;font-size:14px;letter-spacing:1px;">
+    POWER = (Gross/time &times; 10) + (T.Trygg/time &times; 5)
+</div>
 </div>
 
-<footer>
-    <p>TELIA DRAMMEN &nbsp;·&nbsp; GULSKOGEN &nbsp;·&nbsp; MAI 2026</p>
-    <p style="margin-top:6px; font-size:0.72rem;">Oppdateres automatisk ved ny rapport</p>
-</footer>
+<!-- ── KAMP 1 ─────────────────────────────────────── -->
+<div class="match">
+<div class="match-label">KAMP 1</div>
+<div class="fighters">
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #7a2e00 0%, #FF6600 60%, #FFB300 100%);box-shadow:0 0 40px #FF660055">N</div>
+        <div class="anime-name" style="color:#FF6600">NARUTO</div>
+        <div class="jp-name">うずまきナルト</div>
+        <div class="real-name">Ahmed Al Ali</div>
+        <div class="ability">Shadow Clone Jutsu</div>
+        <div class="hours-badge">100 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#FF6600">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#FF6600">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#FF6600;border-color:#FF6600">0.0 POWER</div>
+    </div>
+    <div class="vs-section">
+        <div class="vs">VS</div>
+    </div>
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #0a0a40 0%, #1a1aaa 60%, #5599FF 100%);box-shadow:0 0 40px #5599FF55">S</div>
+        <div class="anime-name" style="color:#5599FF">SASUKE</div>
+        <div class="jp-name">うちはサスケ</div>
+        <div class="real-name">Yasin Ali Ismail</div>
+        <div class="ability">Chidori</div>
+        <div class="hours-badge">90 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#5599FF">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#5599FF">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#5599FF;border-color:#5599FF">0.0 POWER</div>
+    </div>
+</div>
 
+<div class="power-bar-section">
+    <div class="bar-labels">
+        <div>
+            <span class="bar-name" style="color:#FF6600">AHMED</span>
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+        </div>
+        <div style="text-align:right">
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+            <span class="bar-name" style="color:#5599FF">YASIN</span>
+        </div>
+    </div>
+    <div class="power-bar">
+        <div class="bar-left" style="width:50%;background:linear-gradient(160deg, #7a2e00 0%, #FF6600 60%, #FFB300 100%)"></div>
+        <div class="bar-right" style="width:50%;background:linear-gradient(160deg, #0a0a40 0%, #1a1aaa 60%, #5599FF 100%)"></div>
+    </div>
+    <div class="match-result" style="color:#888">DRAW</div>
+</div>
+</div>
+
+<!-- ── KAMP 2 ─────────────────────────────────────── -->
+<div class="match">
+<div class="match-label">KAMP 2</div>
+<div class="fighters">
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #4a3000 0%, #FF8C00 60%, #FFD700 100%);box-shadow:0 0 40px #FFD70055">G</div>
+        <div class="anime-name" style="color:#FFD700">GOKU</div>
+        <div class="jp-name">孫悟空</div>
+        <div class="real-name">Saidt Oliver Alavi</div>
+        <div class="ability">Kamehameha</div>
+        <div class="hours-badge">60 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#FFD700">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#FFD700">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#FFD700;border-color:#FFD700">0.0 POWER</div>
+    </div>
+    <div class="vs-section">
+        <div class="vs">VS</div>
+    </div>
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #2a0050 0%, #6600aa 60%, #BB66FF 100%);box-shadow:0 0 40px #BB66FF55">V</div>
+        <div class="anime-name" style="color:#BB66FF">VEGETA</div>
+        <div class="jp-name">ベジータ</div>
+        <div class="real-name">Mert Ambarduzgun</div>
+        <div class="ability">Final Flash</div>
+        <div class="hours-badge">50 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#BB66FF">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#BB66FF">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#BB66FF;border-color:#BB66FF">0.0 POWER</div>
+    </div>
+</div>
+
+<div class="power-bar-section">
+    <div class="bar-labels">
+        <div>
+            <span class="bar-name" style="color:#FFD700">SAIDT</span>
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+        </div>
+        <div style="text-align:right">
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+            <span class="bar-name" style="color:#BB66FF">MERT</span>
+        </div>
+    </div>
+    <div class="power-bar">
+        <div class="bar-left" style="width:50%;background:linear-gradient(160deg, #4a3000 0%, #FF8C00 60%, #FFD700 100%)"></div>
+        <div class="bar-right" style="width:50%;background:linear-gradient(160deg, #2a0050 0%, #6600aa 60%, #BB66FF 100%)"></div>
+    </div>
+    <div class="match-result" style="color:#888">DRAW</div>
+</div>
+</div>
+
+<!-- ── KAMP 3 ─────────────────────────────────────── -->
+<div class="match">
+<div class="match-label">KAMP 3</div>
+<div class="fighters">
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #003322 0%, #22aa55 60%, #44DD88 100%);box-shadow:0 0 40px #44DD8855">D</div>
+        <div class="anime-name" style="color:#44DD88">DEKU</div>
+        <div class="jp-name">デク</div>
+        <div class="real-name">Josef Ishan Latif Mossaiar</div>
+        <div class="ability">One For All</div>
+        <div class="hours-badge">65 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#44DD88">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#44DD88">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#44DD88;border-color:#44DD88">0.0 POWER</div>
+    </div>
+    <div class="vs-section">
+        <div class="vs">VS</div>
+    </div>
+    <div class="fighter">
+        <div class="avatar-circle girl" style="background:linear-gradient(160deg, #4a0028 0%, #cc2277 60%, #FF69B4 100%);box-shadow:0 0 40px #FF69B455">02</div>
+        <div class="anime-name" style="color:#FF69B4">ZERO TWO</div>
+        <div class="jp-name">ゼロツー</div>
+        <div class="real-name">Aya Mohammad</div>
+        <div class="ability">Strelizia</div>
+        <div class="hours-badge">68 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#FF69B4">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#FF69B4">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#FF69B4;border-color:#FF69B4">0.0 POWER</div>
+    </div>
+</div>
+
+<div class="power-bar-section">
+    <div class="bar-labels">
+        <div>
+            <span class="bar-name" style="color:#44DD88">JOSEF</span>
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+        </div>
+        <div style="text-align:right">
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+            <span class="bar-name" style="color:#FF69B4">AYA</span>
+        </div>
+    </div>
+    <div class="power-bar">
+        <div class="bar-left" style="width:50%;background:linear-gradient(160deg, #003322 0%, #22aa55 60%, #44DD88 100%)"></div>
+        <div class="bar-right" style="width:50%;background:linear-gradient(160deg, #4a0028 0%, #cc2277 60%, #FF69B4 100%)"></div>
+    </div>
+    <div class="match-result" style="color:#888">DRAW</div>
+</div>
+</div>
+
+<!-- ── KAMP 4 ─────────────────────────────────────── -->
+<div class="match">
+<div class="match-label">KAMP 4</div>
+<div class="fighters">
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #3a0000 0%, #cc2222 60%, #FF4444 100%);box-shadow:0 0 40px #FF444455">I</div>
+        <div class="anime-name" style="color:#FF4444">ICHIGO</div>
+        <div class="jp-name">黒崎一護</div>
+        <div class="real-name">Ali Esmati</div>
+        <div class="ability">Bankai: Tensa Zangetsu</div>
+        <div class="hours-badge">90 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#FF4444">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#FF4444">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#FF4444;border-color:#FF4444">0.0 POWER</div>
+    </div>
+    <div class="vs-section">
+        <div class="vs">VS</div>
+    </div>
+    <div class="fighter">
+        <div class="avatar-circle" style="background:linear-gradient(160deg, #003322 0%, #009944 60%, #00CC66 100%);box-shadow:0 0 40px #00CC6655">GL</div>
+        <div class="anime-name" style="color:#00CC66">GUY & LEE</div>
+        <div class="jp-name">ガイ＆リー</div>
+        <div class="real-name">Kasim & Tommy</div>
+        <div class="ability">Gates of Youth</div>
+        <div class="hours-badge">90 timer</div>
+        <div class="stats">
+            <div><div class="stat-val" style="color:#00CC66">0</div><div class="stat-label">GROSS</div></div>
+            <div><div class="stat-val" style="color:#00CC66">0</div><div class="stat-label">T.TRYGG</div></div>
+        </div>
+        <div class="power-badge" style="color:#00CC66;border-color:#00CC66">0.0 POWER</div>
+    </div>
+</div>
+
+<div class="power-bar-section">
+    <div class="bar-labels">
+        <div>
+            <span class="bar-name" style="color:#FF4444">ALI</span>
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+        </div>
+        <div style="text-align:right">
+            <span class="bar-stats">0.0 gross/t | 0.0 trygg/t</span>
+            <span class="bar-name" style="color:#00CC66">KASIM</span>
+        </div>
+    </div>
+    <div class="power-bar">
+        <div class="bar-left" style="width:50%;background:linear-gradient(160deg, #3a0000 0%, #cc2222 60%, #FF4444 100%)"></div>
+        <div class="bar-right" style="width:50%;background:linear-gradient(160deg, #003322 0%, #009944 60%, #00CC66 100%)"></div>
+    </div>
+    <div class="match-result" style="color:#888">DRAW</div>
+</div>
+</div>
+
+<footer>TELIA DRAMMEN &middot; GULSKOGEN &middot; MAI 2026<br>Oppdateres automatisk ved ny rapport</footer>
 </body>
 </html>
