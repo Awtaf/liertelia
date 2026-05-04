@@ -8,43 +8,125 @@ import os
 
 # ── HOURS PER FIGHTER (fixed, set by manager) ───────────────────────────────
 HOURS = {
-    'Ahmed Al Ali':             100,
-    'Yasin Ali Ismail':          90,
-    'Saidt Oliver Alavi':        60,
-    'Mert Ambarduzgun':          50,
-    'Aya Mohammad':              68,
-    'Josef Ishan Latif Mossaiar':65,
-    'Ali Esmati':                90,
-    # Team: Kasim + Tommy combined = 90h
-    'Kasim Al Ali':              90,   # team hours (shared bucket)
-    'Tommy Olafsen':             90,   # team hours (shared bucket)
+    'Ahmed Al Ali':                100,
+    'Yasin Ali Ismail':             90,
+    'Saidt Oliver Alavi':           60,
+    'Mert Ambarduzgun':             50,
+    'Aya Mohammad':                 68,
+    'Josef Ishan Latif Mossaiar':   65,
+    'Ali Esmati':                   90,
+    'Kasim Al Ali':                 90,
+    'Tommy Olafsen':                90,
 }
 
-# ── MATCHUPS ─────────────────────────────────────────────────────────────────
+# Character image URLs (MAL CDN — with emoji fallback if img fails)
+# All male except Aya (Zero Two = female)
 MATCHUPS = [
     {
         'id': 'm1',
-        'left':  {'name': 'Ahmed Al Ali',       'hours': 100, 'color': '#FF4500', 'anime': 'NARUTO', 'emoji': '🔥'},
-        'right': {'name': 'Yasin Ali Ismail',   'hours': 90,  'color': '#00BFFF', 'anime': 'SASUKE', 'emoji': '⚡'},
+        'left': {
+            'name': 'Ahmed Al Ali',
+            'hours': 100,
+            'color': '#FF6600',
+            'anime': 'NARUTO UZUMAKI',
+            'jp': 'うずまきナルト',
+            'ability': 'Shadow Clone Jutsu',
+            'emoji': '🌀',
+            'img': 'https://cdn.myanimelist.net/images/characters/2/284121.jpg',
+            'gradient': 'linear-gradient(135deg, #FF6600, #FF9900)',
+        },
+        'right': {
+            'name': 'Yasin Ali Ismail',
+            'hours': 90,
+            'color': '#0055FF',
+            'anime': 'SASUKE UCHIHA',
+            'jp': 'うちはサスケ',
+            'ability': 'Chidori',
+            'emoji': '⚡',
+            'img': 'https://cdn.myanimelist.net/images/characters/9/131317.jpg',
+            'gradient': 'linear-gradient(135deg, #0033CC, #330066)',
+        },
     },
     {
         'id': 'm2',
-        'left':  {'name': 'Saidt Oliver Alavi', 'hours': 60,  'color': '#FFD700', 'anime': 'GOKU',   'emoji': '💛'},
-        'right': {'name': 'Mert Ambarduzgun',   'hours': 50,  'color': '#9B59B6', 'anime': 'VEGETA', 'emoji': '🟣'},
+        'left': {
+            'name': 'Saidt Oliver Alavi',
+            'hours': 60,
+            'color': '#FFD700',
+            'anime': 'SON GOKU',
+            'jp': '孫悟空',
+            'ability': 'Kamehameha',
+            'emoji': '🔆',
+            'img': 'https://cdn.myanimelist.net/images/characters/15/72823.jpg',
+            'gradient': 'linear-gradient(135deg, #FF8C00, #FFD700)',
+        },
+        'right': {
+            'name': 'Mert Ambarduzgun',
+            'hours': 50,
+            'color': '#9B59B6',
+            'anime': 'VEGETA',
+            'jp': 'ベジータ',
+            'ability': 'Final Flash',
+            'emoji': '👑',
+            'img': 'https://cdn.myanimelist.net/images/characters/13/72829.jpg',
+            'gradient': 'linear-gradient(135deg, #4B0082, #9B59B6)',
+        },
     },
     {
         'id': 'm3',
-        'left':  {'name': 'Josef Ishan Latif Mossaiar', 'hours': 65, 'color': '#00FF7F', 'anime': 'DEKU', 'emoji': '💚'},
-        'right': {'name': 'Aya Mohammad',               'hours': 68, 'color': '#FF69B4', 'anime': 'ZERO TWO', 'emoji': '🌸'},
+        'left': {
+            'name': 'Josef Ishan Latif Mossaiar',
+            'hours': 65,
+            'color': '#00DD66',
+            'anime': 'IZUKU MIDORIYA',
+            'jp': '緑谷出久',
+            'ability': 'One For All',
+            'emoji': '💪',
+            'img': 'https://cdn.myanimelist.net/images/characters/2/373002.jpg',
+            'gradient': 'linear-gradient(135deg, #006600, #00DD66)',
+        },
+        'right': {
+            'name': 'Aya Mohammad',
+            'hours': 68,
+            'color': '#FF69B4',
+            'anime': 'ZERO TWO',
+            'jp': 'ゼロツー',
+            'ability': 'Strelizia — Ikuno',
+            'emoji': '🌸',
+            'img': 'https://cdn.myanimelist.net/images/characters/8/408835.jpg',
+            'gradient': 'linear-gradient(135deg, #CC0066, #FF69B4)',
+            'is_girl': True,
+        },
     },
     {
         'id': 'm4',
-        'left':  {'name': 'Ali Esmati',   'hours': 90, 'color': '#FF6B35', 'anime': 'ICHIGO', 'emoji': '🟠',
-                  'solo': True},
-        'right': {'name': 'Kasim Al Ali + Tommy Olafsen', 'hours': 90, 'color': '#00E5FF', 'anime': 'DUO',
-                  'emoji': '🤝', 'team': ['Kasim Al Ali', 'Tommy Olafsen']},
+        'left': {
+            'name': 'Ali Esmati',
+            'hours': 90,
+            'color': '#FF4500',
+            'anime': 'ICHIGO KUROSAKI',
+            'jp': '黒崎一護',
+            'ability': 'Getsuga Tenshou',
+            'emoji': '⚔️',
+            'img': 'https://cdn.myanimelist.net/images/characters/7/15788.jpg',
+            'gradient': 'linear-gradient(135deg, #8B0000, #FF4500)',
+            'solo': True,
+        },
+        'right': {
+            'name': 'Kasim Al Ali + Tommy Olafsen',
+            'hours': 90,
+            'color': '#00E5FF',
+            'anime': 'MIGHT GUY & ROCK LEE',
+            'jp': 'マイト・ガイ & ロック・リー',
+            'ability': 'Gates of Youth',
+            'emoji': '🔥',
+            'img': '',
+            'gradient': 'linear-gradient(135deg, #006400, #00E5FF)',
+            'team': ['Kasim Al Ali', 'Tommy Olafsen'],
+        },
     },
 ]
+
 
 def load_data():
     path = '/agent/home/complete_extracted_data.json'
@@ -53,8 +135,8 @@ def load_data():
     with open(path) as f:
         return json.load(f)
 
+
 def get_seller_stats(data, store, month, name):
-    """Return gross and trygg for a seller in a given store/month."""
     try:
         sellers = data[store][month]['sellers']
     except (KeyError, TypeError):
@@ -65,8 +147,8 @@ def get_seller_stats(data, store, month, name):
             return float(s.get('gross', 0)), float(s.get('trygg', 0))
     return 0, 0
 
+
 def fighter_stats(data, fighter):
-    """Get gross, trygg, per-hour stats for a fighter."""
     if 'team' in fighter:
         gross, trygg = 0, 0
         for member in fighter['team']:
@@ -90,29 +172,53 @@ def fighter_stats(data, fighter):
         'power':    power,
     }
 
+
 def bar_pct(a, b):
-    """Return percentage widths for two values (left, right)."""
     total = a + b
     if total == 0:
         return 50, 50
     return round(a / total * 100), round(b / total * 100)
 
-def winner_class(left_power, right_power):
-    if left_power > right_power:
-        return 'left-wins'
-    elif right_power > left_power:
-        return 'right-wins'
+
+def winner_class(lp, rp):
+    if lp > rp:   return 'left-wins'
+    if rp > lp:   return 'right-wins'
     return 'draw'
 
+
+def avatar_html(fighter, stats):
+    """Render anime character avatar with image + emoji fallback."""
+    c    = fighter['color']
+    grad = fighter['gradient']
+    img  = fighter.get('img', '')
+    emj  = fighter['emoji']
+    is_g = fighter.get('is_girl', False)
+
+    # Extra sparkle for girl character
+    sparkle = '✨ ' if is_g else ''
+
+    if img:
+        return f"""<div class="fighter-avatar" style="--c:{c}; border-color:{c}; background:{grad}; padding:0; overflow:hidden;">
+                        <img src="{img}" alt="{fighter['anime']}"
+                             style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+                             onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+                        <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2.4rem;background:{grad}">
+                            {sparkle}{emj}
+                        </div>
+                    </div>"""
+    else:
+        return f"""<div class="fighter-avatar" style="--c:{c}; border-color:{c}; background:{grad}; font-size:2.4rem;">
+                        {sparkle}{emj}
+                   </div>"""
+
+
 def generate_html(data):
-    # Pre-compute all stats
     matchup_data = []
     for m in MATCHUPS:
         ls = fighter_stats(data, m['left'])
         rs = fighter_stats(data, m['right'])
         matchup_data.append({'matchup': m, 'ls': ls, 'rs': rs})
 
-    # ── CSS ─────────────────────────────────────────────────────────────────
     css = """
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -122,6 +228,8 @@ def generate_html(data):
         min-height: 100vh;
         overflow-x: hidden;
     }
+
+    /* ── STARFIELD ── */
     .bg-stars {
         position: fixed; top:0; left:0; width:100%; height:100%;
         background: radial-gradient(ellipse at 20% 20%, #0a0a2e 0%, #04040f 60%);
@@ -138,7 +246,9 @@ def generate_html(data):
             radial-gradient(1px 1px at 50% 80%, #fff 0%, transparent 100%),
             radial-gradient(1px 1px at 90% 25%, #aff 0%, transparent 100%),
             radial-gradient(1px 1px at 15% 70%, #fff 0%, transparent 100%),
-            radial-gradient(1px 1px at 70% 45%, #faf 0%, transparent 100%);
+            radial-gradient(1px 1px at 70% 45%, #faf 0%, transparent 100%),
+            radial-gradient(1px 1px at 45% 55%, #fff 0%, transparent 100%),
+            radial-gradient(1px 1px at 25% 90%, #aaf 0%, transparent 100%);
         opacity: 0.6;
     }
 
@@ -157,11 +267,10 @@ def generate_html(data):
         -webkit-text-fill-color: transparent;
         background-clip: text;
         animation: titlePulse 3s ease-in-out infinite;
-        text-shadow: none;
     }
     @keyframes titlePulse {
         0%, 100% { filter: brightness(1); }
-        50% { filter: brightness(1.3); }
+        50%       { filter: brightness(1.4); }
     }
     .header-sub {
         color: #aaa;
@@ -199,8 +308,6 @@ def generate_html(data):
         transition: transform 0.3s;
     }
     .matchup-card:hover { transform: translateY(-3px); }
-    .matchup-card.left-wins  { border-color: rgba(255,255,255,0.15); }
-    .matchup-card.right-wins { border-color: rgba(255,255,255,0.15); }
 
     .matchup-number {
         text-align: center;
@@ -233,46 +340,71 @@ def generate_html(data):
         background: rgba(255,255,255,0.06);
     }
     .fighter-avatar {
-        width: 80px; height: 80px;
+        width: 90px; height: 90px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         margin-bottom: 8px;
         position: relative;
         border: 3px solid transparent;
         animation: avatarGlow 2s ease-in-out infinite;
+        flex-shrink: 0;
     }
     @keyframes avatarGlow {
         0%, 100% { box-shadow: 0 0 10px var(--c), 0 0 20px var(--c); }
-        50%       { box-shadow: 0 0 20px var(--c), 0 0 40px var(--c), 0 0 60px var(--c); }
+        50%       { box-shadow: 0 0 22px var(--c), 0 0 44px var(--c), 0 0 66px var(--c); }
     }
+
+    /* Girl character extra sparkle animation */
+    .girl-glow { animation: girlGlow 2s ease-in-out infinite !important; }
+    @keyframes girlGlow {
+        0%, 100% { box-shadow: 0 0 12px #FF69B4, 0 0 24px #FF69B4, 0 0 4px #fff; }
+        50%       { box-shadow: 0 0 24px #FF69B4, 0 0 48px #FF69B4, 0 0 80px #FF69B4, 0 0 8px #fff; }
+    }
+
     .winner-crown {
         position: absolute;
-        top: -14px;
-        font-size: 1.2rem;
+        top: -16px;
+        font-size: 1.3rem;
         display: none;
     }
     .fighter.winner .winner-crown { display: block; }
 
     .fighter-anime {
-        font-size: 0.6rem;
-        letter-spacing: 3px;
+        font-size: 0.62rem;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        opacity: 0.6;
-        margin-bottom: 4px;
-    }
-    .fighter-name {
-        font-size: 0.95rem;
+        opacity: 0.8;
+        margin-bottom: 2px;
         font-weight: 700;
         text-align: center;
-        margin-bottom: 4px;
+    }
+    .fighter-jp {
+        font-size: 0.7rem;
+        color: #666;
+        margin-bottom: 3px;
+        text-align: center;
+    }
+    .fighter-name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3px;
         line-height: 1.3;
+    }
+    .fighter-ability {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+        color: #555;
+        margin-bottom: 4px;
+        text-align: center;
+        font-style: italic;
     }
     .fighter-hours {
         font-size: 0.7rem;
-        color: #666;
+        color: #555;
         margin-bottom: 12px;
     }
     .stat-row {
@@ -282,9 +414,7 @@ def generate_html(data):
         width: 100%;
         flex-wrap: wrap;
     }
-    .stat-box {
-        text-align: center;
-    }
+    .stat-box { text-align: center; }
     .stat-val {
         font-size: 1.4rem;
         font-weight: 900;
@@ -312,7 +442,7 @@ def generate_html(data):
         align-items: center;
         justify-content: center;
         padding: 0 8px;
-        min-width: 60px;
+        min-width: 54px;
     }
     .vs-circle {
         width: 48px; height: 48px;
@@ -329,13 +459,11 @@ def generate_html(data):
     }
     @keyframes vsPulse {
         0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,100,0,0.5); }
-        50%       { transform: scale(1.1); box-shadow: 0 0 35px rgba(255,100,0,0.8); }
+        50%       { transform: scale(1.12); box-shadow: 0 0 38px rgba(255,100,0,0.9); }
     }
 
     /* ── POWER BAR ── */
-    .power-bar-section {
-        padding: 0 20px 20px;
-    }
+    .power-bar-section { padding: 0 20px 20px; }
     .power-bar-label {
         display: flex;
         justify-content: space-between;
@@ -355,7 +483,7 @@ def generate_html(data):
     .power-bar-left  { transition: width 1s ease; border-radius: 5px 0 0 5px; }
     .power-bar-right { transition: width 1s ease; border-radius: 0 5px 5px 0; }
 
-    /* ── PER HOUR STATS ROW ── */
+    /* ── PER HOUR ── */
     .per-hour-row {
         display: flex;
         justify-content: space-between;
@@ -423,7 +551,7 @@ def generate_html(data):
     @media (max-width: 500px) {
         .fighters-row { flex-direction: column; gap: 8px; }
         .vs-col { transform: rotate(90deg); padding: 4px 0; }
-        .fighter-avatar { width: 60px; height: 60px; font-size: 1.6rem; }
+        .fighter-avatar { width: 70px; height: 70px; font-size: 1.8rem; }
         .stat-val { font-size: 1.1rem; }
     }
     """
@@ -435,9 +563,9 @@ def generate_html(data):
         ls = md['ls']
         rs = md['rs']
 
-        wc = winner_class(ls['power'], rs['power'])
-        lw = 'winner' if wc == 'left-wins' else ''
-        rw = 'winner' if wc == 'right-wins' else ''
+        wc  = winner_class(ls['power'], rs['power'])
+        lw  = 'winner' if wc == 'left-wins'  else ''
+        rw  = 'winner' if wc == 'right-wins' else ''
 
         lpct, rpct = bar_pct(ls['power'], rs['power'])
 
@@ -446,18 +574,28 @@ def generate_html(data):
 
         draw_banner = '<div class="draw-banner">⚔️ DRAW ⚔️</div>' if wc == 'draw' else ''
 
+        # Girl-specific glow class
+        l_girl_cls = 'girl-glow' if m['left'].get('is_girl')  else ''
+        r_girl_cls = 'girl-glow' if m['right'].get('is_girl') else ''
+
+        l_avatar = avatar_html(m['left'],  ls)
+        r_avatar = avatar_html(m['right'], rs)
+
         matchup_html += f"""
         <div class="matchup-card {wc}">
             <div class="matchup-number">⚔️ Kamp {i+1}</div>
             <div class="fighters-row">
-                <!-- LEFT -->
+
+                <!-- LEFT FIGHTER -->
                 <div class="fighter {lw}" style="--c:{lc}">
                     <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar" style="background: radial-gradient(circle, {lc}33, {lc}11); border-color:{lc}; --c:{lc}">
-                        {m['left']['emoji']}
+                    <div class="{l_girl_cls}" style="display:contents">
+                        {l_avatar}
                     </div>
                     <div class="fighter-anime" style="color:{lc}">{m['left']['anime']}</div>
+                    <div class="fighter-jp">{m['left']['jp']}</div>
                     <div class="fighter-name">{m['left']['name']}</div>
+                    <div class="fighter-ability">💥 {m['left']['ability']}</div>
                     <div class="fighter-hours">⏱ {m['left']['hours']} timer</div>
                     <div class="stat-row">
                         <div class="stat-box">
@@ -477,14 +615,16 @@ def generate_html(data):
                     <div class="vs-circle">VS</div>
                 </div>
 
-                <!-- RIGHT -->
+                <!-- RIGHT FIGHTER -->
                 <div class="fighter {rw}" style="--c:{rc}">
                     <div class="winner-crown">👑</div>
-                    <div class="fighter-avatar" style="background: radial-gradient(circle, {rc}33, {rc}11); border-color:{rc}; --c:{rc}">
-                        {m['right']['emoji']}
+                    <div class="{r_girl_cls}" style="display:contents">
+                        {r_avatar}
                     </div>
                     <div class="fighter-anime" style="color:{rc}">{m['right']['anime']}</div>
+                    <div class="fighter-jp">{m['right']['jp']}</div>
                     <div class="fighter-name">{m['right']['name']}</div>
+                    <div class="fighter-ability">💥 {m['right']['ability']}</div>
                     <div class="fighter-hours">⏱ {m['right']['hours']} timer</div>
                     <div class="stat-row">
                         <div class="stat-box">
@@ -534,37 +674,36 @@ def generate_html(data):
         </div>
         """
 
-    # ── ALL SELLERS POWER RANKING ─────────────────────────────────────────────
+    # ── POWER RANKING ─────────────────────────────────────────────────────────
     all_fighters = []
     for md in matchup_data:
         m  = md['matchup']
         ls = md['ls']
         rs = md['rs']
-        lname = m['left']['name']
-        rname = m['right']['name']
-        lc    = m['left']['color']
-        rc    = m['right']['color']
-        le    = m['left']['emoji']
-        re    = m['right']['emoji']
-        all_fighters.append((lname, ls['power'], ls['gross'], ls['trygg'], lc, le))
-        all_fighters.append((rname, rs['power'], rs['gross'], rs['trygg'], rc, re))
+        all_fighters.append((m['left']['name'],  ls['power'], ls['gross'], ls['trygg'],
+                              m['left']['color'],  m['left']['emoji'],  m['left']['anime']))
+        all_fighters.append((m['right']['name'], rs['power'], rs['gross'], rs['trygg'],
+                              m['right']['color'], m['right']['emoji'], m['right']['anime']))
 
     all_fighters.sort(key=lambda x: x[1], reverse=True)
     rank_classes = ['rank-1', 'rank-2', 'rank-3']
     rank_emojis  = ['🥇', '🥈', '🥉']
 
     ranking_rows = ''
-    for idx, (name, power, gross, trygg, color, emoji) in enumerate(all_fighters):
+    for idx, (name, power, gross, trygg, color, emoji, anime) in enumerate(all_fighters):
         rc_cls = rank_classes[idx] if idx < 3 else ''
-        re_lbl = rank_emojis[idx] if idx < 3 else f'#{idx+1}'
+        re_lbl = rank_emojis[idx]  if idx < 3 else f'#{idx+1}'
         ranking_rows += f"""
         <div class="score-row">
             <span style="min-width:30px; text-align:center">{re_lbl}</span>
-            <span class="score-name {rc_cls}" style="margin-left:10px">{emoji} {name}</span>
+            <span class="score-name {rc_cls}" style="margin-left:10px">
+                {emoji} <strong>{name}</strong>
+                <span style="color:#444; font-size:0.7rem; margin-left:6px">{anime}</span>
+            </span>
             <span class="score-val" style="color:{color}">{power}</span>
         </div>"""
 
-    # ── FULL HTML ─────────────────────────────────────────────────────────────
+    # ── FULL HTML ──────────────────────────────────────────────────────────────
     html = f"""<!DOCTYPE html>
 <html lang="no">
 <head>
@@ -578,9 +717,9 @@ def generate_html(data):
 
 <header>
     <div class="header-title">⚔️ Gulskogen Arena ⚔️</div>
-    <div class="header-sub">Hvem dominerer mai-måneden?</div>
+    <div class="header-sub">Hvem dominerer mai — per time?</div>
     <div class="month-badge">MAI 2026</div>
-    <div style="margin-top:10px;">
+    <div style="margin-top:12px;">
         <a href="index.html" style="color:#555; font-size:0.75rem; text-decoration:none; letter-spacing:2px">
             ← TILBAKE TIL DASHBOARD
         </a>
@@ -604,8 +743,8 @@ def generate_html(data):
 </div>
 
 <footer>
-    <p>⚡ OPPDATERES AUTOMATISK NÅR NY RAPPORT MOTTAS ⚡</p>
-    <p style="margin-top:4px">awtaf.github.io/liertelia/konkurranse.html</p>
+    <p>TELIA DRAMMEN &nbsp;·&nbsp; GULSKOGEN &nbsp;·&nbsp; MAI 2026</p>
+    <p style="margin-top:4px; font-size:0.6rem;">Oppdateres automatisk ved ny rapport</p>
 </footer>
 
 </body>
@@ -613,11 +752,11 @@ def generate_html(data):
 
     return html
 
+
 if __name__ == '__main__':
     data = load_data()
     html = generate_html(data)
     out  = '/agent/home/konkurranse.html'
     with open(out, 'w', encoding='utf-8') as f:
         f.write(html)
-    size = os.path.getsize(out)
-    print(f"✅ konkurranse.html generated ({size:,} bytes)")
+    print(f"✅ konkurranse.html generert ({len(html):,} bytes)")
