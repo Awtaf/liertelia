@@ -1,622 +1,619 @@
 #!/usr/bin/env python3
 """
-Generate konkurranse.html - Gulskogen Mai anime-style competition page
-Auto-updated whenever new ToppSelger reports arrive.
-Uses pure CSS character art - NO emojis, NO external images.
+Gulskogen Arena — Anime Competition Page Generator
+Uses base64-embedded anime character images (always works, no hotlinking issues)
+Mobile + Desktop responsive
 """
-import json
-import os
+import json, os
 
-# ── MATCHUPS ─────────────────────────────────────────────────────────────────
-MATCHUPS = [
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Load character images (base64 encoded)
+img_path = os.path.join(SCRIPT_DIR, 'char_images_b64.json')
+with open(img_path) as f:
+    CHAR_IMAGES = json.load(f)
+
+# Load seller data
+data_path = os.path.join(SCRIPT_DIR, 'complete_extracted_data.json')
+with open(data_path) as f:
+    all_data = json.load(f)
+
+# Competition config
+MATCHES = [
     {
-        'id': 'm1',
-        'left': {
-            'name': 'Ahmed Al Ali',
-            'hours': 100,
-            'color': '#FF6600',
-            'anime': 'NARUTO',
-            'jp': 'うずまきナルト',
-            'ability': 'Shadow Clone Jutsu',
-            'symbol': 'N',
-            'gradient': 'linear-gradient(160deg, #7a2e00 0%, #FF6600 60%, #FFB300 100%)',
-            'glow': '#FF6600',
-        },
-        'right': {
-            'name': 'Yasin Ali Ismail',
-            'hours': 90,
-            'color': '#5599FF',
-            'anime': 'SASUKE',
-            'jp': 'うちはサスケ',
-            'ability': 'Chidori',
-            'symbol': 'S',
-            'gradient': 'linear-gradient(160deg, #0a0a40 0%, #1a1aaa 60%, #5599FF 100%)',
-            'glow': '#5599FF',
-        },
+        'p1': {'search': 'Ahmed Al Ali', 'char': 'NARUTO UZUMAKI', 'img': 'naruto', 'color': '#FF6600', 'glow': '#FF660066', 'attack': 'Shadow Clone Jutsu', 'hours': 100, 'kanji': 'うずまきナルト'},
+        'p2': {'search': 'Yasin Ali Ismail', 'char': 'SASUKE UCHIHA', 'img': 'sasuke', 'color': '#5599FF', 'glow': '#5599FF66', 'attack': 'Chidori', 'hours': 90, 'kanji': 'うちはサスケ'}
     },
     {
-        'id': 'm2',
-        'left': {
-            'name': 'Saidt Oliver Alavi',
-            'hours': 60,
-            'color': '#FFD700',
-            'anime': 'GOKU',
-            'jp': '孫悟空',
-            'ability': 'Kamehameha',
-            'symbol': 'G',
-            'gradient': 'linear-gradient(160deg, #4a3000 0%, #FF8C00 60%, #FFD700 100%)',
-            'glow': '#FFD700',
-        },
-        'right': {
-            'name': 'Mert Ambarduzgun',
-            'hours': 50,
-            'color': '#BB66FF',
-            'anime': 'VEGETA',
-            'jp': 'ベジータ',
-            'ability': 'Final Flash',
-            'symbol': 'V',
-            'gradient': 'linear-gradient(160deg, #2a0050 0%, #6600aa 60%, #BB66FF 100%)',
-            'glow': '#BB66FF',
-        },
+        'p1': {'search': 'Saidt Oliver Alavi', 'char': 'SON GOKU', 'img': 'goku', 'color': '#FF8C00', 'glow': '#FFD70066', 'attack': 'Kamehameha', 'hours': 60, 'kanji': '孫悟空'},
+        'p2': {'search': 'Mert Ambarduzgun', 'char': 'VEGETA', 'img': 'vegeta', 'color': '#9944FF', 'glow': '#9944FF66', 'attack': 'Final Flash', 'hours': 50, 'kanji': 'ベジータ'}
     },
     {
-        'id': 'm3',
-        'left': {
-            'name': 'Josef Ishan Latif Mossaiar',
-            'hours': 65,
-            'color': '#44DD88',
-            'anime': 'DEKU',
-            'jp': 'デク',
-            'ability': 'One For All',
-            'symbol': 'D',
-            'gradient': 'linear-gradient(160deg, #003322 0%, #22aa55 60%, #44DD88 100%)',
-            'glow': '#44DD88',
-        },
-        'right': {
-            'name': 'Aya Mohammad',
-            'hours': 68,
-            'color': '#FF69B4',
-            'anime': 'ZERO TWO',
-            'jp': 'ゼロツー',
-            'ability': 'Strelizia',
-            'symbol': '02',
-            'gradient': 'linear-gradient(160deg, #4a0028 0%, #cc2277 60%, #FF69B4 100%)',
-            'glow': '#FF69B4',
-            'is_girl': True,
-        },
+        'p1': {'search': 'Josef Ishan Latif Mossaiar', 'char': 'IZUKU MIDORIYA', 'img': 'deku', 'color': '#22CC66', 'glow': '#22CC6666', 'attack': 'One For All', 'hours': 65, 'kanji': '緑谷出久'},
+        'p2': {'search': 'Aya Mohammad', 'char': 'ZERO TWO', 'img': 'zerotwo', 'color': '#FF69B4', 'glow': '#FF69B466', 'attack': 'Strelitzia', 'hours': 68, 'kanji': 'ゼロツー', 'girl': True}
     },
     {
-        'id': 'm4',
-        'left': {
-            'name': 'Ali Esmati',
-            'hours': 90,
-            'color': '#FF4444',
-            'anime': 'ICHIGO',
-            'jp': '黒崎一護',
-            'ability': 'Bankai: Tensa Zangetsu',
-            'symbol': 'I',
-            'gradient': 'linear-gradient(160deg, #3a0000 0%, #cc2222 60%, #FF4444 100%)',
-            'glow': '#FF4444',
-        },
-        'right': {
-            'name': 'Kasim & Tommy',
-            'hours': 90,
-            'color': '#00CC66',
-            'anime': 'GUY & LEE',
-            'jp': 'ガイ＆リー',
-            'ability': 'Gates of Youth',
-            'symbol': 'GL',
-            'gradient': 'linear-gradient(160deg, #003322 0%, #009944 60%, #00CC66 100%)',
-            'glow': '#00CC66',
-        },
-    },
+        'p1': {'search': 'Ali Esmati', 'char': 'ICHIGO KUROSAKI', 'img': 'ichigo', 'color': '#FF4444', 'glow': '#FF444466', 'attack': 'Bankai: Tensa Zangetsu', 'hours': 90, 'kanji': '黒崎一護'},
+        'p2': {'search': ['Kasim', 'Tommy'], 'char': 'MIGHT GUY & ROCK LEE', 'img': 'guy', 'color': '#00CC44', 'glow': '#00CC4466', 'attack': 'Gates of Youth', 'hours': 90, 'kanji': 'ガイ＆リー', 'duo': True, 'duo_img': 'lee'}
+    }
 ]
 
-ALL_FIGHTERS = []
-for m in MATCHUPS:
-    ALL_FIGHTERS.append(m['left'])
-    ALL_FIGHTERS.append(m['right'])
-
-
-def load_may_data():
-    """Load Mai data from complete_extracted_data.json"""
-    data_path = os.path.join(os.path.dirname(__file__), 'complete_extracted_data.json')
-    if not os.path.exists(data_path):
-        return {}
-    with open(data_path, 'r') as f:
-        data = json.load(f)
-    gulskogen = data.get('gulskogen', {})
-    mai = gulskogen.get('mai', gulskogen.get('may', {}))
-    sellers = mai.get('sellers', [])
-    result = {}
+def find_seller(sellers, search_name):
+    """Find seller data by name (partial match)"""
+    if isinstance(search_name, list):
+        # Duo - combine stats
+        total = {'gross': 0, 'trygg': 0}
+        for sn in search_name:
+            for s in sellers:
+                name = s.get('navn', s.get('name', ''))
+                if sn.lower() in name.lower():
+                    total['gross'] += s.get('gross', 0)
+                    total['trygg'] += s.get('trygg', s.get('telia_trygg', 0))
+                    break
+        return total
     for s in sellers:
         name = s.get('navn', s.get('name', ''))
-        result[name] = {
-            'gross': s.get('gross', 0),
-            'trygg': s.get('trygg', s.get('telia_trygg', 0)),
-        }
-    return result
-
-
-def get_fighter_stats(fighter, mai_data):
-    name = fighter['name']
-    if '&' in name:
-        parts = name.split('&')
-        total_g = 0
-        total_t = 0
-        for part in parts:
-            pname = part.strip()
-            for k, v in mai_data.items():
-                if pname.lower() in k.lower():
-                    total_g += v['gross']
-                    total_t += v['trygg']
-                    break
-        return total_g, total_t
-    else:
-        for k, v in mai_data.items():
-            if name.lower().split()[0] in k.lower() and name.lower().split()[-1] in k.lower():
-                return v['gross'], v['trygg']
-        first = name.split()[0].lower()
-        for k, v in mai_data.items():
-            if first in k.lower():
-                return v['gross'], v['trygg']
-    return 0, 0
-
+        if search_name.lower() in name.lower():
+            return {'gross': s.get('gross', 0), 'trygg': s.get('trygg', s.get('telia_trygg', 0))}
+    return {'gross': 0, 'trygg': 0}
 
 def calc_power(gross, trygg, hours):
-    if hours == 0:
-        return 0
+    """Power per time = (gross/t * 10) + (trygg/t * 5)"""
+    if hours <= 0:
+        return 0.0
     return round((gross / hours) * 10 + (trygg / hours) * 5, 1)
 
+# Get May data for Gulskogen
+may_sellers = []
+gul = all_data.get('gulskogen', {})
+if 'mai' in gul and 'sellers' in gul['mai']:
+    may_sellers = gul['mai']['sellers']
+elif 'may' in gul and 'sellers' in gul['may']:
+    may_sellers = gul['may']['sellers']
 
-def generate():
-    mai_data = load_may_data()
+# Build match data
+match_data = []
+all_players = []
+for m in MATCHES:
+    p1_stats = find_seller(may_sellers, m['p1']['search'])
+    p2_stats = find_seller(may_sellers, m['p2']['search'])
+    p1_power = calc_power(p1_stats['gross'], p1_stats['trygg'], m['p1']['hours'])
+    p2_power = calc_power(p2_stats['gross'], p2_stats['trygg'], m['p2']['hours'])
+    
+    p1d = {**m['p1'], **p1_stats, 'power': p1_power, 'gross_t': round(p1_stats['gross']/m['p1']['hours'], 2) if m['p1']['hours'] > 0 else 0, 'trygg_t': round(p1_stats['trygg']/m['p1']['hours'], 2) if m['p1']['hours'] > 0 else 0}
+    p2d = {**m['p2'], **p2_stats, 'power': p2_power, 'gross_t': round(p2_stats['gross']/m['p2']['hours'], 2) if m['p2']['hours'] > 0 else 0, 'trygg_t': round(p2_stats['trygg']/m['p2']['hours'], 2) if m['p2']['hours'] > 0 else 0}
+    
+    match_data.append((p1d, p2d))
+    
+    p1_name = m['p1']['search'] if isinstance(m['p1']['search'], str) else ' & '.join(m['p1']['search'])
+    p2_name = m['p2']['search'] if isinstance(m['p2']['search'], str) else ' & '.join(m['p2']['search'])
+    all_players.append({'name': p1_name, 'char': m['p1']['char'], 'img': m['p1']['img'], 'color': m['p1']['color'], 'power': p1_power, 'kanji': m['p1']['kanji']})
+    all_players.append({'name': p2_name, 'char': m['p2']['char'], 'img': m['p2'].get('duo_img', m['p2']['img']) if m['p2'].get('duo') else m['p2']['img'], 'color': m['p2']['color'], 'power': p2_power, 'kanji': m['p2']['kanji']})
 
-    # Calculate all stats
-    fighter_stats = []
-    for f in ALL_FIGHTERS:
-        gross, trygg = get_fighter_stats(f, mai_data)
-        power = calc_power(gross, trygg, f['hours'])
-        gross_per_h = round(gross / f['hours'], 2) if f['hours'] > 0 else 0
-        trygg_per_h = round(trygg / f['hours'], 2) if f['hours'] > 0 else 0
-        fighter_stats.append({
-            **f,
-            'gross': gross,
-            'trygg': trygg,
-            'power': power,
-            'gross_per_h': gross_per_h,
-            'trygg_per_h': trygg_per_h,
-        })
+all_players.sort(key=lambda x: x['power'], reverse=True)
 
-    # Sort by power for ranking
-    ranked = sorted(fighter_stats, key=lambda x: x['power'], reverse=True)
-
-    # Build HTML
-    html = f'''<!DOCTYPE html>
+# Build HTML
+html = f'''<!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
-<title>Gulskogen Konkurranse — Mai 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚔️ Gulskogen Arena — Mai 2026</title>
 <style>
-* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&display=swap');
+
+* {{ margin:0; padding:0; box-sizing:border-box; }}
 body {{
     background: #080818;
     color: #fff;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    min-width: 1000px;
-    padding: 40px 60px;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
 }}
 
-.title {{
-    text-align: center;
-    font-size: 52px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    margin-bottom: 8px;
-    background: linear-gradient(90deg, #FF6600, #FFD700, #FF6600);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-transform: uppercase;
+/* Animated background */
+body::before {{
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(255,102,0,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(85,153,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 0%, rgba(153,68,255,0.06) 0%, transparent 50%);
+    z-index: -1;
 }}
-.subtitle {{
-    text-align: center;
-    font-size: 24px;
-    color: #aaa;
-    margin-bottom: 10px;
+
+.container {{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px;
 }}
-.badge {{
-    display: inline-block;
-    background: linear-gradient(135deg, #FF6600, #FF3300);
-    color: #fff;
-    padding: 8px 28px;
-    border-radius: 30px;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin: 0 auto 40px;
-}}
-.badge-wrap {{ text-align: center; }}
-.back-link {{
+
+/* HEADER */
+.header {{
     text-align: center;
     margin-bottom: 40px;
 }}
-.back-link a {{
-    color: #888;
+.header h1 {{
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #FF6600, #FF3366, #9944FF, #5599FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}}
+.header .subtitle {{
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    color: #8888aa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}}
+.header .badge {{
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 24px;
+    background: linear-gradient(135deg, #FF3366, #FF6600);
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}}
+.back-link {{
+    display: inline-block;
+    margin-top: 12px;
+    color: #6666aa;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 0.95rem;
+    transition: color 0.2s;
 }}
-.back-link a:hover {{ color: #fff; }}
+.back-link:hover {{ color: #9999cc; }}
 
-/* ── RANKING TABLE ─────────────────────────────────────────── */
+/* RANKING TABLE */
 .ranking {{
-    max-width: 900px;
-    margin: 0 auto 60px;
-    background: #111125;
+    background: linear-gradient(180deg, #12122a 0%, #0e0e22 100%);
+    border: 1px solid #222244;
     border-radius: 16px;
-    border: 1px solid #222;
-    overflow: hidden;
+    padding: 28px;
+    margin-bottom: 40px;
 }}
-.ranking-title {{
+.ranking h2 {{
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
     text-align: center;
-    font-size: 28px;
-    font-weight: 800;
-    padding: 20px;
-    border-bottom: 1px solid #222;
+    margin-bottom: 20px;
+    color: #FFD700;
     letter-spacing: 2px;
 }}
 .rank-row {{
     display: flex;
     align-items: center;
-    padding: 14px 30px;
-    border-bottom: 1px solid #1a1a30;
-    font-size: 20px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    transition: background 0.2s;
 }}
-.rank-row:last-child {{ border-bottom: none; }}
+.rank-row:hover {{ background: rgba(255,255,255,0.04); }}
+.rank-row.top3 {{ background: rgba(255,215,0,0.06); }}
 .rank-num {{
-    width: 50px;
-    font-weight: 800;
-    font-size: 22px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
 }}
 .rank-num.gold {{ color: #FFD700; }}
 .rank-num.silver {{ color: #C0C0C0; }}
 .rank-num.bronze {{ color: #CD7F32; }}
 .rank-avatar {{
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 20px;
-    margin-right: 18px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    object-fit: cover;
+    margin: 0 14px;
+    border: 2px solid;
     flex-shrink: 0;
 }}
 .rank-info {{
     flex: 1;
+    min-width: 0;
 }}
 .rank-name {{
+    font-size: 1.05rem;
     font-weight: 700;
-    font-size: 20px;
 }}
-.rank-anime {{
-    font-size: 14px;
-    opacity: 0.5;
+.rank-char {{
+    font-size: 0.75rem;
+    color: #8888aa;
+    text-transform: uppercase;
     letter-spacing: 1px;
 }}
 .rank-power {{
-    font-weight: 800;
-    font-size: 24px;
-    min-width: 80px;
-    text-align: right;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-left: 10px;
 }}
 
-/* ── MATCH CARDS ─────────────────────────────────────────── */
+/* MATCH CARDS */
 .match {{
-    max-width: 950px;
-    margin: 0 auto 50px;
-    background: #0d0d22;
+    background: linear-gradient(180deg, #12122a 0%, #0e0e22 100%);
+    border: 1px solid #222244;
     border-radius: 20px;
-    border: 1px solid #222;
-    padding: 40px;
+    padding: 30px 20px;
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+}}
+.match::before {{
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--c1), #333, var(--c2));
 }}
 .match-label {{
     text-align: center;
-    font-size: 16px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    color: #555577;
     letter-spacing: 4px;
-    color: #555;
-    margin-bottom: 30px;
     text-transform: uppercase;
+    margin-bottom: 24px;
 }}
+
 .fighters {{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
 }}
 .fighter {{
-    width: 38%;
     text-align: center;
+    flex: 1;
+    min-width: 180px;
+    max-width: 300px;
 }}
-.avatar-circle {{
-    width: 140px;
-    height: 140px;
+.fighter-avatar {{
+    width: clamp(100px, 18vw, 140px);
+    height: clamp(100px, 18vw, 140px);
     border-radius: 50%;
-    margin: 0 auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 52px;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(0,0,0,0.5);
-    position: relative;
+    object-fit: cover;
+    margin: 0 auto 12px;
+    display: block;
+    border: 3px solid;
+    transition: transform 0.3s, box-shadow 0.3s;
 }}
-.avatar-circle.girl {{
-    animation: girlPulse 2s ease-in-out infinite;
+.fighter-avatar:hover {{
+    transform: scale(1.08);
 }}
-@keyframes girlPulse {{
-    0%, 100% {{ box-shadow: 0 0 30px rgba(255,105,180,0.4); }}
-    50% {{ box-shadow: 0 0 60px rgba(255,105,180,0.8), 0 0 100px rgba(255,105,180,0.3); }}
+.fighter-avatar.girl {{
+    animation: pinkGlow 2s ease-in-out infinite alternate;
 }}
-.anime-name {{
-    font-size: 26px;
-    font-weight: 900;
-    letter-spacing: 2px;
+@keyframes pinkGlow {{
+    0% {{ box-shadow: 0 0 20px #FF69B455, 0 0 40px #FF69B422; }}
+    100% {{ box-shadow: 0 0 30px #FF69B488, 0 0 60px #FF69B444; }}
+}}
+.fighter-char {{
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 4px;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
 }}
-.jp-name {{
-    font-size: 14px;
-    opacity: 0.4;
+.fighter-kanji {{
+    font-size: 0.75rem;
+    color: #666688;
     margin-bottom: 6px;
 }}
-.real-name {{
-    font-size: 20px;
-    font-weight: 600;
-    color: #ccc;
+.fighter-name {{
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-weight: 700;
+    color: #ddd;
     margin-bottom: 4px;
 }}
-.ability {{
-    font-size: 15px;
-    opacity: 0.6;
+.fighter-attack {{
+    font-size: 0.8rem;
+    color: #777799;
     font-style: italic;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }}
-.hours-badge {{
-    font-size: 14px;
-    color: #66ff66;
-    margin-bottom: 18px;
-}}
-.stats {{
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+.fighter-hours {{
+    font-size: 0.78rem;
+    color: #555577;
     margin-bottom: 14px;
 }}
+
+.stats-grid {{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+}}
+.stat-box {{
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+}}
 .stat-val {{
-    font-size: 42px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
     font-weight: 900;
 }}
 .stat-label {{
-    font-size: 14px;
-    color: #888;
+    font-size: 0.7rem;
+    color: #8888aa;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    margin-top: 2px;
 }}
+.stat-per-hour {{
+    font-size: 0.7rem;
+    color: #666688;
+    margin-top: 1px;
+}}
+
 .power-badge {{
     display: inline-block;
-    padding: 6px 22px;
+    padding: 5px 16px;
     border-radius: 20px;
-    font-size: 18px;
-    font-weight: 800;
-    border: 2px solid;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: 1px solid;
 }}
 
-/* VS circle */
-.vs-section {{
-    width: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 50px;
-}}
-.vs {{
-    width: 80px;
-    height: 80px;
+.vs-circle {{
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #ff3300, #ff0066);
+    background: linear-gradient(135deg, #FF3366, #FF6600);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
     font-weight: 900;
-    box-shadow: 0 0 30px rgba(255,0,60,0.5);
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: 40px;
 }}
 
-/* ── POWER BAR ─────────────────────────────────────────── */
-.power-bar-section {{
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #222;
+/* Power bar */
+.power-bar-container {{
+    margin-top: 20px;
+    padding: 0 10px;
 }}
-.bar-labels {{
+.power-bar-labels {{
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
 }}
-.bar-name {{ font-weight: 700; font-size: 16px; text-transform: uppercase; }}
-.bar-stats {{ font-size: 13px; color: #aaa; }}
+.power-bar-labels .left {{ color: var(--c1); font-weight: 700; }}
+.power-bar-labels .right {{ color: var(--c2); font-weight: 700; text-align: right; }}
 .power-bar {{
-    height: 14px;
-    background: #1a1a30;
-    border-radius: 7px;
+    height: 10px;
+    border-radius: 5px;
+    background: #1a1a33;
     overflow: hidden;
     display: flex;
-    margin-bottom: 10px;
 }}
-.bar-left, .bar-right {{
+.power-bar .bar-left {{
     height: 100%;
+    background: linear-gradient(90deg, var(--c1), var(--c1-light));
+    transition: width 0.5s;
+}}
+.power-bar .bar-right {{
+    height: 100%;
+    background: linear-gradient(90deg, var(--c2-light), var(--c2));
     transition: width 0.5s;
 }}
 .match-result {{
     text-align: center;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    margin-top: 8px;
+    margin-top: 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}}
+.match-result.winner {{ color: #FFD700; }}
+.match-result.draw {{ color: #555577; }}
+
+/* FORMULA */
+.formula {{
+    text-align: center;
+    color: #444466;
+    font-size: 0.75rem;
+    margin-top: 20px;
+    letter-spacing: 1px;
 }}
 
-footer {{
+/* FOOTER */
+.footer {{
     text-align: center;
-    color: #333;
-    font-size: 14px;
-    margin-top: 60px;
-    letter-spacing: 2px;
+    padding: 30px 0;
+    color: #333355;
+    font-size: 0.75rem;
     text-transform: uppercase;
+    letter-spacing: 2px;
+}}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {{
+    .container {{ padding: 16px 12px; }}
+    .fighters {{ gap: 12px; }}
+    .fighter {{ min-width: 140px; }}
+    .vs-circle {{ width: 40px; height: 40px; font-size: 0.85rem; margin-top: 30px; }}
+    .rank-row {{ padding: 8px 10px; }}
+    .rank-avatar {{ width: 38px; height: 38px; margin: 0 10px; }}
 }}
 </style>
 </head>
 <body>
+<div class="container">
 
-<div class="title">GULSKOGEN ARENA</div>
-<div class="subtitle">HVEM DOMINERER MAI — PER TIME?</div>
-<div class="badge-wrap"><span class="badge">MAI 2026</span></div>
-<div class="back-link"><a href="index.html">&larr; Tilbake til dashboard</a></div>
+<div class="header">
+<h1>⚔️ GULSKOGEN ARENA ⚔️</h1>
+<p class="subtitle">Hvem dominerer Mai — per time?</p>
+<div class="badge">MAI 2026</div>
+<br>
+<a href="index.html" class="back-link">← Tilbake til dashboard</a>
+</div>
 
-<!-- ── POWER RANKING ─────────────────────────────────────── -->
+<!-- POWER RANKING -->
 <div class="ranking">
-<div class="ranking-title">POWER RANKING — MAI 2026</div>
+<h2>⚡ POWER RANKING — MAI 2026</h2>
 '''
 
-    # Ranking rows
-    for i, f in enumerate(ranked):
-        rank = i + 1
-        cls = ''
-        if rank == 1: cls = ' gold'
-        elif rank == 2: cls = ' silver'
-        elif rank == 3: cls = ' bronze'
-        medal = ''
-        if rank == 1: medal = ' &#x1F451;'
-        elif rank == 2: medal = ' &#x1F948;'
-        elif rank == 3: medal = ' &#x1F949;'
-
-        html += f'''<div class="rank-row">
-    <div class="rank-num{cls}">#{rank}{medal}</div>
-    <div class="rank-avatar" style="background:{f['gradient']}">{f['symbol']}</div>
-    <div class="rank-info">
-        <div class="rank-name">{f['name']}</div>
-        <div class="rank-anime">{f['anime']} &middot; {f['jp']}</div>
-    </div>
-    <div class="rank-power" style="color:{f['color']}">{f['power']}</div>
+# Ranking rows
+for i, p in enumerate(all_players):
+    rank = i + 1
+    cls = ' top3' if rank <= 3 else ''
+    num_cls = ' gold' if rank == 1 else (' silver' if rank == 2 else (' bronze' if rank == 3 else ''))
+    medal = '👑' if rank == 1 else ('🥈' if rank == 2 else ('🥉' if rank == 3 else f'#{rank}'))
+    img_data = CHAR_IMAGES.get(p['img'], '')
+    
+    html += f'''<div class="rank-row{cls}">
+<span class="rank-num{num_cls}">{medal}</span>
+<img class="rank-avatar" src="{img_data}" alt="{p['char']}" style="border-color:{p['color']}">
+<div class="rank-info">
+<div class="rank-name">{p['name']}</div>
+<div class="rank-char" style="color:{p['color']}">{p['char']}</div>
+</div>
+<div class="rank-power" style="color:{p['color']}">{p['power']}</div>
 </div>
 '''
 
-    html += '''<div class="rank-row" style="justify-content:center;color:#555;font-size:14px;letter-spacing:1px;">
-    POWER = (Gross/time &times; 10) + (T.Trygg/time &times; 5)
-</div>
+html += '''<div class="formula">⚡ POWER = (Gross/time × 10) + (T.Trygg/time × 5)</div>
 </div>
 '''
 
-    # ── MATCH CARDS ──────────────────────────────────────────
-    for idx, m in enumerate(MATCHUPS):
-        left = None
-        right = None
-        for fs in fighter_stats:
-            if fs['name'] == m['left']['name']:
-                left = fs
-            if fs['name'] == m['right']['name']:
-                right = fs
-
-        total_power = left['power'] + right['power']
-        if total_power > 0:
-            left_pct = round(left['power'] / total_power * 100)
-            right_pct = 100 - left_pct
-        else:
-            left_pct = 50
-            right_pct = 50
-
-        if left['power'] > right['power']:
-            result_text = f"&#x1F451; {left['name'].split()[0].upper()} LEDER"
-            result_color = left['color']
-        elif right['power'] > left['power']:
-            result_text = f"{right['name'].split()[0].upper()} LEDER &#x1F451;"
-            result_color = right['color']
-        else:
-            result_text = "DRAW"
-            result_color = "#888"
-
-        girl_class = ' girl' if left.get('is_girl') else ''
-        girl_class_r = ' girl' if right.get('is_girl') else ''
-
-        html += f'''
-<!-- ── KAMP {idx+1} ─────────────────────────────────────── -->
-<div class="match">
-<div class="match-label">KAMP {idx+1}</div>
+# MATCH CARDS
+for idx, (p1, p2) in enumerate(match_data):
+    match_num = idx + 1
+    p1_img = CHAR_IMAGES.get(p1['img'], '')
+    p2_img = CHAR_IMAGES.get(p2.get('duo_img', p2['img']) if p2.get('duo') else p2['img'], '')
+    
+    # Determine winner
+    if p1['power'] > p2['power']:
+        result_html = f'<div class="match-result winner">👑 {p1["char"].split()[0]} WINS</div>'
+    elif p2['power'] > p1['power']:
+        result_html = f'<div class="match-result winner">👑 {p2["char"].split()[0]} WINS</div>'
+    else:
+        result_html = '<div class="match-result draw">⚔ DRAW ⚔</div>'
+    
+    # Power bar percentages
+    total_power = p1['power'] + p2['power']
+    if total_power > 0:
+        p1_pct = (p1['power'] / total_power) * 100
+        p2_pct = 100 - p1_pct
+    else:
+        p1_pct = 50
+        p2_pct = 50
+    
+    p1_name = p1['search'] if isinstance(p1['search'], str) else ' & '.join(p1['search'])
+    p2_name = p2['search'] if isinstance(p2['search'], str) else ' & '.join(p2['search'])
+    p1_short = p1_name.split()[0].upper()
+    p2_short = p2_name.split()[0].upper() if not p2.get('duo') else 'DUO'
+    
+    girl_cls = ' girl' if p2.get('girl') else ''
+    
+    # For duo, show both images
+    if p2.get('duo'):
+        p2_avatar_html = f'<img class="fighter-avatar" src="{p2_img}" alt="{p2["char"]}" style="border-color:{p2["color"]};box-shadow:0 0 25px {p2["glow"]}">'
+    else:
+        p2_avatar_html = f'<img class="fighter-avatar{girl_cls}" src="{p2_img}" alt="{p2["char"]}" style="border-color:{p2["color"]};box-shadow:0 0 25px {p2["glow"]}">'
+    
+    html += f'''
+<div class="match" style="--c1:{p1['color']};--c1-light:{p1['color']}88;--c2:{p2['color']};--c2-light:{p2['color']}88">
+<div class="match-label">⚔ KAMP {match_num}</div>
 <div class="fighters">
-    <div class="fighter">
-        <div class="avatar-circle{girl_class}" style="background:{left['gradient']};box-shadow:0 0 40px {left['glow']}55">{left['symbol']}</div>
-        <div class="anime-name" style="color:{left['color']}">{left['anime']}</div>
-        <div class="jp-name">{left['jp']}</div>
-        <div class="real-name">{left['name']}</div>
-        <div class="ability">{left['ability']}</div>
-        <div class="hours-badge">{left['hours']} timer</div>
-        <div class="stats">
-            <div><div class="stat-val" style="color:{left['color']}">{left['gross']}</div><div class="stat-label">GROSS</div></div>
-            <div><div class="stat-val" style="color:{left['color']}">{left['trygg']}</div><div class="stat-label">T.TRYGG</div></div>
-        </div>
-        <div class="power-badge" style="color:{left['color']};border-color:{left['color']}">{left['power']} POWER</div>
-    </div>
-    <div class="vs-section">
-        <div class="vs">VS</div>
-    </div>
-    <div class="fighter">
-        <div class="avatar-circle{girl_class_r}" style="background:{right['gradient']};box-shadow:0 0 40px {right['glow']}55">{right['symbol']}</div>
-        <div class="anime-name" style="color:{right['color']}">{right['anime']}</div>
-        <div class="jp-name">{right['jp']}</div>
-        <div class="real-name">{right['name']}</div>
-        <div class="ability">{right['ability']}</div>
-        <div class="hours-badge">{right['hours']} timer</div>
-        <div class="stats">
-            <div><div class="stat-val" style="color:{right['color']}">{right['gross']}</div><div class="stat-label">GROSS</div></div>
-            <div><div class="stat-val" style="color:{right['color']}">{right['trygg']}</div><div class="stat-label">T.TRYGG</div></div>
-        </div>
-        <div class="power-badge" style="color:{right['color']};border-color:{right['color']}">{right['power']} POWER</div>
-    </div>
+
+<div class="fighter">
+<img class="fighter-avatar" src="{p1_img}" alt="{p1['char']}" style="border-color:{p1['color']};box-shadow:0 0 25px {p1['glow']}">
+<div class="fighter-char" style="color:{p1['color']}">{p1['char']}</div>
+<div class="fighter-kanji">{p1['kanji']}</div>
+<div class="fighter-name">{p1_name}</div>
+<div class="fighter-attack">⚡ {p1['attack']}</div>
+<div class="fighter-hours">🕐 {p1['hours']} timer</div>
+<div class="stats-grid">
+<div class="stat-box">
+<div class="stat-val" style="color:{p1['color']}">{p1['gross']}</div>
+<div class="stat-label">Gross</div>
+<div class="stat-per-hour">{p1['gross_t']}/t</div>
+</div>
+<div class="stat-box">
+<div class="stat-val" style="color:{p1['color']}">{p1['trygg']}</div>
+<div class="stat-label">T.Trygg</div>
+<div class="stat-per-hour">{p1['trygg_t']}/t</div>
+</div>
+</div>
+<div class="power-badge" style="color:{p1['color']};border-color:{p1['color']}44">⚡ {p1['power']} POWER</div>
 </div>
 
-<div class="power-bar-section">
-    <div class="bar-labels">
-        <div>
-            <span class="bar-name" style="color:{left['color']}">{left['name'].split()[0].upper()}</span>
-            <span class="bar-stats">{left['gross_per_h']} gross/t | {left['trygg_per_h']} trygg/t</span>
-        </div>
-        <div style="text-align:right">
-            <span class="bar-stats">{right['gross_per_h']} gross/t | {right['trygg_per_h']} trygg/t</span>
-            <span class="bar-name" style="color:{right['color']}">{right['name'].split()[0].upper()}</span>
-        </div>
-    </div>
-    <div class="power-bar">
-        <div class="bar-left" style="width:{left_pct}%;background:{left['gradient']}"></div>
-        <div class="bar-right" style="width:{right_pct}%;background:{right['gradient']}"></div>
-    </div>
-    <div class="match-result" style="color:{result_color}">{result_text}</div>
+<div class="vs-circle">VS</div>
+
+<div class="fighter">
+{p2_avatar_html}
+<div class="fighter-char" style="color:{p2['color']}">{p2['char']}</div>
+<div class="fighter-kanji">{p2['kanji']}</div>
+<div class="fighter-name">{p2_name}</div>
+<div class="fighter-attack">⚡ {p2['attack']}</div>
+<div class="fighter-hours">🕐 {p2['hours']} timer</div>
+<div class="stats-grid">
+<div class="stat-box">
+<div class="stat-val" style="color:{p2['color']}">{p2['gross']}</div>
+<div class="stat-label">Gross</div>
+<div class="stat-per-hour">{p2['gross_t']}/t</div>
 </div>
+<div class="stat-box">
+<div class="stat-val" style="color:{p2['color']}">{p2['trygg']}</div>
+<div class="stat-label">T.Trygg</div>
+<div class="stat-per-hour">{p2['trygg_t']}/t</div>
+</div>
+</div>
+<div class="power-badge" style="color:{p2['color']};border-color:{p2['color']}44">⚡ {p2['power']} POWER</div>
+</div>
+
+</div>
+
+<div class="power-bar-container">
+<div class="power-bar-labels">
+<span class="left">{p1_short} {p1['gross_t']} gross/t | {p1['trygg_t']} trygg/t</span>
+<span class="right">{p2['gross_t']} gross/t | {p2['trygg_t']} trygg/t {p2_short}</span>
+</div>
+<div class="power-bar">
+<div class="bar-left" style="width:{p1_pct}%"></div>
+<div class="bar-right" style="width:{p2_pct}%"></div>
+</div>
+</div>
+
+{result_html}
 </div>
 '''
 
-    html += '''
-<footer>TELIA DRAMMEN &middot; GULSKOGEN &middot; MAI 2026<br>Oppdateres automatisk ved ny rapport</footer>
+html += '''
+<div class="footer">
+TELIA DRAMMEN · GULSKOGEN · MAI 2026<br>
+Oppdateres automatisk ved ny rapport
+</div>
+
+</div>
 </body>
 </html>'''
 
-    out_path = os.path.join(os.path.dirname(__file__), 'konkurranse.html')
-    with open(out_path, 'w') as f:
-        f.write(html)
-    print(f"konkurranse.html generert ({len(html):,} bytes)")
+out_path = os.path.join(SCRIPT_DIR, 'konkurranse.html')
+with open(out_path, 'w') as f:
+    f.write(html)
 
-
-if __name__ == '__main__':
-    generate()
+print(f"konkurranse.html generert ({len(html):,} bytes)")
