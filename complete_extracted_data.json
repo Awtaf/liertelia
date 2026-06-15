@@ -833,31 +833,41 @@
     "jun": {
       "sellers": [
         {
-          "navn": "Ahmed Al Ali",
-          "gross": 22,
-          "upgr": 30,
-          "forsikring": 14,
+          "navn": "Saidt Oliver Alavi",
+          "gross": 20,
+          "upgr": 26,
           "trygg": 3,
-          "tjenester": 798.4,
-          "tilbehør": 5779.04,
-          "omsetning": 6577.44
+          "forsikring": 16,
+          "tjenester": 478.4,
+          "tilbehør": 11930.08,
+          "omsetning": 12408.48
         },
         {
-          "navn": "Saidt Oliver Alavi",
-          "gross": 16,
-          "upgr": 25,
-          "forsikring": 15,
-          "trygg": 3,
-          "tjenester": 79.20000000000005,
-          "tilbehør": 10925.12,
-          "omsetning": 11004.320000000002
+          "navn": "Yasin Ali Ismail",
+          "gross": 12,
+          "upgr": 6,
+          "trygg": 1,
+          "forsikring": 6,
+          "tjenester": 318.4,
+          "tilbehør": 4195.84,
+          "omsetning": 4514.24
+        },
+        {
+          "navn": "Kasim Al Ali",
+          "gross": 11,
+          "upgr": 7,
+          "trygg": 0,
+          "forsikring": 4,
+          "tjenester": 0.0,
+          "tilbehør": 1895.2,
+          "omsetning": 1895.2
         },
         {
           "navn": "Mert Ambarduzgun",
           "gross": 10,
           "upgr": 11,
-          "forsikring": 4,
           "trygg": 2,
+          "forsikring": 4,
           "tjenester": 159.2,
           "tilbehør": 2084.32,
           "omsetning": 2243.52
@@ -865,109 +875,54 @@
         {
           "navn": "Ali Esmati",
           "gross": 10,
-          "upgr": 10,
-          "forsikring": 9,
+          "upgr": 11,
           "trygg": 1,
+          "forsikring": 9,
           "tjenester": 0.0,
-          "tilbehør": 2138.24,
-          "omsetning": 2138.24
+          "tilbehør": 3174.24,
+          "omsetning": 3174.24
         },
         {
-          "navn": "Yasin Ali Ismail",
-          "gross": 12,
-          "upgr": 6,
-          "forsikring": 6,
+          "navn": "Josef Ishan Latif Mossaiar",
+          "gross": 6,
+          "upgr": 3,
           "trygg": 1,
-          "tjenester": 318.4,
-          "tilbehør": 4195.84,
-          "omsetning": 4514.24
+          "forsikring": 2,
+          "tjenester": 0.0,
+          "tilbehør": 3447.5200000000004,
+          "omsetning": 3447.5200000000004
         },
         {
           "navn": "Aya Mohammad",
           "gross": 5,
-          "upgr": 10,
-          "forsikring": 8,
-          "trygg": 9,
-          "tjenester": 399.2,
-          "tilbehør": 2897.5999999999995,
-          "omsetning": 3296.7999999999993
+          "upgr": 11,
+          "trygg": 10,
+          "forsikring": 9,
+          "tjenester": 558.4,
+          "tilbehør": 2897.6000000000004,
+          "omsetning": 3456.0000000000005
         },
         {
-          "navn": "Tommy Olafsen",
-          "gross": 8,
+          "navn": "Mohammad Jalal Badawi",
+          "gross": 2,
           "upgr": 6,
-          "forsikring": 5,
-          "trygg": 7,
-          "tjenester": 399.2,
-          "tilbehør": 1674.4,
-          "omsetning": 2073.6
-        },
-        {
-          "navn": "Kasim Al Ali",
-          "gross": 7,
-          "upgr": 2,
-          "forsikring": 1,
           "trygg": 0,
+          "forsikring": 2,
           "tjenester": 0.0,
-          "tilbehør": 1093.6,
-          "omsetning": 1093.6
-        },
-        {
-          "navn": "Josef Ishan Latif Mossaiar",
-          "gross": 5,
-          "upgr": 0,
-          "forsikring": 1,
-          "trygg": 0,
-          "tjenester": 0.0,
-          "tilbehør": 2807.52,
-          "omsetning": 2807.52
+          "tilbehør": 282.40000000000003,
+          "omsetning": 282.40000000000003
         },
         {
           "navn": "Amer Salah",
           "gross": 1,
-          "upgr": 1,
-          "forsikring": 1,
+          "upgr": 6,
           "trygg": 1,
+          "forsikring": 5,
           "tjenester": 0.0,
-          "tilbehør": 0.0,
-          "omsetning": 0.0
+          "tilbehør": 630.4000000000001,
+          "omsetning": 630.4000000000001
         }
-      ],
-      "totals": {
-        "gross": 96,
-        "upgr": 101,
-        "forsikring": 64,
-        "trygg": 27,
-        "tjenester": 2153.6,
-        "tilbehør": 33595.68,
-        "omsetning": 35749.28
-      },
-      "diplomas": {
-        "gross": {
-          "navn": "Ahmed Al Ali",
-          "verdi": 22
-        },
-        "upgr": {
-          "navn": "Ahmed Al Ali",
-          "verdi": 30
-        },
-        "trygg": {
-          "navn": "Aya Mohammad",
-          "verdi": 9
-        },
-        "forsikring": {
-          "navn": "Saidt Oliver Alavi",
-          "verdi": 15
-        },
-        "tjenester": {
-          "navn": "Ahmed Al Ali",
-          "verdi": 798
-        },
-        "tilbehør": {
-          "navn": "Saidt Oliver Alavi",
-          "verdi": 10925
-        }
-      }
+      ]
     }
   },
   "liertoppen": {
@@ -1403,81 +1358,26 @@
     "jun": {
       "sellers": [
         {
-          "navn": "Dibran Shala",
-          "gross": 13,
-          "upgr": 17,
-          "forsikring": 12,
-          "trygg": 7,
-          "tjenester": 798.4,
-          "tilbehør": 5106.200000000001,
-          "omsetning": 5904.6
-        },
-        {
-          "navn": "Abdulnaser Sallam",
-          "gross": 5,
-          "upgr": 10,
-          "forsikring": 8,
-          "trygg": 3,
-          "tjenester": 717.5999999999999,
-          "tilbehør": 1396.32,
-          "omsetning": 2113.92
-        },
-        {
           "navn": "Amer Salah",
           "gross": 10,
           "upgr": 6,
-          "forsikring": 8,
           "trygg": 1,
+          "forsikring": 8,
           "tjenester": 0.0,
           "tilbehør": 4704.0,
           "omsetning": 4704.0
         },
         {
           "navn": "Izzedin Alzayegh",
-          "gross": 2,
-          "upgr": 8,
-          "forsikring": 8,
-          "trygg": 5,
-          "tjenester": 159.2,
-          "tilbehør": 3305.6000000000004,
-          "omsetning": 3464.8
+          "gross": 3,
+          "upgr": 11,
+          "trygg": 6,
+          "forsikring": 11,
+          "tjenester": 318.4,
+          "tilbehør": 4471.2,
+          "omsetning": 4789.599999999999
         }
-      ],
-      "totals": {
-        "gross": 30,
-        "upgr": 41,
-        "forsikring": 36,
-        "trygg": 16,
-        "tjenester": 1675.1999999999998,
-        "tilbehør": 14512.12,
-        "omsetning": 16187.32
-      },
-      "diplomas": {
-        "gross": {
-          "navn": "Dibran Shala",
-          "verdi": 13
-        },
-        "upgr": {
-          "navn": "Dibran Shala",
-          "verdi": 17
-        },
-        "trygg": {
-          "navn": "Dibran Shala",
-          "verdi": 7
-        },
-        "forsikring": {
-          "navn": "Dibran Shala",
-          "verdi": 12
-        },
-        "tjenester": {
-          "navn": "Dibran Shala",
-          "verdi": 798
-        },
-        "tilbehør": {
-          "navn": "Dibran Shala",
-          "verdi": 5106
-        }
-      }
+      ]
     }
   },
   "buskerud": {
@@ -1898,91 +1798,36 @@
     "jun": {
       "sellers": [
         {
-          "navn": "Christoffer Øvervoll",
-          "gross": 9,
-          "upgr": 22,
-          "forsikring": 13,
-          "trygg": 7,
-          "tjenester": 1596.8,
-          "tilbehør": 5337.12,
-          "omsetning": 6933.92
-        },
-        {
-          "navn": "Ahmad Sallam",
-          "gross": 10,
-          "upgr": 19,
-          "forsikring": 16,
-          "trygg": 6,
-          "tjenester": 1356.8,
-          "tilbehør": 11271.119999999997,
-          "omsetning": 12627.919999999996
-        },
-        {
-          "navn": "Ismael Javeed",
-          "gross": 1,
-          "upgr": 2,
-          "forsikring": 3,
-          "trygg": 1,
-          "tjenester": 0.0,
-          "tilbehør": 1076.0,
-          "omsetning": 1076.0
-        },
-        {
           "navn": "Mohammad Jalal Badawi",
-          "gross": 2,
+          "gross": 4,
           "upgr": 1,
-          "forsikring": 3,
           "trygg": 0,
+          "forsikring": 3,
           "tjenester": 399.2,
-          "tilbehør": 1403.36,
-          "omsetning": 1802.56
+          "tilbehør": 1404.16,
+          "omsetning": 1803.3600000000001
         },
         {
           "navn": "Emily Adelaide Marshall",
           "gross": 2,
-          "upgr": 0,
-          "forsikring": 0,
+          "upgr": 1,
           "trygg": 0,
+          "forsikring": 1,
           "tjenester": 798.4,
-          "tilbehør": 1116.0,
-          "omsetning": 1914.4
+          "tilbehør": 2512.0,
+          "omsetning": 3310.4
+        },
+        {
+          "navn": "Ismael Javeed",
+          "gross": 1,
+          "upgr": 5,
+          "trygg": 1,
+          "forsikring": 4,
+          "tjenester": 0.0,
+          "tilbehør": 1276.8000000000002,
+          "omsetning": 1276.8000000000002
         }
-      ],
-      "totals": {
-        "gross": 24,
-        "upgr": 44,
-        "forsikring": 35,
-        "trygg": 14,
-        "tjenester": 4151.2,
-        "tilbehør": 20203.6,
-        "omsetning": 24354.8
-      },
-      "diplomas": {
-        "gross": {
-          "navn": "Ahmad Sallam",
-          "verdi": 10
-        },
-        "upgr": {
-          "navn": "Christoffer Øvervoll",
-          "verdi": 22
-        },
-        "trygg": {
-          "navn": "Christoffer Øvervoll",
-          "verdi": 7
-        },
-        "forsikring": {
-          "navn": "Ahmad Sallam",
-          "verdi": 16
-        },
-        "tjenester": {
-          "navn": "Christoffer Øvervoll",
-          "verdi": 1596
-        },
-        "tilbehør": {
-          "navn": "Ahmad Sallam",
-          "verdi": 11271
-        }
-      }
+      ]
     }
   }
 }
