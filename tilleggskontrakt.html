@@ -1,1 +1,609 @@
-placeholder
+<!DOCTYPE html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telia – Tilleggskontrakt</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.16/lib/cdn.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  .fade-in { animation: fadeIn 0.3s ease-in; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .telia-gradient { background: linear-gradient(135deg, #990AE3 0%, #6B07A0 100%); }
+  .telia-light { background: linear-gradient(135deg, #f5f0ff 0%, #ede5ff 100%); }
+  @media print { .no-print { display: none !important; } }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- ==================== HOVEDVERKTØY ==================== -->
+<div id="app-main">
+  <!-- Header -->
+  <header class="telia-gradient text-white px-4 py-4 shadow-lg no-print">
+    <div class="max-w-lg mx-auto flex items-center justify-between">
+      <div>
+        <h1 class="text-lg font-bold tracking-tight">Telia – Tilleggskontrakt</h1>
+        <p class="text-xs text-purple-200">Beregning av stillingsprosent for vikariat</p>
+      </div>
+      <button onclick="visAdmin()" class="btn btn-ghost btn-sm text-white/40 hover:text-white" title="Admin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-lg mx-auto p-4 space-y-5 pb-10">
+    <!-- Grunnopplysninger -->
+    <section class="space-y-3 fade-in">
+      <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Grunnopplysninger</h2>
+
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-gray-700">Managers navn</label>
+        <input id="managerNavn" type="text" class="input input-bordered w-full" placeholder="Ditt navn" oninput="beregn()">
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-sm font-medium text-gray-700">Medarbeiders navn</label>
+        <input id="medarbeiderNavn" type="text" class="input input-bordered w-full" placeholder="Navn på medarbeideren" oninput="beregn()">
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-1">
+          <label class="text-sm font-medium text-gray-700">Fast stillingsprosent</label>
+          <div class="relative">
+            <input id="fastProsent" type="number" class="input input-bordered w-full pr-8" value="20" min="0" max="100" oninput="beregn()">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">%</span>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label class="text-sm font-medium text-gray-700">Fulltidsgrunnlag</label>
+          <div class="relative">
+            <input id="timerPerUke" type="number" class="input input-bordered w-full pr-12" value="37.5" min="1" step="0.5" oninput="beregn()">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">t/uke</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perioder -->
+    <section class="space-y-3">
+      <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Perioder</h2>
+      <div id="perioder-container"></div>
+      <button onclick="leggTilPeriode()" class="btn btn-outline btn-sm w-full gap-2 border-dashed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+        Legg til periode
+      </button>
+    </section>
+
+    <!-- Resultater -->
+    <div id="resultater-container"></div>
+  </main>
+</div>
+
+<!-- ==================== ADMIN ==================== -->
+<div id="app-admin" class="hidden">
+  <!-- Admin Login -->
+  <div id="admin-login" class="min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="w-full max-w-sm space-y-5 fade-in">
+      <div class="text-center space-y-1">
+        <div class="w-14 h-14 telia-gradient rounded-2xl flex items-center justify-center mx-auto mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h1 class="text-xl font-bold text-gray-800">Admin</h1>
+        <p class="text-sm text-gray-500">Skriv inn passord for å fortsette</p>
+      </div>
+      <div class="space-y-3">
+        <input id="admin-passord" type="password" class="input input-bordered w-full" placeholder="Passord"
+          onkeydown="if(event.key==='Enter')adminLoggInn()">
+        <p id="admin-feil" class="text-error text-xs text-center hidden">Feil passord. Prøv igjen.</p>
+        <button onclick="adminLoggInn()" class="btn w-full text-white telia-gradient hover:opacity-90">Logg inn</button>
+      </div>
+      <div class="text-center">
+        <button onclick="visHoved()" class="btn btn-ghost btn-sm gap-2 text-gray-500">
+          ← Tilbake til verktøyet
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="admin-dashboard" class="hidden">
+    <header class="bg-gray-800 text-white px-4 py-3 no-print">
+      <div class="max-w-4xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="visHoved()" class="btn btn-ghost btn-sm text-white">←</button>
+          <div>
+            <h1 class="font-bold text-base">Admin – Brukslogg</h1>
+            <p class="text-xs text-gray-400">Telia Tilleggskontrakt</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="hentLogg()" class="btn btn-ghost btn-sm text-white" title="Oppdater">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+          </button>
+          <button onclick="lastNedCSV()" class="btn btn-outline btn-sm text-white border-white/30 gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            CSV
+          </button>
+          <button onclick="slettAlleLogger()" class="btn btn-outline btn-sm text-error border-error/30 gap-1" title="Slett all logg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto p-4 space-y-4">
+      <!-- Statistikk -->
+      <div id="admin-stats" class="grid grid-cols-3 gap-3"></div>
+
+      <!-- Søk og filter -->
+      <div class="bg-white rounded-xl p-3 shadow-sm space-y-2 no-print">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+          <input id="admin-sok-manager" type="text" class="input input-bordered input-sm w-full pl-9" placeholder="Søk på managernavn…" oninput="hentLogg()">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-xs text-gray-400">Fra dato</label>
+            <input id="admin-sok-fra" type="date" class="input input-bordered input-sm w-full" onchange="hentLogg()">
+          </div>
+          <div>
+            <label class="text-xs text-gray-400">Til dato</label>
+            <input id="admin-sok-til" type="date" class="input input-bordered input-sm w-full" onchange="hentLogg()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabell -->
+      <div id="admin-tabell" class="bg-white rounded-xl shadow-sm overflow-x-auto"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== STATE ====================
+let perioder = [];
+let periodeIdTeller = 0;
+let adminAutentisert = false;
+let sorterPaa = 'tidspunkt';
+let sorterRetning = 'desc';
+const ADMIN_PASSORD = 'TeliaAdmin2025';
+const LOGG_KEY = 'telia_tilleggskontrakt_logg';
+
+// ==================== INIT ====================
+function init() {
+  leggTilPeriode();
+}
+
+// ==================== PERIODER ====================
+function leggTilPeriode() {
+  periodeIdTeller++;
+  perioder.push({ id: periodeIdTeller, fraDato: '', tilDato: '', timer: '', uker: '1' });
+  renderPerioder();
+}
+
+function fjernPeriode(id) {
+  if (perioder.length <= 1) return;
+  perioder = perioder.filter(p => p.id !== id);
+  renderPerioder();
+  beregn();
+}
+
+function oppdaterPeriode(id, felt, verdi) {
+  const p = perioder.find(p => p.id === id);
+  if (p) p[felt] = verdi;
+  beregn();
+}
+
+function renderPerioder() {
+  const container = document.getElementById('perioder-container');
+  container.innerHTML = perioder.map((p, i) => `
+    <div class="bg-white rounded-xl p-4 shadow-sm space-y-3 mb-3 fade-in border border-gray-100" id="periode-${p.id}">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Periode ${i + 1}</span>
+        <div class="flex items-center gap-2">
+          <span id="badge-faktisk-${p.id}" class="badge badge-outline badge-sm hidden"></span>
+          <span id="badge-tillegg-${p.id}" class="badge badge-sm hidden"></span>
+          ${perioder.length > 1 ? `
+            <button onclick="fjernPeriode(${p.id})" class="btn btn-ghost btn-xs text-red-400 hover:text-red-600 hover:bg-red-50" title="Fjern periode">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+          ` : ''}
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-1">
+          <label class="text-xs text-gray-500">Fra dato</label>
+          <input type="date" class="input input-bordered input-sm w-full" value="${p.fraDato}" onchange="oppdaterPeriode(${p.id},'fraDato',this.value)">
+        </div>
+        <div class="space-y-1">
+          <label class="text-xs text-gray-500">Til dato</label>
+          <input type="date" class="input input-bordered input-sm w-full" value="${p.tilDato}" onchange="oppdaterPeriode(${p.id},'tilDato',this.value)">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-1">
+          <label class="text-xs text-gray-500">Timer i perioden</label>
+          <div class="relative">
+            <input type="number" class="input input-bordered input-sm w-full pr-6" placeholder="0" min="0" step="0.5" value="${p.timer}" oninput="oppdaterPeriode(${p.id},'timer',this.value)">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">t</span>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label class="text-xs text-gray-500">Antall uker</label>
+          <div class="relative">
+            <input type="number" class="input input-bordered input-sm w-full pr-12" placeholder="1" min="0.5" step="0.5" value="${p.uker}" oninput="oppdaterPeriode(${p.id},'uker',this.value)">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">uker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ==================== BEREGNING ====================
+function beregn() {
+  const fast = parseFloat(document.getElementById('fastProsent').value) || 0;
+  const tpUke = parseFloat(document.getElementById('timerPerUke').value) || 37.5;
+
+  const resultater = [];
+  perioder.forEach(p => {
+    const timer = parseFloat(p.timer);
+    const uker = parseFloat(p.uker);
+    const badgeFaktisk = document.getElementById(`badge-faktisk-${p.id}`);
+    const badgeTillegg = document.getElementById(`badge-tillegg-${p.id}`);
+
+    if (!isNaN(timer) && !isNaN(uker) && uker > 0 && timer > 0) {
+      const faktisk = Math.round((timer / (uker * tpUke)) * 100);
+      const tillegg = faktisk - fast;
+
+      badgeFaktisk.textContent = `Faktisk: ${faktisk} %`;
+      badgeFaktisk.classList.remove('hidden');
+
+      badgeTillegg.textContent = `Tillegg: ${tillegg} %`;
+      badgeTillegg.classList.remove('hidden');
+      badgeTillegg.className = `badge badge-sm ${tillegg > 0 ? 'bg-purple-600 text-white border-purple-600' : tillegg < 0 ? 'badge-error' : 'badge-ghost'}`;
+
+      if (p.fraDato && p.tilDato) {
+        resultater.push({ ...p, timer, uker, faktisk, tillegg });
+      }
+    } else {
+      badgeFaktisk.classList.add('hidden');
+      badgeTillegg.classList.add('hidden');
+    }
+  });
+
+  renderResultater(resultater, fast);
+}
+
+function formaterDato(datoStr) {
+  if (!datoStr) return '';
+  const [y, m, d] = datoStr.split('-');
+  return `${d}.${m}.${y}`;
+}
+
+function renderResultater(resultater, fast) {
+  const container = document.getElementById('resultater-container');
+  if (resultater.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  const sumTimer = resultater.reduce((s, r) => s + r.timer, 0);
+  const avtaletekst = genererAvtaletekst(resultater);
+  const managerNavn = document.getElementById('managerNavn').value.trim();
+
+  container.innerHTML = `
+    <div class="space-y-4 fade-in">
+      <!-- Tabell -->
+      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <h3 class="font-semibold text-sm text-gray-700 mb-3 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          Beregningsresultat
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="table table-sm w-full">
+            <thead>
+              <tr class="text-xs text-gray-400">
+                <th>Periode</th>
+                <th class="text-right">Timer</th>
+                <th class="text-right">Faktisk stilling</th>
+                <th class="text-right">Tilleggsprosent</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${resultater.map(r => `
+                <tr>
+                  <td class="text-xs">${formaterDato(r.fraDato)} – ${formaterDato(r.tilDato)}</td>
+                  <td class="text-right text-xs">${r.timer} t</td>
+                  <td class="text-right text-xs">${r.faktisk} %</td>
+                  <td class="text-right">
+                    <span class="font-bold text-sm ${r.tillegg > 0 ? 'text-purple-600' : r.tillegg < 0 ? 'text-red-500' : 'text-gray-500'}">${r.tillegg} %</span>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+            <tfoot>
+              <tr class="font-semibold text-xs border-t-2">
+                <td>Totalt (${resultater.length} ${resultater.length === 1 ? 'periode' : 'perioder'})</td>
+                <td class="text-right">${sumTimer} t</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Avtaletekst -->
+      ${avtaletekst ? `
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 space-y-3">
+          <h3 class="font-semibold text-sm text-gray-700">Avtaleperiode – tekst til kontrakt</h3>
+          <div class="bg-gray-50 rounded-lg p-3 text-sm leading-relaxed text-gray-700 border border-gray-200">
+            ${avtaletekst}
+          </div>
+          <button onclick="kopierAvtaletekst()" id="kopier-btn"
+            class="btn btn-sm w-full gap-2 text-white telia-gradient hover:opacity-90">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Kopier avtaletekst
+          </button>
+          ${!managerNavn ? '<p class="text-xs text-amber-500 text-center">⚠️ Fyll inn managernavn for å logge bruken.</p>' : ''}
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function genererAvtaletekst(resultater) {
+  const gyldige = resultater.filter(r => r.fraDato && r.tilDato && r.tillegg > 0);
+  if (gyldige.length === 0) return '';
+
+  const periodeSetninger = gyldige.map(r =>
+    `fra ${formaterDato(r.fraDato)} til og med ${formaterDato(r.tilDato)} i en ${r.tillegg} % stilling`
+  ).join(', ');
+
+  return `Arbeidstaker ansettes midlertidig som vikar for å dekke planlagt fravær ${periodeSetninger}. Arbeidstakers daglige og ukentlige arbeidstid vil variere i henhold til den til enhver tid gjeldende arbeidsplan og/eller behov. Ved utløp av siste periode avsluttes det midlertidige ansettelsesforholdet uten ytterligere varsel, jf. arbeidsmiljøloven § 14-9 sjette ledd.`;
+}
+
+// ==================== KOPIER & LOGG ====================
+function kopierAvtaletekst() {
+  const resultater = beregnResultater();
+  const avtaletekst = genererAvtaletekst(resultater);
+  if (!avtaletekst) return;
+
+  navigator.clipboard.writeText(avtaletekst).then(() => {
+    const btn = document.getElementById('kopier-btn');
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Kopiert!`;
+    btn.classList.remove('telia-gradient');
+    btn.classList.add('btn-success');
+    setTimeout(() => {
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Kopier avtaletekst`;
+      btn.classList.add('telia-gradient');
+      btn.classList.remove('btn-success');
+    }, 3000);
+  });
+
+  // Logg
+  const managerNavn = document.getElementById('managerNavn').value.trim();
+  const medarbeiderNavn = document.getElementById('medarbeiderNavn').value.trim();
+  const fast = parseFloat(document.getElementById('fastProsent').value) || 0;
+  if (!managerNavn) return;
+
+  const sumTimer = resultater.reduce((s, r) => s + r.timer, 0);
+  const tilleggsArr = resultater.filter(r => r.tillegg > 0).map(r => r.tillegg);
+
+  const logg = hentLoggFraStorage();
+  logg.push({
+    id: Date.now(),
+    tidspunkt: new Date().toISOString(),
+    manager_navn: managerNavn,
+    medarbeider_navn: medarbeiderNavn,
+    fast_stillingsprosent: fast,
+    antall_perioder: resultater.length,
+    sum_timer: sumTimer,
+    tilleggsproseneter: JSON.stringify(tilleggsArr)
+  });
+  localStorage.setItem(LOGG_KEY, JSON.stringify(logg));
+}
+
+function beregnResultater() {
+  const fast = parseFloat(document.getElementById('fastProsent').value) || 0;
+  const tpUke = parseFloat(document.getElementById('timerPerUke').value) || 37.5;
+  const resultater = [];
+
+  perioder.forEach(p => {
+    const timer = parseFloat(p.timer);
+    const uker = parseFloat(p.uker);
+    if (!isNaN(timer) && !isNaN(uker) && uker > 0 && timer > 0 && p.fraDato && p.tilDato) {
+      const faktisk = Math.round((timer / (uker * tpUke)) * 100);
+      const tillegg = faktisk - fast;
+      resultater.push({ ...p, timer, uker, faktisk, tillegg });
+    }
+  });
+  return resultater;
+}
+
+// ==================== ADMIN ====================
+function visAdmin() {
+  document.getElementById('app-main').classList.add('hidden');
+  document.getElementById('app-admin').classList.remove('hidden');
+  if (adminAutentisert) {
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    hentLogg();
+  } else {
+    document.getElementById('admin-login').classList.remove('hidden');
+    document.getElementById('admin-dashboard').classList.add('hidden');
+    setTimeout(() => document.getElementById('admin-passord').focus(), 100);
+  }
+}
+
+function visHoved() {
+  document.getElementById('app-admin').classList.add('hidden');
+  document.getElementById('app-main').classList.remove('hidden');
+}
+
+function adminLoggInn() {
+  const passord = document.getElementById('admin-passord').value;
+  if (passord === ADMIN_PASSORD) {
+    adminAutentisert = true;
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    document.getElementById('admin-feil').classList.add('hidden');
+    hentLogg();
+  } else {
+    document.getElementById('admin-feil').classList.remove('hidden');
+    document.getElementById('admin-passord').value = '';
+    document.getElementById('admin-passord').focus();
+  }
+}
+
+function hentLoggFraStorage() {
+  try { return JSON.parse(localStorage.getItem(LOGG_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function hentLogg() {
+  let logg = hentLoggFraStorage();
+
+  // Filter
+  const sokManager = (document.getElementById('admin-sok-manager')?.value || '').toLowerCase();
+  const sokFra = document.getElementById('admin-sok-fra')?.value || '';
+  const sokTil = document.getElementById('admin-sok-til')?.value || '';
+
+  if (sokManager) logg = logg.filter(e => e.manager_navn.toLowerCase().includes(sokManager));
+  if (sokFra) logg = logg.filter(e => e.tidspunkt.slice(0,10) >= sokFra);
+  if (sokTil) logg = logg.filter(e => e.tidspunkt.slice(0,10) <= sokTil);
+
+  // Sorter
+  logg.sort((a, b) => {
+    const valA = a[sorterPaa] || '';
+    const valB = b[sorterPaa] || '';
+    const cmp = typeof valA === 'string' ? valA.localeCompare(valB) : valA - valB;
+    return sorterRetning === 'desc' ? -cmp : cmp;
+  });
+
+  renderAdminStats(logg);
+  renderAdminTabell(logg);
+}
+
+function toggleSortering(felt) {
+  if (sorterPaa === felt) {
+    sorterRetning = sorterRetning === 'desc' ? 'asc' : 'desc';
+  } else {
+    sorterPaa = felt;
+    sorterRetning = 'desc';
+  }
+  hentLogg();
+}
+
+function renderAdminStats(logg) {
+  const unikeManagere = new Set(logg.map(e => e.manager_navn.toLowerCase())).size;
+  const trettidager = new Date(); trettidager.setDate(trettidager.getDate() - 30);
+  const sisteTretti = logg.filter(e => new Date(e.tidspunkt) >= trettidager).length;
+
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
+      <div class="text-3xl font-bold text-purple-600">${logg.length}</div>
+      <div class="text-xs text-gray-400 mt-1">Totalt bruk</div>
+    </div>
+    <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
+      <div class="text-3xl font-bold text-purple-600">${unikeManagere}</div>
+      <div class="text-xs text-gray-400 mt-1">Unike managere</div>
+    </div>
+    <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
+      <div class="text-3xl font-bold text-purple-600">${sisteTretti}</div>
+      <div class="text-xs text-gray-400 mt-1">Siste 30 dager</div>
+    </div>
+  `;
+}
+
+function formaterTidspunkt(iso) {
+  const d = new Date(iso);
+  return d.toLocaleString('nb-NO', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function renderAdminTabell(logg) {
+  const pil = (felt) => sorterPaa === felt ? (sorterRetning === 'desc' ? ' ↓' : ' ↑') : '';
+
+  if (logg.length === 0) {
+    document.getElementById('admin-tabell').innerHTML = `
+      <div class="text-center py-10 text-gray-400 text-sm">Ingen loggposter funnet.</div>
+    `;
+    return;
+  }
+
+  document.getElementById('admin-tabell').innerHTML = `
+    <table class="table table-sm w-full">
+      <thead>
+        <tr class="text-xs text-gray-400">
+          <th class="cursor-pointer select-none hover:text-gray-600" onclick="toggleSortering('tidspunkt')">Tidspunkt${pil('tidspunkt')}</th>
+          <th class="cursor-pointer select-none hover:text-gray-600" onclick="toggleSortering('manager_navn')">Manager${pil('manager_navn')}</th>
+          <th>Medarbeider</th>
+          <th class="text-right">Fast %</th>
+          <th class="text-right">Perioder</th>
+          <th class="text-right">Sum timer</th>
+          <th>Tillegg %</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${logg.map(e => {
+          let tillegg = [];
+          try { tillegg = JSON.parse(e.tilleggsproseneter); } catch {}
+          return `
+            <tr class="hover">
+              <td class="text-xs whitespace-nowrap">${formaterTidspunkt(e.tidspunkt)}</td>
+              <td class="text-xs">${escapeHtml(e.manager_navn)}</td>
+              <td class="text-xs">${escapeHtml(e.medarbeider_navn)}</td>
+              <td class="text-right text-xs">${e.fast_stillingsprosent} %</td>
+              <td class="text-right text-xs">${e.antall_perioder}</td>
+              <td class="text-right text-xs">${e.sum_timer} t</td>
+              <td class="text-xs">
+                ${tillegg.map(t => `<span class="badge badge-sm bg-purple-600 text-white border-purple-600 mr-1">${t} %</span>`).join('')}
+              </td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+// ==================== CSV EKSPORT ====================
+function lastNedCSV() {
+  const logg = hentLoggFraStorage();
+  const header = ['ID','Tidspunkt','Manager','Medarbeider','Fast %','Perioder','Sum timer','Tillegg %'];
+  const rader = logg.map(e => {
+    let tillegg = [];
+    try { tillegg = JSON.parse(e.tilleggsproseneter); } catch {}
+    return [e.id, formaterTidspunkt(e.tidspunkt), e.manager_navn, e.medarbeider_navn, e.fast_stillingsprosent, e.antall_perioder, e.sum_timer, tillegg.join('; ')];
+  });
+  const csv = [header, ...rader].map(r => r.map(c => `"${c}"`).join(';')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `telia-brukslogg-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ==================== SLETT ALL LOGG ====================
+function slettAlleLogger() {
+  if (!confirm('Er du sikker på at du vil slette all brukslogg? Dette kan ikke angres.')) return;
+  localStorage.removeItem(LOGG_KEY);
+  hentLogg();
+}
+
+// ==================== START ====================
+init();
+</script>
+</body>
+</html>
